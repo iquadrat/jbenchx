@@ -3,6 +3,7 @@ package org.jbench;
 import java.lang.reflect.*;
 
 import org.jbench.error.*;
+import org.jbench.vm.*;
 
 public class BenchmarkTask {
   
@@ -41,18 +42,28 @@ public class BenchmarkTask {
     System.out.println("using " + iterationCount + " iterations");
     
     BenchmarkTimings timings = new BenchmarkTimings(fMinRunCount, fMaxRunCount, fMinSampleCount, fMaxDeviation);
+    SystemUtil.cleanMemory();
+    VmState preState = VmState.getCurrentState();
+    System.out.println(preState);
     do {
       long time = singleRun(benchmark, method, iterationCount);
-      timings.add(time);
+      VmState postState = VmState.getCurrentState();
+      if (preState.equals(postState)) {
+        timings.add(time);
+      } else {
+        System.out.println(postState+" "+time);
+        // restart
+        timings.clear();
+      }
+      preState = postState;
     } while (timings.needsMoreRuns());
     
-    long avgNs = Math.round(timings.getEstimatedAverage() / iterationCount);
+    long avgNs = Math.round(timings.getEstimatedTime() / iterationCount);
     System.out.println(this + ": " + avgNs + "ns");
-    
   }
   
   private long singleRun(Object benchmark, Method method, long iterationCount) throws IllegalArgumentException, IllegalAccessException,
-      InvocationTargetException {
+      InvocationTargetException, InstantiationException {
     Timer timer = new Timer();
     timer.start();
     for (long i = 0; i < iterationCount; ++i) {
@@ -100,6 +111,10 @@ public class BenchmarkTask {
   
   @Override
   public String toString() {
+    return getName();
+  }
+
+  public String getName() {
     return fClassName + ":" + fMethodName;
   }
   

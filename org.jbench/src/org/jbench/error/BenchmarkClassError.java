@@ -12,4 +12,9 @@ public class BenchmarkClassError extends BenchmarkError {
     fMessage = message;
   }
   
+  @Override
+  public String toString() {
+    return getClass().getSimpleName() + ": " + fClass.getName() + ": " + fMessage;
+  }
+  
 }

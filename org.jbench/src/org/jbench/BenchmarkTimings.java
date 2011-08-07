@@ -73,20 +73,28 @@ public class BenchmarkTimings {
     return fMaxRunCount;
   }
   
-  public double getEstimatedAverage() {
-    long sum = 0;
-    int validSampleCount = 0;
-    long maxAllowedTime = (long)Math.round(fMinTime * (1 + fMaxDeviation));
-    
-    for (int i = 0; i < fRuns; ++i) {
-      Long timings = fTimings.get(i);
-      if (timings <= maxAllowedTime) {
-        validSampleCount++;
-        sum += timings;
-      }
-    }
-    
-    return 1.0 * sum / validSampleCount;
+  public double getEstimatedTime() {
+    return fMinTime;
+//    long sum = 0;
+//    int validSampleCount = 0;
+//    long maxAllowedTime = (long)Math.round(fMinTime * (1 + fMaxDeviation));
+//    
+//    for (int i = 0; i < fRuns; ++i) {
+//      Long timings = fTimings.get(i);
+//      if (timings <= maxAllowedTime) {
+//        validSampleCount++;
+//        sum += timings;
+//      }
+//    }
+//    
+//    return 1.0 * sum / validSampleCount;
+  }
+
+  public void clear() {
+    fRuns = 0;
+    fMinTime = Long.MAX_VALUE;
+    fLastIsBest = true;
+    fTimings.clear();
   }
   
 }

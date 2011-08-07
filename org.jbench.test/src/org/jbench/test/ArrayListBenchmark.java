@@ -16,6 +16,11 @@ public class ArrayListBenchmark extends Benchmark {
     }
   }
   
+  @Bench
+  public void create() {
+    new ArrayList<Object>(100);
+  }
+  
 //  @Bench
 //  public Object createAdd1000() {
 //    ArrayList<Integer> list = new ArrayList<Integer>(100);
@@ -29,7 +34,7 @@ public class ArrayListBenchmark extends Benchmark {
   public boolean contains() {
 //    return fInteger1000.contains(-1);
     
-    for (int i = 1; i <= 1000; ++i) {
+    for (int i = 1; i <= 10; ++i) {
       if (fInteger1000.contains(-1)) {
         return true;
       }

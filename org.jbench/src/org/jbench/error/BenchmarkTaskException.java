@@ -12,4 +12,9 @@ public class BenchmarkTaskException extends BenchmarkError {
     fException = exception;
   }
   
+  @Override
+  public String toString() {
+    return fTask.getName()+": "+fException;
+  }
+  
 }

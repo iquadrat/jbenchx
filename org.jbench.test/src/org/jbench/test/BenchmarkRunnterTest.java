@@ -16,4 +16,8 @@ public class BenchmarkRunnterTest extends BenchmarkTestCase {
     
   }
   
+  public static void main(String[] args) {
+    new BenchmarkRunnterTest().testRun_ArrayListBenchmark();
+  }
+  
 }
