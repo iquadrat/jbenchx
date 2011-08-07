@@ -1,10 +1,14 @@
 package org.jbench;
 
+import java.lang.annotation.*;
 import java.lang.reflect.*;
 import java.util.*;
 
+import javax.annotation.*;
+
 import org.jbench.annotations.*;
 import org.jbench.error.*;
+import org.jbench.util.*;
 
 public class BenchmarkRunner {
   
@@ -40,7 +44,7 @@ public class BenchmarkRunner {
     }
     
     for (Method method: clazz.getMethods()) {
-      Bench annotation = method.getAnnotation(Bench.class);
+      Bench annotation = findAnnotation(method, Bench.class);
       if (annotation == null) continue;
       
       if (method.getParameterTypes().length > 0) {
@@ -52,6 +56,23 @@ public class BenchmarkRunner {
           annotation.minSampleCount(), annotation.maxDeviation()));
     }
     
+  }
+  
+  @CheckForNull
+  private static <A extends Annotation> A findAnnotation(Method m, Class<A> annotation) throws SecurityException {
+    A result = m.getAnnotation(annotation);
+    if (result != null) {
+      return result;
+    }
+    Class<?> parent = m.getDeclaringClass().getSuperclass();
+    if (parent != null) {
+      try {
+        Method superMethod = parent.getMethod(m.getName());
+        return findAnnotation(superMethod, annotation);
+      } catch (NoSuchMethodException e) {
+      }
+    }
+    return null;
   }
   
 }

@@ -17,8 +17,11 @@ public class ArrayListBenchmark extends Benchmark {
   }
   
   @Bench
-  public void create() {
-    new ArrayList<Object>(100);
+  public Object create() {
+    for(int i=0; i<1000; ++i) {
+      new ArrayList<Object>(1000000);
+    }
+    return null;
   }
   
 //  @Bench

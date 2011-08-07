@@ -3,6 +3,7 @@ package org.jbench;
 import java.lang.reflect.*;
 
 import org.jbench.error.*;
+import org.jbench.util.*;
 import org.jbench.vm.*;
 
 public class BenchmarkTask {
@@ -44,22 +45,31 @@ public class BenchmarkTask {
     BenchmarkTimings timings = new BenchmarkTimings(fMinRunCount, fMaxRunCount, fMinSampleCount, fMaxDeviation);
     SystemUtil.cleanMemory();
     VmState preState = VmState.getCurrentState();
-    System.out.println(preState);
+//    System.out.println(preState);
     do {
+      
+      GcStats preGcStats = SystemUtil.getGcStats();
       long time = singleRun(benchmark, method, iterationCount);
+      GcStats postGcStats = SystemUtil.getGcStats();
       VmState postState = VmState.getCurrentState();
       if (preState.equals(postState)) {
-        timings.add(time);
+        Timing timing = new Timing(time, preGcStats, postGcStats);
+        System.out.print(timing+" ");
+        System.out.flush();
+        timings.add(timing);
       } else {
-        System.out.println(postState+" "+time);
+        System.out.print("!!!");
+        System.out.flush();
+//        System.out.println(postState + " " + time);
         // restart
         timings.clear();
       }
       preState = postState;
     } while (timings.needsMoreRuns());
     
-    long avgNs = Math.round(timings.getEstimatedTime() / iterationCount);
-    System.out.println(this + ": " + avgNs + "ns");
+    long avgNs = Math.round(timings.getEstimatedTime() / iterationCount / fDivisor);
+    System.out.println();
+    System.out.println(this + ": " + TimeUtil.toString(avgNs));
   }
   
   private long singleRun(Object benchmark, Method method, long iterationCount) throws IllegalArgumentException, IllegalAccessException,
@@ -83,7 +93,6 @@ public class BenchmarkTask {
         method.invoke(benchmark);
       }
       time = timer.stopAndReset();
-      System.out.println(iterations + " / " + time);
       time = Math.max(time, 10 * 1000 * 1000); // at least 10ms
       
       if (iterations == 1 && time > context.getTargetTimeNs()) {
@@ -93,8 +102,9 @@ public class BenchmarkTask {
         break;
       }
       
-      iterations = (long)Math.ceil(1.0 * context.getTargetTimeNs() / time) * iterations;
-      
+      double factor = (1.0 * context.getTargetTimeNs()) / time;
+      iterations = (long)Math.round(iterations * factor);
+      iterations = Math.max(1, iterations);
     }
     return iterations;
   }
@@ -113,7 +123,7 @@ public class BenchmarkTask {
   public String toString() {
     return getName();
   }
-
+  
   public String getName() {
     return fClassName + ":" + fMethodName;
   }

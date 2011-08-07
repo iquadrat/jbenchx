@@ -4,30 +4,30 @@ import java.util.*;
 
 public class BenchmarkTimings {
   
-  private final double     fMaxDeviation;
-  private final int        fMinRunCount;
-  private final int        fMaxRunCount;
-  private final int        fMinSampleCount;
+  private final double       fMaxDeviation;
+  private final int          fMinRunCount;
+  private final int          fMaxRunCount;
+  private final int          fMinSampleCount;
   
-  private final List<Long> fTimings;                    // TODO use array
-  private int              fRuns       = 0;
-  private long             fMinTime    = Long.MAX_VALUE;
-  private boolean          fLastIsBest = true;
+  private final List<Timing> fTimings;
+  
+  private int                fRuns       = 0;
+  private long               fMinTime    = Long.MAX_VALUE;
+  private boolean            fLastIsBest = true;
   
   public BenchmarkTimings(int minRunCount, int maxRunCount, int minSamplesCount, double maxDeviation) {
     fMinRunCount = minRunCount;
     fMaxRunCount = maxRunCount;
     fMinSampleCount = minSamplesCount;
     fMaxDeviation = maxDeviation;
-    fTimings = new ArrayList<Long>(maxRunCount);
+    fTimings = new ArrayList<Timing>(maxRunCount);
   }
   
-  public void add(long time) {
-    System.out.println("run " + fRuns + ": " + time);
+  public void add(Timing timing) {
     fRuns++;
-    fTimings.add(time);
-    if (time < fMinTime) {
-      fMinTime = time;
+    fTimings.add(timing);
+    if (timing.getRunTime() < fMinTime) {
+      fMinTime = timing.getRunTime();
       fLastIsBest = true;
     } else {
       fLastIsBest = false;
@@ -53,7 +53,7 @@ public class BenchmarkTimings {
     long maxAllowedTime = (long)Math.round(fMinTime * (1 + fMaxDeviation));
     int validSampleCount = 0;
     for (int i = 0; i < fRuns; ++i) {
-      if (fTimings.get(i) <= maxAllowedTime) {
+      if (fTimings.get(i).getRunTime() <= maxAllowedTime) {
         validSampleCount++;
       }
     }
@@ -89,7 +89,7 @@ public class BenchmarkTimings {
 //    
 //    return 1.0 * sum / validSampleCount;
   }
-
+  
   public void clear() {
     fRuns = 0;
     fMinTime = Long.MAX_VALUE;

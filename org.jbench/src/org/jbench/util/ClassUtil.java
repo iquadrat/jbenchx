@@ -1,7 +1,9 @@
-package org.jbench;
+package org.jbench.util;
 
 import java.lang.reflect.*;
 import java.security.*;
+
+import org.jbench.*;
 
 public class ClassUtil {
   
