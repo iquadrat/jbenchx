@@ -9,6 +9,7 @@ import org.jbenchx.annotations.*;
  * Benchmarks all queries (non-modifying) operation defined on the {@link Collection} interface.
  * @author micha
  */
+@Group("Collection")
 public abstract class CollectionQueryBenchmark extends Benchmark {
   
   private static final int     COUNT = 100;
@@ -98,7 +99,7 @@ public abstract class CollectionQueryBenchmark extends Benchmark {
     return fCollection.containsAll(Arrays.asList(fContained));
   }
   
-  @Bench(divisor = 1000)
+  @Bench
   public int hashCode() {
     return fCollection.hashCode();
   }

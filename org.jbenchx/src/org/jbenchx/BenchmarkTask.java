@@ -3,73 +3,79 @@ package org.jbenchx;
 import java.lang.reflect.*;
 
 import org.jbenchx.error.*;
+import org.jbenchx.result.*;
 import org.jbenchx.util.*;
 import org.jbenchx.vm.*;
 
 public class BenchmarkTask {
   
-  private static final double SQRT2 = Math.sqrt(2);
+  private static final double       SQRT2 = Math.sqrt(2);
   
-  private final String        fClassName;
-  private final String        fMethodName;
-  private final int           fDivisor;
-  private final int           fMinRunCount;
-  private final int           fMaxRunCount;
-  private final int           fMinSampleCount;
-  private final double        fMaxDeviation;
+  private final String              fClassName;
+  private final String              fMethodName;
+  private final String              fBenchmarkName;
   
-  public BenchmarkTask(String className, String methodName, int divisor, int minRunCount, int maxRunCount, int minSampleCount, double maxDeviation) {
+  private final BenchmarkParameters fParams;
+  
+  public BenchmarkTask(String benchmarkName, String className, String methodName, BenchmarkParameters params) {
+    fBenchmarkName = benchmarkName;
     fClassName = className;
     fMethodName = methodName;
-    fDivisor = divisor;
-    fMinRunCount = minRunCount;
-    fMaxRunCount = maxRunCount;
-    fMinSampleCount = minSampleCount;
-    fMaxDeviation = maxDeviation;
+    fParams = params;
   }
   
   public void run(BenchmarkResult result, BenchmarkContext context) {
     try {
-      internalRun(context, result);
+      
+      context.getProgressMonitor().started(this);
+      
+      TaskResult taskResult = internalRun(context);
+      
+      result.addResult(this, taskResult);
+      context.getProgressMonitor().done(this);
+      
     } catch (Exception e) {
-      result.addError(new BenchmarkTaskException(this, e));
+      result.addResult(this, new TaskResult(new BenchmarkTimings(fParams), 0, new BenchmarkTaskException(this, e)));
+      context.getProgressMonitor().failed(this);
     }
   }
   
-  private void internalRun(BenchmarkContext context, BenchmarkResult result) throws Exception {
-    Object benchmark = createInstance(result);
+  private TaskResult internalRun(BenchmarkContext context) throws Exception {
+    Object benchmark = createInstance();
     Method method = getBenchmarkMethod(benchmark);
     long iterationCount = findIterationCount(context, benchmark, method);
-    System.out.println("using " + iterationCount + " iterations");
+//    System.out.println("using " + iterationCount + " iterations");
     
-    BenchmarkTimings timings = new BenchmarkTimings(fMinRunCount, fMaxRunCount, fMinSampleCount, fMaxDeviation);
+    BenchmarkTimings timings = new BenchmarkTimings(fParams);
     SystemUtil.cleanMemory();
     VmState preState = VmState.getCurrentState();
-//    System.out.println(preState);
     do {
       
       GcStats preGcStats = SystemUtil.getGcStats();
       long time = singleRun(benchmark, method, iterationCount);
       GcStats postGcStats = SystemUtil.getGcStats();
       VmState postState = VmState.getCurrentState();
+      
+      Timing timing = new Timing(time, preGcStats, postGcStats);
       if (preState.equals(postState)) {
-        Timing timing = new Timing(time, preGcStats, postGcStats);
-        System.out.print(timing+" ");
-        System.out.flush();
+//        System.out.print(timing + " ");
+//        System.out.flush();
         timings.add(timing);
       } else {
-        System.out.print("!!!");
-        System.out.flush();
-//        System.out.println(postState + " " + time);
+//        System.out.print("!!!");
+//        System.out.flush();
         // restart
         timings.clear();
       }
+      context.getProgressMonitor().run(this, timing, VmState.difference(preState, postState));
       preState = postState;
+      
     } while (timings.needsMoreRuns());
     
-    long avgNs = Math.round(timings.getEstimatedTime() / iterationCount / fDivisor);
-    System.out.println();
-    System.out.println(this + ": " + TimeUtil.toString(avgNs));
+//    long avgNs = Math.round(timings.getEstimatedTime() / iterationCount / fDivisor);
+//    System.out.println();
+//    System.out.println(this + ": " + TimeUtil.toString(avgNs));
+    return new TaskResult(timings, iterationCount);
   }
   
   private long singleRun(Object benchmark, Method method, long iterationCount) throws IllegalArgumentException, IllegalAccessException,
@@ -95,14 +101,14 @@ public class BenchmarkTask {
       time = timer.stopAndReset();
       time = Math.max(time, 10 * 1000 * 1000); // at least 10ms
       
-      if (iterations == 1 && time > context.getTargetTimeNs()) {
+      if (iterations == 1 && time > fParams.getTargetTimeNs()) {
         break;
       }
-      if (time >= context.getTargetTimeNs() / SQRT2 && time < context.getTargetTimeNs() * SQRT2) {
+      if (time >= fParams.getTargetTimeNs() / SQRT2 && time < fParams.getTargetTimeNs() * SQRT2) {
         break;
       }
       
-      double factor = (1.0 * context.getTargetTimeNs()) / time;
+      double factor = (1.0 * fParams.getTargetTimeNs()) / time;
       iterations = (long)Math.round(iterations * factor);
       iterations = Math.max(1, iterations);
     }
@@ -113,7 +119,7 @@ public class BenchmarkTask {
     return benchmark.getClass().getMethod(fMethodName);
   }
   
-  private Object createInstance(BenchmarkResult result) throws ClassNotFoundException, InstantiationException, IllegalAccessException {
+  private Object createInstance() throws ClassNotFoundException, InstantiationException, IllegalAccessException {
     ClassLoader classLoader = ClassUtil.createClassLoader();
     Class<?> clazz = (Class<?>)classLoader.loadClass(fClassName);
     return clazz.newInstance();
@@ -125,7 +131,7 @@ public class BenchmarkTask {
   }
   
   public String getName() {
-    return fClassName + ":" + fMethodName;
+    return fBenchmarkName+ "." + fMethodName;
   }
   
 }

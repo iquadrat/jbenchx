@@ -2,10 +2,13 @@ package org.jbenchx.collections.jcf;
 
 import java.util.*;
 
+import org.jbenchx.annotations.*;
+
 public class HashSetBenchmark extends CollectionQueryBenchmark {
 
+  @Bench
   public Collection<String> create() {
-    return new HashSet<String>();
+    return createEmptyCollection();
   }
 
   @Override

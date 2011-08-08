@@ -6,14 +6,16 @@ import java.lang.annotation.*;
 @Target(ElementType.METHOD)
 public @interface Bench {
   
-  int minRunCount() default 4;
+  int minRunCount() default -1;
   
-  int maxRunCount() default 100;
+  int maxRunCount() default -1;
   
-  double maxDeviation() default 0.1;
+  double maxDeviation() default -1;
   
-  int divisor() default 1;
+  int divisor() default -1;
+  
+  int minSampleCount() default -1;
 
-  int minSampleCount() default 8;
+  long targetTimeNs() default -1;
   
 }

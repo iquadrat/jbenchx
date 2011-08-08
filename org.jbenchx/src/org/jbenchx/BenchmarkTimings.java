@@ -4,23 +4,16 @@ import java.util.*;
 
 public class BenchmarkTimings {
   
-  private final double       fMaxDeviation;
-  private final int          fMinRunCount;
-  private final int          fMaxRunCount;
-  private final int          fMinSampleCount;
+  private final BenchmarkParameters fParams;
+  private final List<Timing>        fTimings;
   
-  private final List<Timing> fTimings;
+  private int                       fRuns       = 0;
+  private long                      fMinTime    = Long.MAX_VALUE;
+  private boolean                   fLastIsBest = true;
   
-  private int                fRuns       = 0;
-  private long               fMinTime    = Long.MAX_VALUE;
-  private boolean            fLastIsBest = true;
-  
-  public BenchmarkTimings(int minRunCount, int maxRunCount, int minSamplesCount, double maxDeviation) {
-    fMinRunCount = minRunCount;
-    fMaxRunCount = maxRunCount;
-    fMinSampleCount = minSamplesCount;
-    fMaxDeviation = maxDeviation;
-    fTimings = new ArrayList<Timing>(maxRunCount);
+  public BenchmarkTimings(BenchmarkParameters params) {
+    fParams = params;
+    fTimings = new ArrayList<Timing>(params.getMaxRunCount());
   }
   
   public void add(Timing timing) {
@@ -35,8 +28,8 @@ public class BenchmarkTimings {
   }
   
   public boolean needsMoreRuns() {
-    if (fRuns >= getMaxRunCount()) return false;
-    if (fRuns < getMinRunCount()) return true;
+    if (fRuns >= fParams.getMaxRunCount()) return false;
+    if (fRuns < fParams.getMinRunCount()) return true;
     
     if (fLastIsBest) return true;
     
@@ -50,7 +43,7 @@ public class BenchmarkTimings {
 //      }
 //    }
     
-    long maxAllowedTime = (long)Math.round(fMinTime * (1 + fMaxDeviation));
+    long maxAllowedTime = (long)Math.round(fMinTime * (1 + fParams.getMaxDeviation()));
     int validSampleCount = 0;
     for (int i = 0; i < fRuns; ++i) {
       if (fTimings.get(i).getRunTime() <= maxAllowedTime) {
@@ -58,36 +51,11 @@ public class BenchmarkTimings {
       }
     }
     
-    return validSampleCount < getMinSampleCount();
+    return validSampleCount < fParams.getMinSampleCount();
   }
   
-  private int getMinSampleCount() {
-    return fMinSampleCount;
-  }
-  
-  private int getMinRunCount() {
-    return fMinRunCount;
-  }
-  
-  private int getMaxRunCount() {
-    return fMaxRunCount;
-  }
-  
-  public double getEstimatedTime() {
-    return fMinTime;
-//    long sum = 0;
-//    int validSampleCount = 0;
-//    long maxAllowedTime = (long)Math.round(fMinTime * (1 + fMaxDeviation));
-//    
-//    for (int i = 0; i < fRuns; ++i) {
-//      Long timings = fTimings.get(i);
-//      if (timings <= maxAllowedTime) {
-//        validSampleCount++;
-//        sum += timings;
-//      }
-//    }
-//    
-//    return 1.0 * sum / validSampleCount;
+  public double getEstimatedRunTime() {
+    return 1.0 * fMinTime / fParams.getDivisor();
   }
   
   public void clear() {

@@ -1,13 +1,11 @@
 package org.jbenchx;
 
-import java.lang.annotation.*;
 import java.lang.reflect.*;
 import java.util.*;
 
-import javax.annotation.*;
-
-import org.jbenchx.annotations.*;
 import org.jbenchx.error.*;
+import org.jbenchx.monitor.*;
+import org.jbenchx.result.*;
 import org.jbenchx.util.*;
 
 public class BenchmarkRunner {
@@ -19,60 +17,55 @@ public class BenchmarkRunner {
   }
   
   public BenchmarkResult run(IProgressMonitor progressMontior) {
-    BenchmarkContext context = new BenchmarkContext();
+    BenchmarkContext context = new BenchmarkContext(progressMontior);
     BenchmarkResult result = new BenchmarkResult();
-    List<BenchmarkTask> benchmarkTasks = findAllBenchmarkTasks(result);
-    progressMontior.beginTasks(benchmarkTasks.size());
+    List<BenchmarkTask> benchmarkTasks = findAllBenchmarkTasks(context, result);
+    progressMontior.init(benchmarkTasks.size(), result);
     for (BenchmarkTask task: benchmarkTasks) {
       task.run(result, context);
     }
+    progressMontior.finished();
     return result;
   }
   
-  private List<BenchmarkTask> findAllBenchmarkTasks(BenchmarkResult result) {
+  private List<BenchmarkTask> findAllBenchmarkTasks(BenchmarkContext context, BenchmarkResult result) {
     List<BenchmarkTask> tasks = new ArrayList<BenchmarkTask>();
     for (Class<? extends Benchmark> clazz: fBenchmarks) {
-      addBenchmarkTasks(result, tasks, clazz);
+      addBenchmarkTasks(context, result, tasks, clazz);
     }
     return tasks;
   }
   
-  private void addBenchmarkTasks(BenchmarkResult result, List<BenchmarkTask> tasks, Class<? extends Benchmark> clazz) {
+  private void addBenchmarkTasks(BenchmarkContext context, BenchmarkResult result, List<BenchmarkTask> tasks, Class<? extends Benchmark> clazz) {
     
     if (!ClassUtil.hasDefaultConstructor(clazz)) {
-      result.addError(new BenchmarkClassError(clazz, "No default constructor found!"));
+      result.addGeneralError(new BenchmarkClassError(clazz, "No default constructor found!"));
     }
     
     for (Method method: clazz.getMethods()) {
-      Bench annotation = findAnnotation(method, Bench.class);
-      if (annotation == null) continue;
+      
+      BenchmarkParameters params = BenchmarkParameters.read(method);
+      if (params == null) continue;
       
       if (method.getParameterTypes().length > 0) {
-        result.addError(new BenchmarkClassError(clazz, "Benchmark method " + method.getName() + " has parameters!"));
+        result.addGeneralError(new BenchmarkClassError(clazz, "Benchmark method " + method.getName() + " has parameters!"));
         continue;
       }
       
-      tasks.add(new BenchmarkTask(clazz.getName(), method.getName(), annotation.divisor(), annotation.minRunCount(), annotation.maxRunCount(),
-          annotation.minSampleCount(), annotation.maxDeviation()));
+      try {
+        
+        Benchmark benchmark = clazz.newInstance();
+        params = BenchmarkParameters.merge(context.getDefaultParams(), BenchmarkParameters.read(method));
+        tasks.add(new BenchmarkTask(benchmark.getName(), clazz.getName(), method.getName(), params));
+        
+      } catch (InstantiationException e) {
+        result.addGeneralError(new BenchmarkClassError(clazz, "Could not instantiate class " + clazz.getSimpleName() + ": " + e.getMessage()));
+      } catch (IllegalAccessException e) {
+        result.addGeneralError(new BenchmarkClassError(clazz, "Could not instantiate class " + clazz.getSimpleName() + ": " + e.getMessage()));
+      }
+      
     }
     
-  }
-  
-  @CheckForNull
-  private static <A extends Annotation> A findAnnotation(Method m, Class<A> annotation) throws SecurityException {
-    A result = m.getAnnotation(annotation);
-    if (result != null) {
-      return result;
-    }
-    Class<?> parent = m.getDeclaringClass().getSuperclass();
-    if (parent != null) {
-      try {
-        Method superMethod = parent.getMethod(m.getName());
-        return findAnnotation(superMethod, annotation);
-      } catch (NoSuchMethodException e) {
-      }
-    }
-    return null;
   }
   
 }

@@ -1,6 +1,7 @@
 package org.jbenchx.collections.jcf;
 
 import org.jbenchx.*;
+import org.jbenchx.monitor.*;
 
 
 public class Run {
@@ -10,7 +11,10 @@ public class Run {
     runner.add(ArrayListBenchmark.class);
     runner.add(HashSetBenchmark.class);
     runner.add(TreeSetBenchmark.class);
-    runner.run(IProgressMonitor.DUMMY);
+    runner.add(LinkedHashSetBenchmark.class);
+    runner.add(ArrayDequeBenchmark.class);
+    runner.add(LinkedListBenchmark.class);
+    runner.run(new ConsoleProgressMonitor());
   }
   
 }

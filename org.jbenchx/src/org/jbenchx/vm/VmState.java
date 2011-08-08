@@ -4,23 +4,27 @@ import java.lang.management.*;
 
 public class VmState {
   
-  private final long fClassesLoaded;
-  private final long fClassesUnloaded;
-  private final long fCompilationTime;
+  public static final VmState EMPTY = new VmState(0, 0, 0);
+  
+  private final long          fClassesLoaded;
+  private final long          fClassesUnloaded;
+  private final long          fCompilationTime;
   
   public static VmState getCurrentState() {
-    return new VmState();
-  }
-  
-  protected VmState() {
     ClassLoadingMXBean loadBean = ManagementFactory.getClassLoadingMXBean();
-    fClassesLoaded = loadBean.getTotalLoadedClassCount();
-    fClassesUnloaded = loadBean.getUnloadedClassCount();
-    fCompilationTime = getCompilationTime();
-    
+    long fClassesLoaded = loadBean.getTotalLoadedClassCount();
+    long fClassesUnloaded = loadBean.getUnloadedClassCount();
+    long fCompilationTime = getCompilationTime();
+    return new VmState(fClassesLoaded, fClassesUnloaded, fCompilationTime);
   }
   
-  private long getCompilationTime() {
+  protected VmState(long classesLoaded, long classesUnloaded, long compilationTime) {
+    fClassesLoaded = classesLoaded;
+    fClassesUnloaded = classesUnloaded;
+    fCompilationTime = compilationTime;
+  }
+  
+  private static long getCompilationTime() {
     CompilationMXBean compBean = ManagementFactory.getCompilationMXBean();
     if (compBean.isCompilationTimeMonitoringSupported()) {
       return compBean.getTotalCompilationTime();
@@ -53,6 +57,11 @@ public class VmState {
   @Override
   public String toString() {
     return "Classes: " + fClassesLoaded + " loaded, " + fClassesUnloaded + " unloaded; used " + fCompilationTime + " to compile.";
+  }
+  
+  public static VmState difference(VmState preState, VmState postState) {
+    return new VmState(postState.fClassesUnloaded - preState.fClassesUnloaded, postState.fClassesLoaded - preState.fClassesLoaded,
+        postState.fCompilationTime - preState.fCompilationTime);
   }
   
 }

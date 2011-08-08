@@ -2,10 +2,13 @@ package org.jbenchx.collections.jcf;
 
 import java.util.*;
 
+import org.jbenchx.annotations.*;
+
 public class ArrayListBenchmark extends CollectionQueryBenchmark {
   
+  @Bench
   public Collection<String> create() {
-    return new ArrayList<String>();
+    return createEmptyCollection();
   }
   
   @Override

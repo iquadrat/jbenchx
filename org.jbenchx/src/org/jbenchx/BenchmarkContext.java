@@ -1,28 +1,37 @@
 package org.jbenchx;
 
+import org.jbenchx.monitor.*;
 import org.jbenchx.vm.*;
 
 public class BenchmarkContext {
   
-  private static final long MS = 1000 * 1000L;
+  private static final long         MS      = 1000 * 1000L;
   
-  private final VmInfo      fVmInfo;
+  private final VmInfo              fVmInfo = VmInfo.getVmInfo();
   
-  public BenchmarkContext() {
-    fVmInfo = VmInfo.getVmInfo();
-    System.out.println("Running on "+fVmInfo);
+  private final BenchmarkParameters fDefaultParams;
+  
+  private final IProgressMonitor    fProgressMonitor;
+  
+  public BenchmarkContext(IProgressMonitor progressMonitor) {
+    this(progressMonitor, new BenchmarkParameters(250 * MS, 1, 4, 100, 8, 0.05));
   }
   
-  public long getTargetTimeNs() {
-    return 250 * MS;
+  public BenchmarkContext(IProgressMonitor progressMonitor, BenchmarkParameters defaultParams) {
+    fProgressMonitor = progressMonitor;
+    fDefaultParams = defaultParams;
   }
   
-  public int getMinRunCount() {
-    return 4;
+  public VmInfo getVmInfo() {
+    return fVmInfo;
   }
   
-  public int getMaxRunCount() {
-    return 100;
+  public BenchmarkParameters getDefaultParams() {
+    return fDefaultParams;
+  }
+  
+  public IProgressMonitor getProgressMonitor() {
+    return fProgressMonitor;
   }
   
 }

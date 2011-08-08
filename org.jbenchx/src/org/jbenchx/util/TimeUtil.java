@@ -45,5 +45,10 @@ public class TimeUtil {
     sb.insert(commapos, SEPARATOR);
     return sb.substring(0, 4);
   }
+
+  public static String toString(double ns) {
+    // TODO sub-ns time formating
+    return toString((long)Math.round(ns));
+  }
   
 }

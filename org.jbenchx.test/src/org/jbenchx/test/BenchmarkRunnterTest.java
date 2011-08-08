@@ -1,6 +1,7 @@
 package org.jbenchx.test;
 
 import org.jbenchx.*;
+import org.jbenchx.monitor.*;
 import org.junit.*;
 
 
