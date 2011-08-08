@@ -9,6 +9,11 @@ Sources: http://github.com/iquadrat/jbenchx
 Example Benchmark to test how long it takes to generate a truely random integer:
 
 ---
+import java.security.*;
+
+import org.jbenchx.*;
+import org.jbenchx.annotations.*;
+
 public class Example extends Benchmark {
   
   private SecureRandom fRandom;
