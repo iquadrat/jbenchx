@@ -1,0 +1,32 @@
+JBenchX - Java Unit Benchmark Framework
+
+JBenchX is a framework to write mirco benchmarks for your java classes as easily
+as you write unit tests using the well-known JUnit framework.
+
+Example Benchmark to test how long it takes to generate a truely random integer:
+
+public class Example extends Benchmark {
+  
+  private SecureRandom fRandom;
+
+  public Example() throws Exception {
+    fRandom = SecureRandom.getInstance("SHA1PRNG");
+  }
+  
+  @Bench
+  public int random() {
+    return fRandom.nextInt();
+  }
+  
+}
+
+
+JBenchX's Philosophy:
+* Make it easy to write small benchmarks.
+* Express everything in Java. 
+* Use Java annotations to configure benchmarks.
+* Make benchmarking run as fast as possible to get meaningful results.
+* Use many iterations per run to make timings accurate.
+* Use multiple runs and take the fastest.
+* Monitor class recomiplation and garbage collection.
+* Tell the user to cast a critical eye over the given benchmark results.
