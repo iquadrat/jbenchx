@@ -14,7 +14,7 @@ public class BenchmarkContext {
   private final IProgressMonitor    fProgressMonitor;
   
   public BenchmarkContext(IProgressMonitor progressMonitor) {
-    this(progressMonitor, new BenchmarkParameters(250 * MS, 1, 4, 100, 8, 0.05));
+    this(progressMonitor, new BenchmarkParameters(250 * MS, 1, 10, 100, 8, 0.05));
   }
   
   public BenchmarkContext(IProgressMonitor progressMonitor, BenchmarkParameters defaultParams) {

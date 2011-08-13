@@ -121,6 +121,7 @@ public class BenchmarkTask {
   
   private Object createInstance() throws ClassNotFoundException, InstantiationException, IllegalAccessException {
     ClassLoader classLoader = ClassUtil.createClassLoader();
+//    ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
     Class<?> clazz = (Class<?>)classLoader.loadClass(fClassName);
     return clazz.newInstance();
   }

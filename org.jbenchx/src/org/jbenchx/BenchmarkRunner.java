@@ -7,6 +7,7 @@ import org.jbenchx.error.*;
 import org.jbenchx.monitor.*;
 import org.jbenchx.result.*;
 import org.jbenchx.util.*;
+import org.jbenchx.vm.*;
 
 public class BenchmarkRunner {
   
@@ -17,6 +18,9 @@ public class BenchmarkRunner {
   }
   
   public BenchmarkResult run(IProgressMonitor progressMontior) {
+    
+    VmState initialState = VmState.getCurrentState();
+    
     BenchmarkContext context = new BenchmarkContext(progressMontior);
     BenchmarkResult result = new BenchmarkResult();
     List<BenchmarkTask> benchmarkTasks = findAllBenchmarkTasks(context, result);
@@ -25,6 +29,11 @@ public class BenchmarkRunner {
       task.run(result, context);
     }
     progressMontior.finished();
+    
+    VmState finalState = VmState.getCurrentState();
+    
+    System.out.println("initial:"+initialState);
+    System.out.println("final:"+finalState);
     return result;
   }
   
@@ -52,17 +61,8 @@ public class BenchmarkRunner {
         continue;
       }
       
-      try {
-        
-        Benchmark benchmark = clazz.newInstance();
-        params = BenchmarkParameters.merge(context.getDefaultParams(), BenchmarkParameters.read(method));
-        tasks.add(new BenchmarkTask(benchmark.getName(), clazz.getName(), method.getName(), params));
-        
-      } catch (InstantiationException e) {
-        result.addGeneralError(new BenchmarkClassError(clazz, "Could not instantiate class " + clazz.getSimpleName() + ": " + e.getMessage()));
-      } catch (IllegalAccessException e) {
-        result.addGeneralError(new BenchmarkClassError(clazz, "Could not instantiate class " + clazz.getSimpleName() + ": " + e.getMessage()));
-      }
+      params = BenchmarkParameters.merge(context.getDefaultParams(), BenchmarkParameters.read(method));
+      tasks.add(new BenchmarkTask(clazz.getSimpleName(), clazz.getName(), method.getName(), params));
       
     }
     
