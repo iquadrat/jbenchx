@@ -1,0 +1,13 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Jbenchx
+Bundle-SymbolicName: org.jbenchx
+Bundle-Version: 0.1.0.qualifier
+Export-Package: org.jbenchx,
+ org.jbenchx.annotations,
+ org.jbenchx.error,
+ org.jbenchx.monitor,
+ org.jbenchx.result,
+ org.jbenchx.util,
+ org.jbenchx.vm
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
