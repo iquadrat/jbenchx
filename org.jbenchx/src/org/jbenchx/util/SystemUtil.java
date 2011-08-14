@@ -1,9 +1,6 @@
 package org.jbenchx.util;
 
 import java.lang.management.*;
-import java.lang.reflect.*;
-
-import javax.annotation.*;
 
 import org.jbenchx.*;
 

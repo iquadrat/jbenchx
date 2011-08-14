@@ -102,7 +102,6 @@ public class BenchmarkTask {
         method.invoke(benchmark);
       }
       time = timer.stopAndReset();
-      System.out.println(time+" "+iterations);
       if (iterations == 1 && time > fParams.getTargetTimeNs()) {
         break;
       }
