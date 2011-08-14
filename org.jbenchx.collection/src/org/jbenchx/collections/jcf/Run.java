@@ -14,7 +14,7 @@ public class Run {
     runner.add(LinkedHashSetBenchmark.class);
     runner.add(ArrayDequeBenchmark.class);
     runner.add(LinkedListBenchmark.class);
-    runner.run(new ConsoleProgressMonitor());
+    runner.run(BenchmarkContext.create(new ConsoleProgressMonitor()));
   }
   
 }

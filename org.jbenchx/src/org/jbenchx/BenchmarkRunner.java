@@ -3,11 +3,11 @@ package org.jbenchx;
 import java.lang.reflect.*;
 import java.util.*;
 
+import org.jbenchx.annotations.*;
 import org.jbenchx.error.*;
 import org.jbenchx.monitor.*;
 import org.jbenchx.result.*;
 import org.jbenchx.util.*;
-import org.jbenchx.vm.*;
 
 public class BenchmarkRunner {
   
@@ -17,23 +17,15 @@ public class BenchmarkRunner {
     fBenchmarks.add(benchmark);
   }
   
-  public BenchmarkResult run(IProgressMonitor progressMontior) {
-    
-    VmState initialState = VmState.getCurrentState();
-    
-    BenchmarkContext context = new BenchmarkContext(progressMontior);
+  public BenchmarkResult run(BenchmarkContext context) {
+    IProgressMonitor prgoressMonitor = context.getProgressMonitor();
     BenchmarkResult result = new BenchmarkResult();
     List<BenchmarkTask> benchmarkTasks = findAllBenchmarkTasks(context, result);
-    progressMontior.init(benchmarkTasks.size(), result);
+    prgoressMonitor.init(benchmarkTasks.size(), result);
     for (BenchmarkTask task: benchmarkTasks) {
       task.run(result, context);
     }
-    progressMontior.finished();
-    
-    VmState finalState = VmState.getCurrentState();
-    
-    System.out.println("initial:"+initialState);
-    System.out.println("final:"+finalState);
+    prgoressMonitor.finished();
     return result;
   }
   
@@ -51,7 +43,9 @@ public class BenchmarkRunner {
       result.addGeneralError(new BenchmarkClassError(clazz, "No default constructor found!"));
     }
     
-    for (Method method: clazz.getMethods()) {
+    Method[] methods = clazz.getMethods();
+    Arrays.sort(methods, MethodByNameSorter.INSTANCE);
+    for (Method method: methods) {
       
       BenchmarkParameters params = BenchmarkParameters.read(method);
       if (params == null) continue;
@@ -62,10 +56,16 @@ public class BenchmarkRunner {
       }
       
       params = BenchmarkParameters.merge(context.getDefaultParams(), BenchmarkParameters.read(method));
-      tasks.add(new BenchmarkTask(clazz.getSimpleName(), clazz.getName(), method.getName(), params));
+      boolean singleRun = hasSingleRunAnnotation(method); 
+      
+      tasks.add(new BenchmarkTask(clazz.getSimpleName(), clazz.getName(), method.getName(), params, singleRun));
       
     }
     
+  }
+
+  private boolean hasSingleRunAnnotation(Method method) {
+    return !ClassUtil.findAnnotations(method, SingleRun.class).isEmpty();
   }
   
 }

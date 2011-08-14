@@ -19,7 +19,7 @@ public class ArrayListBenchmark extends Benchmark {
   @Bench
   public Object create() {
     for(int i=0; i<1000; ++i) {
-      new ArrayList<Object>(1000000);
+      new ArrayList<Object>(1000);
     }
     return null;
   }

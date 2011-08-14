@@ -18,7 +18,6 @@ public class BenchmarkClassLoader extends ClassLoader {
   public Class<?> loadClass(String name) throws ClassNotFoundException {
     // TODO good way to handle this?
     if (name.startsWith("java.") || name.startsWith("sun.") || name.startsWith("javax.")) {
-      System.out.println((++count)+"->"+name);
       return super.loadClass(name);
     }
     

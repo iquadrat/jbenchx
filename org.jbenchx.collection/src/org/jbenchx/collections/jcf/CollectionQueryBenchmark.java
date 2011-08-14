@@ -27,10 +27,11 @@ public abstract class CollectionQueryBenchmark extends Benchmark {
     
     // fill the collection
     for (int i = 0; i < fSize; ++i) {
-      String string = String.valueOf(2 * i);
+      int v = 2 * i + 1;
+      String string = String.valueOf(v);
       fCollection.add(string);
       fContained[i] = string;
-      fNotContained[i] = String.valueOf(2 * i + 1);
+      fNotContained[i] = String.valueOf(v + 1);
     }
     
     // create some collections for testing simple properties

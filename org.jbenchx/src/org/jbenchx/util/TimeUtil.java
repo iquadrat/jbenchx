@@ -1,9 +1,13 @@
 package org.jbenchx.util;
 
+import org.jbenchx.*;
 
 public class TimeUtil {
   
-  public static String SEPARATOR = ".";
+  public static final long MS        = 1000 * 1000;
+  public static final long US        = 1000;
+  
+  public static String     SEPARATOR = ".";
   
   public static String toString(long ns) {
     if (ns == 0) {
@@ -45,10 +49,23 @@ public class TimeUtil {
     sb.insert(commapos, SEPARATOR);
     return sb.substring(0, 4);
   }
-
+  
   public static String toString(double ns) {
     // TODO sub-ns time formating
     return toString((long)Math.round(ns));
+  }
+  
+  public static long estimateTimerGranularity(Timer timer) {
+    int runs = 0;
+    long sum = 0;
+    while (sum < 200 * TimeUtil.MS) {
+      runs++;
+      timer.start();
+      while (timer.getTime() == 0);
+      sum += timer.stopAndReset();
+    }
+    long avg = sum / runs;
+    return avg;
   }
   
 }

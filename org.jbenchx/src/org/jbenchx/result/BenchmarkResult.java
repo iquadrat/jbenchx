@@ -22,6 +22,13 @@ public class BenchmarkResult {
     return fResults.get(task);
   }
   
+  public BenchmarkTask findTask(String name) {
+    for(BenchmarkTask task: fResults.keySet()) {
+      if (task.getName().equals(name)) return task;
+    }
+    return null;
+  }
+  
   public Set<BenchmarkTask> getTasks() {
     return fResults.keySet();
   }

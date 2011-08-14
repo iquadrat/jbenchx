@@ -1,6 +1,10 @@
 package org.jbenchx.error;
 
+import java.io.*;
 
-public class BenchmarkError {
+
+public abstract class BenchmarkError {
+ 
+  public abstract void print(PrintWriter out);
   
 }

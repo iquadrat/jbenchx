@@ -24,7 +24,7 @@ public class Timing extends GcStats {
   
   @Override
   public String toString() {
-    return TimeUtil.toString(fRunTime)  + ", GC={" + super.toString() + "}" ;
+    return TimeUtil.toString(fRunTime) + ", GC={" + super.toString() + "}";
   }
   
 }

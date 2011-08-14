@@ -1,6 +1,9 @@
 package org.jbenchx.util;
 
 import java.lang.management.*;
+import java.lang.reflect.*;
+
+import javax.annotation.*;
 
 import org.jbenchx.*;
 
@@ -22,5 +25,41 @@ public class SystemUtil {
     }
     return gcStats;
   }
+  
+//  public static long estimateMethodInvokeTime() throws Exception {
+//    Timer timer = new Timer();
+//    Method method1 = InvokeMe.class.getMethod("methodOne");
+//    Method method2 = InvokeMe.class.getMethod("methodTwo");
+//    InvokeMe foo = new InvokeMe();
+//    long min = Long.MAX_VALUE;
+//    for (int j = 0; j < 10; ++j) {
+//      int count = 1000000;
+//      for (int i = 0; i < count; ++i) {
+//        method1.invoke(foo);
+//      }
+//      timer.start();
+//      for (int i = 0; i < count; ++i) {
+//        method2.invoke(foo);
+//      }
+//      long time2 = timer.stopAndReset() / count;
+//      min = Math.min(min, time2);
+//      System.out.println(time2);
+//    }
+//    return min;
+//  }
+//  
+//  private static class InvokeMe {
+//    
+//    @CheckForNull
+//    public Object methodOne() {
+//      return null;
+//    }
+//    
+//    @CheckForNull
+//    public Object methodTwo() {
+//      return null;
+//    }
+//    
+//  }
   
 }

@@ -6,8 +6,7 @@ public class Timer {
   
   private long    fStartTime = 0;
   
-  public Timer() {
-  }
+  public Timer() {}
   
   public boolean isRunning() {
     return fRunning;
@@ -15,13 +14,22 @@ public class Timer {
   
   public void start() {
     if (fRunning) throw new IllegalStateException("Already running!");
-    fStartTime = System.nanoTime();
+    fStartTime = time();
     fRunning = true;
+  }
+
+  private long time() {
+    return System.nanoTime();
+//    return System.currentTimeMillis() * 1000*1000;
+  }
+  
+  public long getTime() {
+    return time() - fStartTime;
   }
   
   public long stopAndReset() {
     if (!fRunning) throw new IllegalStateException("Not running!");
-    long endTime = System.nanoTime();
+    long endTime = time();
     fRunning = false;
     return endTime - fStartTime;
   }

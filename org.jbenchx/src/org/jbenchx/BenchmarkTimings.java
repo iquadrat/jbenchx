@@ -54,8 +54,11 @@ public class BenchmarkTimings {
     return validSampleCount < fParams.getMinSampleCount();
   }
   
-  public double getEstimatedRunTime() {
-    return 1.0 * fMinTime / fParams.getDivisor();
+  /**
+   * @return estimated runtime in nanoseconds
+   */
+  public long getEstimatedRunTime() {
+    return fMinTime;
   }
   
   public void clear() {
@@ -63,6 +66,10 @@ public class BenchmarkTimings {
     fMinTime = Long.MAX_VALUE;
     fLastIsBest = true;
     fTimings.clear();
+  }
+  
+  public BenchmarkParameters getParams() {
+    return fParams;
   }
   
 }

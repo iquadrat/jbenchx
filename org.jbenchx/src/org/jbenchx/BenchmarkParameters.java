@@ -1,21 +1,21 @@
 package org.jbenchx;
 
-import java.lang.annotation.*;
 import java.lang.reflect.*;
 import java.util.*;
 
 import javax.annotation.*;
 
 import org.jbenchx.annotations.*;
+import org.jbenchx.util.*;
 
 public class BenchmarkParameters {
   
-  private final long   fTargetTimeNs;
-  private final int    fDivisor;
-  private final int    fMinRunCount;
-  private final int    fMaxRunCount;
-  private final int    fMinSampleCount;
-  private final double fMaxDeviation;
+  private long   fTargetTimeNs;
+  private int    fDivisor;
+  private int    fMinRunCount;
+  private int    fMaxRunCount;
+  private int    fMinSampleCount;
+  private double fMaxDeviation;
   
   public BenchmarkParameters(long targetTimeNs, int divisor, int minRunCount, int maxRunCount, int minSampleCount, double maxDeviation) {
     fTargetTimeNs = targetTimeNs;
@@ -55,6 +55,30 @@ public class BenchmarkParameters {
     return fTargetTimeNs;
   }
   
+  public void setTargetTimeNs(long targetTimeNs) {
+    fTargetTimeNs = targetTimeNs;
+  }
+  
+  public void setDivisor(int divisor) {
+    fDivisor = divisor;
+  }
+  
+  public void setMinRunCount(int minRunCount) {
+    fMinRunCount = minRunCount;
+  }
+  
+  public void setMaxRunCount(int maxRunCount) {
+    fMaxRunCount = maxRunCount;
+  }
+  
+  public void setMinSampleCount(int minSampleCount) {
+    fMinSampleCount = minSampleCount;
+  }
+  
+  public void setMaxDeviation(double maxDeviation) {
+    fMaxDeviation = maxDeviation;
+  }
+  
   public static BenchmarkParameters merge(BenchmarkParameters paramsBase, BenchmarkParameters params) {
     long targetTimeNs = (params.getTargetTimeNs() == -1) ? paramsBase.getTargetTimeNs() : params.getTargetTimeNs();
     int divisor = (params.getDivisor() == -1) ? paramsBase.getDivisor() : params.getDivisor();
@@ -67,8 +91,7 @@ public class BenchmarkParameters {
   
   @CheckForNull
   public static BenchmarkParameters read(Method method) {
-    ArrayList<Bench> annotations = new ArrayList<Bench>();
-    findAnnotations(method, Bench.class, annotations);
+    List<Bench> annotations = ClassUtil.findAnnotations(method, Bench.class);
     ListIterator<Bench> iterator = annotations.listIterator(annotations.size());
     if (!iterator.hasPrevious()) return null;
     BenchmarkParameters result = new BenchmarkParameters(iterator.previous());
@@ -76,21 +99,6 @@ public class BenchmarkParameters {
       result = merge(result, new BenchmarkParameters(iterator.previous()));
     }
     return result;
-  }
-  
-  private static <A extends Annotation> void findAnnotations(Method m, Class<A> annotationClass, List<A> result) throws SecurityException {
-    A annotation = m.getAnnotation(annotationClass);
-    if (annotation != null) {
-      result.add(annotation);
-    }
-    Class<?> parent = m.getDeclaringClass().getSuperclass();
-    if (parent != null) {
-      try {
-        Method superMethod = parent.getMethod(m.getName());
-        findAnnotations(superMethod, annotationClass, result);
-      } catch (NoSuchMethodException e) {
-      }
-    }
   }
   
   @Override
@@ -107,7 +115,7 @@ public class BenchmarkParameters {
     result = prime * result + (int)(fTargetTimeNs ^ (fTargetTimeNs >>> 32));
     return result;
   }
-
+  
   @Override
   public boolean equals(Object obj) {
     if (this == obj) return true;
@@ -122,11 +130,15 @@ public class BenchmarkParameters {
     if (fTargetTimeNs != other.fTargetTimeNs) return false;
     return true;
   }
-
+  
   @Override
   public String toString() {
     return "BenchmarkParameters [fTargetTimeNs=" + fTargetTimeNs + ", fDivisor=" + fDivisor + ", fMinRunCount=" + fMinRunCount + ", fMaxRunCount="
         + fMaxRunCount + ", fMinSampleCount=" + fMinSampleCount + ", fMaxDeviation=" + fMaxDeviation + "]";
+  }
+  
+  public static BenchmarkParameters getDefaults() {
+    return new BenchmarkParameters(250 * TimeUtil.MS, 1, 10, 100, 8, 0.05);
   }
   
 }

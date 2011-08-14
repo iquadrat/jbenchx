@@ -1,5 +1,7 @@
 package org.jbenchx.error;
 
+import java.io.*;
+
 import org.jbenchx.*;
 
 public class BenchmarkClassError extends BenchmarkError {
@@ -15,6 +17,11 @@ public class BenchmarkClassError extends BenchmarkError {
   @Override
   public String toString() {
     return getClass().getSimpleName() + ": " + fClass.getName() + ": " + fMessage;
+  }
+
+  @Override
+  public void print(PrintWriter out) {
+    out.println(toString());
   }
   
 }
