@@ -1,0 +1,83 @@
+package org.jbenchx.ui.eclipse.classpath;
+
+import java.io.*;
+import java.net.*;
+import java.util.*;
+
+import org.eclipse.core.runtime.*;
+import org.eclipse.jdt.core.*;
+import org.osgi.framework.*;
+
+import edu.umd.cs.findbugs.annotations.*;
+
+public class JBenchXContainerInitializer extends ClasspathContainerInitializer {
+  
+  public static class ActifsourceClasspathContainer implements IClasspathContainer {
+    
+    private final IPath       fPath;
+    
+    @CheckForNull
+    private IClasspathEntry[] fClassPathEntries;
+    
+    public ActifsourceClasspathContainer(IPath path) {
+      fPath = path;
+    }
+    
+    @Override
+    public IClasspathEntry[] getClasspathEntries() {
+      if (fClassPathEntries != null) {
+        return fClassPathEntries;
+      }
+      return calculateClassPathEntries();
+    }
+    
+    private IClasspathEntry[] calculateClassPathEntries() {
+      List<String> requiredBundles = Arrays.asList("org.jbenchx", "org.jbenchx.libs_external");
+      
+      Set<URL> classPath = new LinkedHashSet<URL>();
+      for (String bundleName: requiredBundles) {
+        try {
+          
+          String name = bundleName;
+          Bundle bundle = Platform.getBundle(name);
+          classPath.addAll(PluginUtil.getClassPath(bundle, false));
+          
+        } catch (BundleException e) {
+        } catch (IOException e) {
+        }
+      }
+      
+      List<IClasspathEntry> classPathEntries = new ArrayList<IClasspathEntry>();
+      for (URL url: classPath) {
+        Path path = new Path(url.getFile());
+        classPathEntries.add(JavaCore.newLibraryEntry(path, null, null));
+      }
+      
+      fClassPathEntries = classPathEntries.toArray(new IClasspathEntry[classPathEntries.size()]);
+      return fClassPathEntries;
+    }
+    
+    @Override
+    public String getDescription() {
+      return "JBenchX";
+    }
+    
+    @Override
+    public int getKind() {
+      return IClasspathContainer.K_APPLICATION;
+    }
+    
+    @Override
+    public IPath getPath() {
+      return fPath;
+    }
+    
+  }
+  
+  @Override
+  public void initialize(IPath path, IJavaProject javaProject) throws CoreException {
+    IClasspathContainer[] containers = {new ActifsourceClasspathContainer(path)};
+    JavaCore.setClasspathContainer(path, new IJavaProject[] {javaProject}, containers, null);
+  }
+  
+}

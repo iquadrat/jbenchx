@@ -5,11 +5,12 @@
    <extension
          point="org.eclipse.ui.views">
       <category
+            id="org.jbenchx.ui.eclipse"
             name="JBenchX"
-            id="org.jbenchx.ui.eclipse">
+            parentCategory="org.eclipse.jdt.ui.java">
       </category>
       <view
-            name="Benchmark View"
+            name="JBenchX"
             icon="icons/sample.gif"
             category="org.jbenchx.ui.eclipse"
             class="org.jbenchx.ui.eclipse.views.BenchmarkView"
@@ -22,8 +23,8 @@
             targetID="org.eclipse.jdt.ui.JavaPerspective">
          <view
                ratio="0.5"
-               relative="org.eclipse.ui.views.TaskList"
-               relationship="right"
+               relative="org.eclipse.jdt.ui.PackageExplorer"
+               relationship="stack"
                id="org.jbenchx.ui.eclipse.views.BenchmarkView">
          </view>
       </perspectiveExtension>
@@ -34,5 +35,28 @@
             file="contexts.xml">
       </contexts>
    </extension>
+   
+   <extension
+         point="org.eclipse.debug.ui.launchShortcuts">
+      <shortcut
+            class="org.jbenchx.ui.eclipse.RunBenchmark"
+            description="Runs all JBenchX Benchmarks found."
+            id="org.jbenchx.ui.eclipse.run"
+            label="JBenchX Benchmark"
+            modes="&quot;run&quot;,&quot;debug&quot;,&quot;profile&quot;">
+      </shortcut>
+   </extension>
+
+      <extension point="org.eclipse.jdt.ui.classpathContainerPage">
+						<classpathContainerPage 
+						                 class="org.jbenchx.ui.eclipse.classpath.JBenchXContainerPage" 
+                             id="org.jbenchx.JBENCHX_CONTAINER"
+                             name="JBenchX"/>
+      </extension>
+      <extension point="org.eclipse.jdt.core.classpathContainerInitializer">
+     				<classpathContainerInitializer 
+     				    class="org.jbenchx.ui.eclipse.classpath.JBenchXContainerInitializer"
+          			id="org.jbenchx.JBENCHX_CONTAINER"/>
+      </extension>
 
 </plugin>
