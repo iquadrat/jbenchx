@@ -7,7 +7,9 @@ Export-Package: org.jbenchx,
  org.jbenchx.annotations,
  org.jbenchx.error,
  org.jbenchx.monitor,
+ org.jbenchx.remote,
  org.jbenchx.result,
  org.jbenchx.util,
  org.jbenchx.vm
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Require-Bundle: org.jbenchx.libs_external;bundle-version="1.0.0"

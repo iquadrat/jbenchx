@@ -2,61 +2,72 @@
 <?eclipse version="3.4"?>
 <plugin>
 
-   <extension
+	<extension
          point="org.eclipse.ui.views">
-      <category
-            id="org.jbenchx.ui.eclipse"
-            name="JBenchX"
-            parentCategory="org.eclipse.jdt.ui.java">
-      </category>
-      <view
-            name="JBenchX"
-            icon="icons/sample.gif"
-            category="org.jbenchx.ui.eclipse"
-            class="org.jbenchx.ui.eclipse.views.BenchmarkView"
-            id="org.jbenchx.ui.eclipse.views.BenchmarkView">
-      </view>
-   </extension>
-   <extension
+		<category id="org.jbenchx.ui.eclipse" name="JBenchX" parentCategory="org.eclipse.jdt.ui.java">
+		</category>
+		<view name="JBenchX" icon="icons/sample.gif" category="org.jbenchx.ui.eclipse"
+			class="org.jbenchx.ui.eclipse.views.BenchmarkView"
+			id="org.jbenchx.ui.eclipse.views.BenchmarkView">
+		</view>
+	</extension>
+	<extension
          point="org.eclipse.ui.perspectiveExtensions">
-      <perspectiveExtension
-            targetID="org.eclipse.jdt.ui.JavaPerspective">
-         <view
-               ratio="0.5"
-               relative="org.eclipse.jdt.ui.PackageExplorer"
-               relationship="stack"
-               id="org.jbenchx.ui.eclipse.views.BenchmarkView">
-         </view>
-      </perspectiveExtension>
-   </extension>
-   <extension
+		<perspectiveExtension targetID="org.eclipse.jdt.ui.JavaPerspective">
+			<view ratio="0.5" relative="org.eclipse.jdt.ui.PackageExplorer" relationship="stack"
+				id="org.jbenchx.ui.eclipse.views.BenchmarkView">
+			</view>
+		</perspectiveExtension>
+	</extension>
+	<extension
          point="org.eclipse.help.contexts">
-      <contexts
+		<contexts
             file="contexts.xml">
-      </contexts>
-   </extension>
-   
-   <extension
-         point="org.eclipse.debug.ui.launchShortcuts">
-      <shortcut
-            class="org.jbenchx.ui.eclipse.RunBenchmark"
-            description="Runs all JBenchX Benchmarks found."
-            id="org.jbenchx.ui.eclipse.run"
-            label="JBenchX Benchmark"
-            modes="&quot;run&quot;,&quot;debug&quot;,&quot;profile&quot;">
-      </shortcut>
-   </extension>
+		</contexts>
+	</extension>
 
-      <extension point="org.eclipse.jdt.ui.classpathContainerPage">
-						<classpathContainerPage 
-						                 class="org.jbenchx.ui.eclipse.classpath.JBenchXContainerPage" 
-                             id="org.jbenchx.JBENCHX_CONTAINER"
-                             name="JBenchX"/>
-      </extension>
-      <extension point="org.eclipse.jdt.core.classpathContainerInitializer">
-     				<classpathContainerInitializer 
-     				    class="org.jbenchx.ui.eclipse.classpath.JBenchXContainerInitializer"
-          			id="org.jbenchx.JBENCHX_CONTAINER"/>
-      </extension>
+	<extension
+         point="org.eclipse.debug.ui.launchShortcuts">
+		<shortcut class="org.jbenchx.ui.eclipse.RunBenchmarkShortcut" id="org.jbenchx.ui.eclipse.run"
+			label="JBenchX Benchmark" modes="run, debug, profile">
+			<configurationType 
+			id="org.eclipse.jdt.launching.localJavaApplication">
+			</configurationType>
+			<contextualLaunch>
+				<enablement>
+					<with variable="selection">
+						<count value="1"/>
+						<iterate>
+							<adapt type="org.eclipse.jdt.core.IJavaElement">
+								<test property="org.eclipse.jdt.core.isInJavaProject"/>
+								<test property="org.eclipse.jdt.core.hasTypeOnClasspath" value="org.jbenchx.annotations.Bench"/>
+								<test property="org.jbenchx.ui.eclipse.propertyTester.containsBench" forcePluginActivation="true"/>
+							</adapt>
+						</iterate>
+					</with>
+				</enablement>
+			</contextualLaunch>
+		</shortcut>
+	</extension>
+
+	<extension point="org.eclipse.jdt.ui.classpathContainerPage">
+		<classpathContainerPage class="org.jbenchx.ui.eclipse.classpath.JBenchXContainerPage"
+			id="org.jbenchx.JBENCHX_CONTAINER"
+			name="JBenchX"/>
+	</extension>
+	<extension point="org.eclipse.jdt.core.classpathContainerInitializer">
+		<classpathContainerInitializer class="org.jbenchx.ui.eclipse.classpath.JBenchXContainerInitializer"
+			id="org.jbenchx.JBENCHX_CONTAINER"/>
+	</extension>
+ <extension
+       point="org.eclipse.core.expressions.propertyTesters">
+    <propertyTester
+          class="org.jbenchx.ui.eclipse.JBenchXPropertyTester"
+          id="org.jbenchx.ui.eclipse.propertyTester"
+          namespace="org.jbenchx.ui.eclipse.propertyTester"
+          properties="containsBench"
+          type="org.eclipse.core.runtime.IAdaptable">
+    </propertyTester>
+ </extension>
 
 </plugin>
