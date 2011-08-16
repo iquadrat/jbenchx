@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Test
+Bundle-SymbolicName: org.jbenchx.test
+Bundle-Version: 1.0.0.qualifier
+Export-Package: org.jbenchx.test,
+ org.jbenchx.test.util
+Require-Bundle: org.jbenchx.libs_external;bundle-version="0.1.0",
+ org.jbenchx;bundle-version="0.1.0",
+ org.junit;bundle-version="4.8.2"

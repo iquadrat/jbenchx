@@ -12,4 +12,4 @@ Export-Package: org.jbenchx,
  org.jbenchx.util,
  org.jbenchx.vm
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-Require-Bundle: org.jbenchx.libs_external;bundle-version="1.0.0"
+Require-Bundle: org.jbenchx.libs_external;bundle-version="0.1.0"
