@@ -31,7 +31,7 @@
 		<shortcut class="org.jbenchx.ui.eclipse.launch.RunBenchmarkShortcut" id="org.jbenchx.ui.eclipse.run"
 			label="JBenchX Benchmark" modes="run, debug, profile">
 			<configurationType 
-			id="org.eclipse.jdt.launching.localJavaApplication">
+			id="org.jbenchx.ui.eclipse.remoteJBenchXRunner">
 			</configurationType>
 			<contextualLaunch>
 				<enablement>
@@ -73,8 +73,11 @@
        point="org.eclipse.debug.core.launchConfigurationTypes">
     <launchConfigurationType
           delegate="org.jbenchx.ui.eclipse.launch.JBenchXLaunchConfigurationDelegate"
-          id="org.jbenchx.ui.eclipse.launchConfigurationType"
-          name="JBenchX">
+          id="org.jbenchx.ui.eclipse.remoteJBenchXRunner"
+          modes="run, debug, profile"
+          name="JBenchX"
+          sourceLocatorId="org.eclipse.jdt.launching.sourceLocator.JavaSourceLookupDirector"
+          sourcePathComputerId="org.eclipse.jdt.launching.sourceLookup.javaSourcePathComputer">
     </launchConfigurationType>
  </extension>
 

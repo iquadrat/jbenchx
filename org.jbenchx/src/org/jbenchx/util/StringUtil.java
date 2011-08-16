@@ -14,7 +14,7 @@ public class StringUtil {
     return join(separator, strings, 5);
   }
   
-  public static String join(String separator, Collection<String> strings) {
+  public static String join(String separator, List<String> strings) {
     return join(separator, strings, strings.size());
   }
   
@@ -34,6 +34,10 @@ public class StringUtil {
       builder.append(text);
     }
     return builder.toString();
+  }
+
+  public static List<String> split(String string, String regexp) {
+    return Arrays.asList(string.split(regexp, -1));
   }
   
 }

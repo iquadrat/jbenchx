@@ -1,6 +1,6 @@
 package org.jbenchx.bench.util;
 
-import java.util.ArrayList;
+import java.util.*;
 
 import org.jbenchx.*;
 import org.jbenchx.annotations.Bench;
@@ -9,15 +9,20 @@ import org.jbenchx.util.StringUtil;
 
 public class StringUtilBench extends Benchmark {
   
-  private static final int        STRING_COUNT = 1000;
+  private static final int   STRING_COUNT = 1000;
   
-  private final ArrayList<String> fStrings;
+  private final List<String> fStringList;
+  
+  private final String[]     fStrings;
   
   public StringUtilBench() {
-    fStrings = new ArrayList<String>(STRING_COUNT);
+    
+    fStrings = new String[STRING_COUNT];
+    
     for (int i = 0; i < STRING_COUNT; ++i) {
-      fStrings.add(String.valueOf(i));
+      fStrings[i] = String.valueOf(i);
     }
+    fStringList = Arrays.asList(fStrings);
   }
   
   /**
@@ -25,11 +30,16 @@ public class StringUtilBench extends Benchmark {
    */
   @Bench(minSampleCount = 20)
   public String joinIterable() {
-    return StringUtil.join(", ", (Iterable<String>)fStrings);
+    return StringUtil.join(", ", (Iterable<String>)fStringList);
   }
   
   @Bench(minSampleCount = 20)
   public String joinList() {
+    return StringUtil.join(", ", fStringList);
+  }
+  
+  @Bench(minSampleCount = 20)
+  public String joinArray() {
     return StringUtil.join(", ", fStrings);
   }
   
