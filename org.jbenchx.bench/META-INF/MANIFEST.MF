@@ -5,3 +5,4 @@ Bundle-SymbolicName: org.jbenchx.bench
 Bundle-Version: 0.1.0.qualifier
 Bundle-Vendor: Micha Riser
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Require-Bundle: org.jbenchx;bundle-version="0.1.0"
