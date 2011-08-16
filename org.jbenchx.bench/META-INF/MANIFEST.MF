@@ -1,0 +1,7 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Bench
+Bundle-SymbolicName: org.jbenchx.bench
+Bundle-Version: 0.1.0.qualifier
+Bundle-Vendor: Micha Riser
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
