@@ -52,7 +52,7 @@ public class TimeUtil {
   
   public static String toString(double ns) {
     // TODO sub-ns time formating
-    return toString((long)Math.round(ns));
+    return toString(Math.round(ns));
   }
   
   public static long estimateTimerGranularity(Timer timer) {
@@ -61,7 +61,7 @@ public class TimeUtil {
     while (sum < 200 * TimeUtil.MS) {
       runs++;
       timer.start();
-      while (timer.getTime() == 0);
+      while (timer.getTime() == 0) {}
       sum += timer.stopAndReset();
     }
     long avg = sum / runs;

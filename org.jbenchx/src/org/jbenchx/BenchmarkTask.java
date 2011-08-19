@@ -78,7 +78,7 @@ public class BenchmarkTask {
   }
   
   private long singleRun(Object benchmark, Method method, long iterationCount) throws IllegalArgumentException, IllegalAccessException,
-      InvocationTargetException, InstantiationException {
+      InvocationTargetException {
     Timer timer = new Timer();
     timer.start();
     for (long i = 0; i < iterationCount; ++i) {
@@ -110,7 +110,7 @@ public class BenchmarkTask {
       }
       time = Math.max(time, 2 * context.getTimerGranularity()); // at least two times the timer granularity
       double factor = (1.0 * fParams.getTargetTimeNs()) / time;
-      iterations = (long)Math.round(iterations * factor);
+      iterations = Math.round(iterations * factor);
       iterations = Math.max(1, iterations);
     }
     return iterations;
@@ -123,7 +123,7 @@ public class BenchmarkTask {
   private Object createInstance() throws ClassNotFoundException, InstantiationException, IllegalAccessException {
     ClassLoader classLoader = ClassUtil.createClassLoader();
 //    ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-    Class<?> clazz = (Class<?>)classLoader.loadClass(fClassName);
+    Class<?> clazz = classLoader.loadClass(fClassName);
     return clazz.newInstance();
   }
   

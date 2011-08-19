@@ -1,24 +1,19 @@
 package org.jbenchx.test;
 
-import java.security.*;
-
 import org.jbenchx.*;
-import org.jbenchx.annotations.*;
-import org.jbenchx.monitor.*;
-
-import edu.umd.cs.findbugs.annotations.*;
+import org.jbenchx.annotations.Bench;
+import org.jbenchx.monitor.ConsoleProgressMonitor;
 
 public class Example extends Benchmark {
   
-  private SecureRandom fRandom;
+  private volatile double fNumber1;
+  private double    fNumber2;
+  private double          fNumber3;
+  private final int       fN = 1000;
   
-  private volatile double       fNumber1;
-  private double       fNumber2;
-  private double       fNumber3;
-  private int          fN = 1000;
+  public Example(Void v) {}
   
   public Example() throws Exception {
-    fRandom = SecureRandom.getInstance("SHA1PRNG");
     fNumber1 = 2;
     fNumber2 = 2;
     fNumber3 = 2;
@@ -57,7 +52,7 @@ public class Example extends Benchmark {
   public double asqrt1() {
 //    return Math.sqrt(fNumber3) == 0 ? Boolean.TRUE : null;
     return Math.sqrt(fNumber1);
-  } 
+  }
   
   @Bench(divisor = 2)
   public double sqrt2() {
@@ -66,17 +61,17 @@ public class Example extends Benchmark {
   
   @Bench(divisor = 3)
   public double sqrt3() {
-    return Math.sqrt(fNumber1) + Math.sqrt(fNumber2)+ Math.sqrt(fNumber3);
+    return Math.sqrt(fNumber1) + Math.sqrt(fNumber2) + Math.sqrt(fNumber3);
   }
   
   @Bench(divisor = 2)
   public double sqrt2b() {
-    return Math.sqrt(Math.sqrt(fNumber1)); 
+    return Math.sqrt(Math.sqrt(fNumber1));
   }
   
   @Bench(divisor = 3)
   public void sqrt3b() {
-    fNumber3 = Math.sqrt(Math.sqrt(Math.sqrt(fNumber1))); 
+    fNumber3 = Math.sqrt(Math.sqrt(Math.sqrt(fNumber1)));
   }
   
   @Bench(divisor = 1000)

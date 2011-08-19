@@ -1,17 +1,13 @@
 package org.jbenchx.test;
 
-import java.security.*;
-
 import org.jbenchx.*;
-import org.jbenchx.annotations.*;
-import org.jbenchx.monitor.*;
-
-import edu.umd.cs.findbugs.annotations.*;
+import org.jbenchx.annotations.Bench;
+import org.jbenchx.monitor.ConsoleProgressMonitor;
 
 public class Example2 extends Benchmark {
   
   private int   sval;
-  private int[] vals;
+  private final int[] vals;
   
   public Example2() throws Exception {
     sval = 0;

@@ -43,7 +43,7 @@ public class BenchmarkTimings {
 //      }
 //    }
     
-    long maxAllowedTime = (long)Math.round(fMinTime * (1 + fParams.getMaxDeviation()));
+    long maxAllowedTime = Math.round(fMinTime * (1 + fParams.getMaxDeviation()));
     int validSampleCount = 0;
     for (int i = 0; i < fRuns; ++i) {
       if (fTimings.get(i).getRunTime() <= maxAllowedTime) {

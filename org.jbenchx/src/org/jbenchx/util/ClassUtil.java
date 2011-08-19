@@ -24,6 +24,7 @@ public class ClassUtil {
   public static ClassLoader createClassLoader() {
     return AccessController.doPrivileged(new PrivilegedAction<ClassLoader>() {
       
+      @Override
       public ClassLoader run() {
         return new BenchmarkClassLoader();
       }

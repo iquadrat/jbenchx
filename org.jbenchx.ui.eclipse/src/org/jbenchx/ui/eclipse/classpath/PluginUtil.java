@@ -11,7 +11,7 @@ import org.osgi.framework.*;
 public class PluginUtil {
   
   private static Collection<ManifestElement> getManifestElements(Bundle bundle, String headerField) throws BundleException {
-    ManifestElement[] prereqs = ManifestElement.parseHeader(headerField, (String)bundle.getHeaders("").get(headerField));
+    ManifestElement[] prereqs = ManifestElement.parseHeader(headerField, bundle.getHeaders("").get(headerField));
     if (prereqs == null) return Collections.emptySet();
     return Arrays.asList(prereqs);
   }

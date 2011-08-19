@@ -34,29 +34,34 @@ public class BenchmarkParameterTest extends BenchmarkTestCase {
   
   public static class B extends A {
     
+    @Override
     public void two() {}
     
+    @Override
     @Bench(divisor = 10, maxDeviation = 0.1)
     public void four() {}
     
+    @Override
     @Bench(maxRunCount = 2, divisor = 100, targetTimeNs = 100)
     public void five() {}
     
+    @Override
     public void seven() {}
     
   }
   
   public static class C extends B {
     
+    @Override
     public void three() {}
     
+    @Override
     @Bench(maxRunCount = 1, targetTimeNs = 1000)
     public void five() {}
     
   }
   
   public void testRead() throws Exception {
-    
     assertNull(BenchmarkParameters.read(C.class.getMethod("zero")));
     
     // long targetTimeNs, int divisor, int minRunCount, int maxRunCount, int minSampleCount, double maxDeviation
@@ -67,7 +72,6 @@ public class BenchmarkParameterTest extends BenchmarkTestCase {
     assertEquals(new BenchmarkParameters(1000, 100, -1, 1, 2, -1), BenchmarkParameters.read(C.class.getMethod("five")));
     assertEquals(new BenchmarkParameters(-1, -1, -1, -1, -1, -1), BenchmarkParameters.read(C.class.getMethod("six")));
     assertEquals(new BenchmarkParameters(-1, -1, 20, -1, -1, -1), BenchmarkParameters.read(C.class.getMethod("seven")));
-    
   }
   
 }

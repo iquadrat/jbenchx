@@ -14,10 +14,10 @@ public abstract class CollectionQueryBenchmark extends Benchmark {
   
   private static final int     COUNT = 100;
   private final int            fSize = 1000;
-  private Collection<String>   fCollection;
-  private String[]             fContained;
-  private String[]             fNotContained;
-  private Collection<String>[] fCollectionArray;
+  private final Collection<String>   fCollection;
+  private final String[]             fContained;
+  private final String[]             fNotContained;
+  private final Collection<String>[] fCollectionArray;
   
   @SuppressWarnings("unchecked")
   CollectionQueryBenchmark() {
@@ -101,7 +101,7 @@ public abstract class CollectionQueryBenchmark extends Benchmark {
   }
   
   @Bench
-  public int hashCode() {
+  public int benchHashCode() {
     return fCollection.hashCode();
   }
   
