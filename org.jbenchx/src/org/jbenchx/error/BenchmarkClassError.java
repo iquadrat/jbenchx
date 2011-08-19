@@ -4,7 +4,7 @@ import java.io.*;
 
 import org.jbenchx.*;
 
-public class BenchmarkClassError extends BenchmarkError {
+public class BenchmarkClassError extends BenchmarkFailure {
   
   private final Class<? extends Benchmark> fClass;
   private final String                     fMessage;

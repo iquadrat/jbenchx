@@ -4,10 +4,13 @@ import java.lang.management.*;
 
 import org.jbenchx.*;
 
+import edu.umd.cs.findbugs.annotations.SuppressWarnings;
+
 public class SystemUtil {
   
   private static final long MS = 1000 * 1000;
-  
+
+  @SuppressWarnings("DM_GC")
   public static void cleanMemory() {
     for (int i = 0; i < 10; ++i) {
       System.gc();

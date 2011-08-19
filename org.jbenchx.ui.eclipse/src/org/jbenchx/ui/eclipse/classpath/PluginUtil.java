@@ -9,6 +9,42 @@ import org.eclipse.osgi.util.*;
 import org.osgi.framework.*;
 
 public class PluginUtil {
+
+  public static Set<URI> getClassPath(Bundle bundle, boolean recursive) throws BundleException, IOException {
+    return getClassPath(bundle, recursive, true, new LinkedHashSet<URI>());
+  }
+  
+  /**
+   * Gets the url to the jar-file used in a jar-url.
+   *
+   * Note: the inner path is ignored
+   * @throws IOException
+   */
+  public static URI jarURLToJarFileURI(URL url) throws IOException {
+    try {
+      
+      if (!"jar".equals(url.getProtocol())) {
+        return url.toURI();
+      }
+      String spec = url.getFile();
+      
+      int separator = spec.indexOf("!/");
+      if (separator == -1) {
+        throw new IllegalArgumentException("no !/ found in url spec:" + spec);
+      }
+      
+      try {
+        return new URL(spec.substring(0, separator)).toURI();
+      } catch (MalformedURLException e) {
+        throw new IllegalArgumentException(e);
+      }
+      
+    } catch (URISyntaxException e) {
+      throw new IllegalArgumentException(e);
+    }
+  }
+
+  // only private methods below
   
   private static Collection<ManifestElement> getManifestElements(Bundle bundle, String headerField) throws BundleException {
     ManifestElement[] prereqs = ManifestElement.parseHeader(headerField, bundle.getHeaders("").get(headerField));
@@ -19,7 +55,7 @@ public class PluginUtil {
   private static Collection<Bundle> getRequiredBundles(Bundle bundle, boolean recursive, Collection<Bundle> requiredBundles) throws BundleException {
     Collection<ManifestElement> requiredBundleElements = getManifestElements(bundle, Constants.REQUIRE_BUNDLE);
     for (ManifestElement prereq: requiredBundleElements) {
-      if (requiredBundles.contains(prereq.getValue())) continue;
+      if (requiredBundleElements.contains(prereq)) continue;
       Bundle requiredBundle = Platform.getBundle(prereq.getValue());
       requiredBundles.add(requiredBundle);
       if (recursive) {
@@ -33,12 +69,12 @@ public class PluginUtil {
     return getRequiredBundles(bundle, recursive, new HashSet<Bundle>());
   }
   
-  private static Set<URL> getClassPath(Bundle bundle, boolean recursive, boolean includeBundlePath, Set<URL> classPath) throws BundleException,
+  private static Set<URI> getClassPath(Bundle bundle, boolean recursive, boolean includeBundlePath, Set<URI> classPath) throws BundleException,
       IOException {
     if (includeBundlePath) {
       URL url = bundle.getResource("/");
       if (url != null) {
-        classPath.add(jarURLToJarFileURL(FileLocator.resolve(url)));
+        classPath.add(jarURLToJarFileURI(FileLocator.resolve(url)));
       }
     }
     Collection<ManifestElement> classPathElements = getManifestElements(bundle, Constants.BUNDLE_CLASSPATH);
@@ -47,7 +83,7 @@ public class PluginUtil {
         if (".".equals(value)) continue;
         URL entry = bundle.getEntry(value);
         if (entry == null) continue;
-        classPath.add(jarURLToJarFileURL(FileLocator.resolve(entry)));
+        classPath.add(jarURLToJarFileURI(FileLocator.resolve(entry)));
       }
     }
     if (recursive) {
@@ -56,32 +92,6 @@ public class PluginUtil {
       }
     }
     return classPath;
-  }
-  
-  public static Set<URL> getClassPath(Bundle bundle, boolean recursive) throws BundleException, IOException {
-    return getClassPath(bundle, recursive, true, new LinkedHashSet<URL>());
-  }
-  
-  /**
-   * Gets the url to the jar-file used in a jar-url.
-   *
-   * Note: the inner path is ignored
-   * @throws IOException
-   */
-  public static URL jarURLToJarFileURL(URL url) throws IOException {
-    if (!"jar".equals(url.getProtocol())) return url;
-    String spec = url.getFile();
-    
-    int separator = spec.indexOf("!/");
-    if (separator == -1) {
-      throw new IllegalArgumentException("no !/ found in url spec:" + spec);
-    }
-    
-    try {
-      return new URL(spec.substring(0, separator));
-    } catch (MalformedURLException e) {
-      throw new IllegalArgumentException(e);
-    }
   }
   
 }

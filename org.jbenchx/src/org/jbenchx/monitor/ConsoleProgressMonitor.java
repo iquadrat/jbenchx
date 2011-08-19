@@ -61,10 +61,11 @@ public class ConsoleProgressMonitor implements IProgressMonitor {
   
   @Override
   public void failed(BenchmarkTask task) {
+    if (fResult == null) throw new IllegalStateException();
     System.out.println("\tfailed");
     System.out.flush();
     PrintWriter out = new PrintWriter(System.err);
-    for(BenchmarkError error: fResult.getResult(task).getErrors()) {
+    for(BenchmarkFailure error: fResult.getResult(task).getErrors()) {
       error.print(out);
     }
     out.flush();

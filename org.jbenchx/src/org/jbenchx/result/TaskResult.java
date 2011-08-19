@@ -11,11 +11,11 @@ public class TaskResult {
   
   private final BenchmarkContext     fContext;
   private final BenchmarkTimings     fTimings;
-  private final List<BenchmarkError> fErrors;
+  private final List<BenchmarkFailure> fErrors;
   private final double               fEstimatedBenchmark;
   private final long                 fIterationCount;
   
-  public TaskResult(BenchmarkContext context, BenchmarkTimings timings, long iterationCount, BenchmarkError... errors) {
+  public TaskResult(BenchmarkContext context, BenchmarkTimings timings, long iterationCount, BenchmarkFailure... errors) {
     fContext = context;
     fTimings = timings;
     fIterationCount = iterationCount;
@@ -34,7 +34,7 @@ public class TaskResult {
     return fIterationCount;
   }
   
-  public List<BenchmarkError> getErrors() {
+  public List<BenchmarkFailure> getErrors() {
     return fErrors;
   }
   

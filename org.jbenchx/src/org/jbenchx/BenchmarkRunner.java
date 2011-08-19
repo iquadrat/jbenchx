@@ -11,7 +11,7 @@ import org.jbenchx.util.*;
 
 public class BenchmarkRunner {
   
-  private List<Class<? extends Benchmark>> fBenchmarks = new ArrayList<Class<? extends Benchmark>>();
+  private final List<Class<? extends Benchmark>> fBenchmarks = new ArrayList<Class<? extends Benchmark>>();
   
   public void add(Class<? extends Benchmark> benchmark) {
     fBenchmarks.add(benchmark);
@@ -55,7 +55,7 @@ public class BenchmarkRunner {
         continue;
       }
       
-      params = BenchmarkParameters.merge(context.getDefaultParams(), BenchmarkParameters.read(method));
+      params = BenchmarkParameters.merge(context.getDefaultParams(), params);
       boolean singleRun = hasSingleRunAnnotation(method); 
       
       tasks.add(new BenchmarkTask(clazz.getSimpleName(), clazz.getName(), method.getName(), params, singleRun));

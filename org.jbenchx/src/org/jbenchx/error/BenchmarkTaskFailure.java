@@ -4,12 +4,12 @@ import java.io.*;
 
 import org.jbenchx.*;
 
-public class BenchmarkTaskException extends BenchmarkError {
+public class BenchmarkTaskFailure extends BenchmarkFailure {
   
   private final BenchmarkTask fTask;
   private final Exception     fException;
   
-  public BenchmarkTaskException(BenchmarkTask task, Exception exception) {
+  public BenchmarkTaskFailure(BenchmarkTask task, Exception exception) {
     fTask = task;
     fException = exception;
   }

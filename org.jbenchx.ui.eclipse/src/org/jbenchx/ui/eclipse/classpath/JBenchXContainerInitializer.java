@@ -34,7 +34,7 @@ public class JBenchXContainerInitializer extends ClasspathContainerInitializer {
     private IClasspathEntry[] calculateClassPathEntries() {
       List<String> requiredBundles = Arrays.asList("org.jbenchx", "org.jbenchx.libs_external");
       
-      Set<URL> classPath = new LinkedHashSet<URL>();
+      Set<URI> classPath = new LinkedHashSet<URI>();
       for (String bundleName: requiredBundles) {
         try {
           
@@ -48,8 +48,8 @@ public class JBenchXContainerInitializer extends ClasspathContainerInitializer {
       }
       
       List<IClasspathEntry> classPathEntries = new ArrayList<IClasspathEntry>();
-      for (URL url: classPath) {
-        Path path = new Path(url.getFile());
+      for (URI url: classPath) {
+        Path path = new Path(url.getPath());
         classPathEntries.add(JavaCore.newLibraryEntry(path, null, null));
       }
       

@@ -38,7 +38,7 @@ public class BenchmarkTask {
       context.getProgressMonitor().done(this);
       
     } catch (Exception e) {
-      result.addResult(this, new TaskResult(context, new BenchmarkTimings(fParams), 0, new BenchmarkTaskException(this, e)));
+      result.addResult(this, new TaskResult(context, new BenchmarkTimings(fParams), 0, new BenchmarkTaskFailure(this, e)));
       context.getProgressMonitor().failed(this);
     }
   }
