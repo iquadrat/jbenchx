@@ -29,6 +29,7 @@
 	<extension
          point="org.eclipse.debug.ui.launchShortcuts">
 		<shortcut
+        category="org.eclipse.ui.externaltools"
         class="org.jbenchx.ui.eclipse.launch.RunBenchmarkShortcut"
         icon="icons/jb_icon.png"
         id="org.jbenchx.ui.eclipse.run"
@@ -91,6 +92,14 @@
           id="org.jbenchx.ui.eclipse.launchConfigurationTabGroup"
           type="org.jbenchx.ui.eclipse.remoteJBenchXRunner">
     </launchConfigurationTabGroup>
+ </extension>
+ <extension
+       point="org.eclipse.debug.ui.launchConfigurationTypeImages">
+    <launchConfigurationTypeImage
+          configTypeID="org.jbenchx.ui.eclipse.remoteJBenchXRunner"
+          icon="icons/jb_icon.png"
+          id="org.jbenchx.ui.eclipse.launchConfigurationTypeIcon">
+    </launchConfigurationTypeImage>
  </extension>
 
 </plugin>

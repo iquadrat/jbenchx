@@ -65,9 +65,8 @@ public class RunBenchmarkShortcut implements ILaunchShortcut {
   private void launchWithBenchmarks(List<String> benchmarkClasses, IJavaProject javaProject, String mode) {
     
     try {
-      ILaunchConfiguration config = getOrCreateLaunchConfiguration(benchmarkClasses, javaProject);
       
-      //ILaunch launch = config.launch(mode, new NullProgressMonitor());
+      ILaunchConfiguration config = getOrCreateLaunchConfiguration(benchmarkClasses, javaProject);
       DebugUITools.launch(config, mode);
       
     } catch (CoreException e) {
@@ -77,14 +76,20 @@ public class RunBenchmarkShortcut implements ILaunchShortcut {
   }
   
   private ILaunchConfiguration getOrCreateLaunchConfiguration(List<String> benchmarkClasses, IJavaProject javaProject) throws CoreException {
-    // TODO make custom launch configuration
     ILaunchManager launchManager = DebugPlugin.getDefault().getLaunchManager();
     ILaunchConfigurationType type = launchManager.getLaunchConfigurationType(JBenchXLaunchConfig.ID_JBENCHX_BENCHMARK);
+    String benchmarkClassesString = createBenchmarkClassesString(benchmarkClasses);
+    String name = createLaunchConfigName(benchmarkClasses);
     for (ILaunchConfiguration configuration: launchManager.getLaunchConfigurations(type)) {
       
-      if (configuration.getName().equals(JBenchXLaunchConfig.LAUNCH_CONFIG_NAME)) {
-        return configuration.getWorkingCopy();
+      if (!configuration.getName().equals(name)) {
+        continue;
       }
+      if (!benchmarkClassesString.equals(configuration.getAttribute(JBenchXLaunchConfig.ATTR_JBENCHX_BENCHMARKS, false))) {
+        continue;
+      }
+      
+      return configuration.getWorkingCopy();
     }
     return createLaunchConfiguration(benchmarkClasses, javaProject);
   }
@@ -92,15 +97,33 @@ public class RunBenchmarkShortcut implements ILaunchShortcut {
   private ILaunchConfiguration createLaunchConfiguration(List<String> benchmarkClasses, IJavaProject javaProject) throws CoreException {
     ILaunchManager launchManager = DebugPlugin.getDefault().getLaunchManager();
     ILaunchConfigurationType type = launchManager.getLaunchConfigurationType(JBenchXLaunchConfig.ID_JBENCHX_BENCHMARK);
-    ILaunchConfigurationWorkingCopy result = type.newInstance(null, JBenchXLaunchConfig.LAUNCH_CONFIG_NAME);
+    String name = createLaunchConfigName(benchmarkClasses);
+    launchManager.generateLaunchConfigurationName(name);
+    ILaunchConfigurationWorkingCopy result = type.newInstance(null, name);
     
     // set attributes
     result.setAttribute(IJavaLaunchConfigurationConstants.ATTR_MAIN_TYPE_NAME, RemoteRunner.class.getName());
     result.setAttribute(IJavaLaunchConfigurationConstants.ATTR_DEFAULT_CLASSPATH, true);
     result.setAttribute(IJavaLaunchConfigurationConstants.ATTR_PROJECT_NAME, javaProject.getElementName());
-    result.setAttribute(JBenchXLaunchConfig.ATTR_JBENCHX_BENCHMARKS, StringUtil.join(",", benchmarkClasses));
+    result.setAttribute(JBenchXLaunchConfig.ATTR_JBENCHX_BENCHMARKS, createBenchmarkClassesString(benchmarkClasses));
     
     return result.doSave();
+  }
+
+  private String createLaunchConfigName(List<String> benchmarkClasses) {
+    List<String> simpleNames = new ArrayList<String>(benchmarkClasses.size());
+    for(String className: benchmarkClasses) {
+      int dot = className.lastIndexOf('.');
+      if (dot != -1) {
+        className = className.substring(dot+1);
+      }
+      simpleNames.add(className);
+    }
+    return StringUtil.join(",", simpleNames);
+  }
+
+  private String createBenchmarkClassesString(List<String> benchmarkClasses) {
+    return StringUtil.join(",", benchmarkClasses);
   }
   
 }
