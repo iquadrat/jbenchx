@@ -85,7 +85,7 @@ public class RunBenchmarkShortcut implements ILaunchShortcut {
       if (!configuration.getName().equals(name)) {
         continue;
       }
-      if (!benchmarkClassesString.equals(configuration.getAttribute(JBenchXLaunchConfig.ATTR_JBENCHX_BENCHMARKS, false))) {
+      if (!benchmarkClassesString.equals(configuration.getAttribute(JBenchXLaunchConfig.ATTR_JBENCHX_BENCHMARKS, ""))) {
         continue;
       }
       
