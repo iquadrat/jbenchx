@@ -6,7 +6,7 @@
          point="org.eclipse.ui.views">
 		<category id="org.jbenchx.ui.eclipse" name="JBenchX" parentCategory="org.eclipse.jdt.ui.java">
 		</category>
-		<view name="JBenchX" icon="icons/sample.gif" category="org.jbenchx.ui.eclipse"
+		<view name="JBenchX" icon="icons/jb_icon.png" category="org.jbenchx.ui.eclipse"
 			class="org.jbenchx.ui.eclipse.views.BenchmarkView"
 			id="org.jbenchx.ui.eclipse.views.BenchmarkView">
 		</view>
@@ -28,8 +28,12 @@
 
 	<extension
          point="org.eclipse.debug.ui.launchShortcuts">
-		<shortcut class="org.jbenchx.ui.eclipse.launch.RunBenchmarkShortcut" id="org.jbenchx.ui.eclipse.run"
-			label="JBenchX Benchmark" modes="run, debug, profile">
+		<shortcut
+        class="org.jbenchx.ui.eclipse.launch.RunBenchmarkShortcut"
+        icon="icons/jb_icon.png"
+        id="org.jbenchx.ui.eclipse.run"
+        label="JBenchX Benchmark"
+        modes="run, debug, profile">
 			<configurationType 
 			id="org.jbenchx.ui.eclipse.remoteJBenchXRunner">
 			</configurationType>
@@ -79,6 +83,14 @@
           sourceLocatorId="org.eclipse.jdt.launching.sourceLocator.JavaSourceLookupDirector"
           sourcePathComputerId="org.eclipse.jdt.launching.sourceLookup.javaSourcePathComputer">
     </launchConfigurationType>
+ </extension>
+ <extension
+       point="org.eclipse.debug.ui.launchConfigurationTabGroups">
+    <launchConfigurationTabGroup
+          class="org.jbenchx.ui.eclipse.launch.JBenchXLaunchConfigurationTabGroup"
+          id="org.jbenchx.ui.eclipse.launchConfigurationTabGroup"
+          type="org.jbenchx.ui.eclipse.remoteJBenchXRunner">
+    </launchConfigurationTabGroup>
  </extension>
 
 </plugin>
