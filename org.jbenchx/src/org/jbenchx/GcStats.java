@@ -37,8 +37,8 @@ public class GcStats {
     fCountAndTimeMap.put(name, new GcCountAndTime(count, time));
   }
   
-  public Iterable<String> getGcNames() {
-    return fGcs;
+  public List<String> getGcNames() {
+    return Collections.unmodifiableList(fGcs);
   }
   
   public long getGcCount(String name) {

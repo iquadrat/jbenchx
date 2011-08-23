@@ -51,7 +51,13 @@ public class ConsoleProgressMonitor implements IProgressMonitor {
   @Override
   public void run(BenchmarkTask task, Timing timing, VmState vmStateDiff) {
     if (VmState.EMPTY.equals(vmStateDiff)) {
-      System.out.print(".");
+      
+      if (timing.getGcNames().isEmpty()) {
+        System.out.print(".");
+      } else {
+        System.out.print("*");
+      }
+      
 //      System.out.print(TimeUtil.toString(timing.getRunTime()));
     } else {
       System.out.print("!");
