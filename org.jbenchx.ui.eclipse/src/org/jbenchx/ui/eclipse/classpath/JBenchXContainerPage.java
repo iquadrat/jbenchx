@@ -10,15 +10,15 @@ import org.eclipse.swt.widgets.*;
 import edu.umd.cs.findbugs.annotations.*;
 
 public class JBenchXContainerPage extends WizardPage implements IClasspathContainerPage, IExecutableExtension {
-  
+
   @CheckForNull
   private IClasspathEntry fEntry = null;
-  
+
   public JBenchXContainerPage() {
     super(JBenchXContainerPage.class.getSimpleName());
     setTitle("JBenchX Container");
   }
-  
+
   @Override
   public void createControl(Composite parent) {
     Label label = new Label(parent, SWT.NONE);
@@ -30,12 +30,12 @@ public class JBenchXContainerPage extends WizardPage implements IClasspathContai
     }
     setControl(label);
   }
-  
+
   @Override
   public boolean finish() {
     return true;
   }
-  
+
   @Override
   public IClasspathEntry getSelection() {
     if (fEntry == null) {
@@ -43,15 +43,15 @@ public class JBenchXContainerPage extends WizardPage implements IClasspathContai
     }
     return fEntry;
   }
-  
+
   @Override
   public void setSelection(IClasspathEntry containerEntry) {
     fEntry = containerEntry;
   }
-  
+
   @Override
-  public void setInitializationData(IConfigurationElement config, String propertyName, Object data) throws CoreException {
+  public void setInitializationData(IConfigurationElement config, String propertyName, Object data) {
 
   }
-  
+
 }
