@@ -30,6 +30,20 @@ public class Example extends Benchmark {
 }
 ---
 
+
+Eclipse Plug-in
+---------------
+
+There is an Eclipse plug-in available for JBenchX. This update site is located
+at http://iquadrat.github.com/jbenchx/updates/
+
+Important note to Eclipse users: Before you can write JBenchX bechmarks in 
+Eclipse you need to add the JBenchX library to the classpath! You can do this
+easily by opening the Properties of your project, selecting the Java Build Path
+page, chosing the Libraries tab and adding the JBenchX libraries with the
+"Add Library..." command.
+
+
 JBenchX's Philosophy
 --------------------
 
