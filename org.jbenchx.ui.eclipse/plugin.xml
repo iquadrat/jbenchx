@@ -2,6 +2,7 @@
 <?eclipse version="3.4"?>
 <plugin>
 
+<!--
 	<extension
          point="org.eclipse.ui.views">
 		<category id="org.jbenchx.ui.eclipse" name="JBenchX" parentCategory="org.eclipse.jdt.ui.java">
@@ -25,7 +26,7 @@
             file="contexts.xml">
 		</contexts>
 	</extension>
-
+-->
 	<extension
          point="org.eclipse.debug.ui.launchShortcuts">
 		<shortcut
