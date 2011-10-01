@@ -6,7 +6,7 @@ import org.jbenchx.result.*;
 import org.jbenchx.util.*;
 import org.jbenchx.vm.*;
 
-public class BenchmarkTask {
+public class BenchmarkTask implements IBenchmarkTask {
 
 //  private static final int          MIN_TARGET_TIME = 1 * 1000 * 1000;
 
@@ -30,7 +30,8 @@ public class BenchmarkTask {
     fSingleRun = singleRun;
   }
 
-  public void run(BenchmarkResult result, BenchmarkContext context) {
+  @Override
+  public void run(BenchmarkResult result, IBenchmarkContext context) {
     try {
 
       context.getProgressMonitor().started(this);
@@ -46,7 +47,7 @@ public class BenchmarkTask {
     }
   }
 
-  private TaskResult internalRun(BenchmarkContext context) throws Exception {
+  private TaskResult internalRun(IBenchmarkContext context) throws Exception {
     Object benchmark = createInstance();
     Method method = getBenchmarkMethod(benchmark);
     long iterationCount = findIterationCount(context, benchmark, method);
@@ -99,7 +100,7 @@ public class BenchmarkTask {
     return timer.stopAndReset();
   }
 
-  private long findIterationCount(BenchmarkContext context, Object benchmark, Method method) throws IllegalAccessException, InvocationTargetException {
+  private long findIterationCount(IBenchmarkContext context, Object benchmark, Method method) throws IllegalAccessException, InvocationTargetException {
     if (fSingleRun) {
       return 1;
     }
@@ -144,6 +145,7 @@ public class BenchmarkTask {
     return getName();
   }
 
+  @Override
   public String getName() {
     return fBenchmarkName + "." + fMethodName;
   }

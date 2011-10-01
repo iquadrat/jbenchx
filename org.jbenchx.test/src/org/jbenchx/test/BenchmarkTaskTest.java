@@ -26,11 +26,11 @@ public class BenchmarkTaskTest extends BenchmarkTestCase {
 
   @Test
   public void warningWhenIterationToFast() {
-    BenchmarkTask task = new BenchmarkTask("empty", TestBench.class.getName(), "empty", BenchmarkParameters.getDefaults(), false);
+    IBenchmarkTask task = new BenchmarkTask("empty", TestBench.class.getName(), "empty", BenchmarkParameters.getDefaults(), false);
     BenchmarkResult result = new BenchmarkResult();
-    BenchmarkContext context = new BenchmarkContext(IProgressMonitor.DUMMY, 10, 100);
+    IBenchmarkContext context = new BenchmarkContext(IProgressMonitor.DUMMY, 10, 100);
     task.run(result, context);
-    TaskResult taskResult = result.getResult(task);
+    ITaskResult taskResult = result.getResult(task);
     Assert.assertTrue(taskResult.getErrors().isEmpty());
     Assert.assertEquals(1, taskResult.getWarnings().size());
     Pattern pattern = Pattern.compile("Runtime of single iteration too short: [0-9]*ns, increase work in single iteration to run at least 1000ns");

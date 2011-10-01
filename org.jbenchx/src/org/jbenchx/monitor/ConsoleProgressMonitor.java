@@ -15,14 +15,14 @@ public class ConsoleProgressMonitor implements IProgressMonitor {
   private int             fTasksDone  = 0;
 
   @CheckForNull
-  private BenchmarkResult fResult     = null;
+  private IBenchmarkResult fResult     = null;
 
   public ConsoleProgressMonitor() {
     System.out.println("Initializing Benchmarking Framework...");
   }
 
   @Override
-  public void init(int count, BenchmarkResult result) {
+  public void init(int count, IBenchmarkResult result) {
     fTasksTotal = count;
     fTasksDone = 0;
     fResult = result;
@@ -30,13 +30,13 @@ public class ConsoleProgressMonitor implements IProgressMonitor {
   }
 
   @Override
-  public void started(BenchmarkTask task) {
+  public void started(IBenchmarkTask task) {
     System.out.print("[" + fTasksDone + "]\t" + task.getName());
     System.out.flush();
   }
 
   @Override
-  public void done(BenchmarkTask task) {
+  public void done(IBenchmarkTask task) {
     if (fResult == null) {
       throw new IllegalStateException();
     }
@@ -50,7 +50,7 @@ public class ConsoleProgressMonitor implements IProgressMonitor {
   }
 
   @Override
-  public void run(BenchmarkTask task, Timing timing, VmState vmStateDiff) {
+  public void run(IBenchmarkTask task, Timing timing, VmState vmStateDiff) {
     if (VmState.EMPTY.equals(vmStateDiff)) {
 
       if (timing.getGcNames().isEmpty()) {
@@ -67,7 +67,7 @@ public class ConsoleProgressMonitor implements IProgressMonitor {
   }
 
   @Override
-  public void failed(BenchmarkTask task) {
+  public void failed(IBenchmarkTask task) {
     if (fResult == null) {
       throw new IllegalStateException();
     }

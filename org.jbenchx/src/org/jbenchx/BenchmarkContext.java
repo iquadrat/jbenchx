@@ -5,7 +5,7 @@ import org.jbenchx.result.*;
 import org.jbenchx.util.*;
 import org.jbenchx.vm.*;
 
-public class BenchmarkContext {
+public class BenchmarkContext implements IBenchmarkContext {
   
   private final VmInfo              fVmInfo = VmInfo.getVmInfo();
   
@@ -28,41 +28,46 @@ public class BenchmarkContext {
     fDefaultParams = defaultParams;
   }
   
+  @Override
   public VmInfo getVmInfo() {
     return fVmInfo;
   }
   
+  @Override
   public BenchmarkParameters getDefaultParams() {
     return fDefaultParams;
   }
   
+  @Override
   public IProgressMonitor getProgressMonitor() {
     return fProgressMonitor;
   }
   
+  @Override
   public long getTimerGranularity() {
     return fTimerGranularity;
   }
   
+  @Override
   public long getMethodInvokeTime() {
     return fMethodInvokeTime;
   }
   
-  public static BenchmarkContext create(IProgressMonitor progressMonitor) {
-    BenchmarkContext systemBenchmarkContext = new BenchmarkContext(IProgressMonitor.DUMMY, -1, -1);
+  public static IBenchmarkContext create(IProgressMonitor progressMonitor) {
+    IBenchmarkContext systemBenchmarkContext = new BenchmarkContext(IProgressMonitor.DUMMY, -1, -1);
     systemBenchmarkContext.getDefaultParams().setTargetTimeNs(50 * TimeUtil.MS);
     BenchmarkRunner runner = new BenchmarkRunner();
     runner.add(SystemBenchmark.class);
-    BenchmarkResult result = runner.run(systemBenchmarkContext);
+    IBenchmarkResult result = runner.run(systemBenchmarkContext);
     
-    BenchmarkTask sqrtTask = result.findTask(SystemBenchmark.class.getSimpleName() + ".sqrt");
-    BenchmarkTask sqrt1Task = result.findTask(SystemBenchmark.class.getSimpleName() + ".sqrt1");
+    IBenchmarkTask sqrtTask = result.findTask(SystemBenchmark.class.getSimpleName() + ".sqrt");
+    IBenchmarkTask sqrt1Task = result.findTask(SystemBenchmark.class.getSimpleName() + ".sqrt1");
     if (sqrtTask == null || sqrt1Task == null) {
       throw new RuntimeException("Failed to run SystemBenchmark");
     }
     
-    TaskResult sqrtResult = result.getResult(sqrt1Task);
-    TaskResult sqrt1Result = result.getResult(sqrtTask);
+    ITaskResult sqrtResult = result.getResult(sqrt1Task);
+    ITaskResult sqrt1Result = result.getResult(sqrtTask);
     
 //    System.out.println("sqrt="+sqrtResult.getEstimatedBenchmark()+" sqrt1="+sqrt1Result.getEstimatedBenchmark());
     long methodInvokeTime = Math.round(sqrtResult.getEstimatedBenchmark() - sqrt1Result.getEstimatedBenchmark());

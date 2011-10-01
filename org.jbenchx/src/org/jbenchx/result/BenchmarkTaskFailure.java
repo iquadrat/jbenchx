@@ -6,10 +6,10 @@ import org.jbenchx.*;
 
 public class BenchmarkTaskFailure extends BenchmarkFailure {
   
-  private final BenchmarkTask fTask;
+  private final IBenchmarkTask fTask;
   private final Exception     fException;
   
-  public BenchmarkTaskFailure(BenchmarkTask task, Exception exception) {
+  public BenchmarkTaskFailure(IBenchmarkTask task, Exception exception) {
     fTask = task;
     fException = exception;
   }

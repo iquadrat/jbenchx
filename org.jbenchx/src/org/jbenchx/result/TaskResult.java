@@ -4,11 +4,11 @@ import java.util.*;
 
 import org.jbenchx.*;
 
-public class TaskResult {
+public class TaskResult implements ITaskResult {
 
   private static final boolean         SUBTRACT_INVOKE_TIME = false;
 
-  private final BenchmarkContext       fContext;
+  private final IBenchmarkContext       fContext;
 
   private final BenchmarkTimings       fTimings;
 
@@ -20,7 +20,7 @@ public class TaskResult {
 
   private final long                   fIterationCount;
 
-  public TaskResult(BenchmarkContext context, BenchmarkTimings timings, long iterationCount, BenchmarkFailure... errors) {
+  public TaskResult(IBenchmarkContext context, BenchmarkTimings timings, long iterationCount, BenchmarkFailure... errors) {
     fContext = context;
     fTimings = timings;
     fIterationCount = iterationCount;
@@ -40,22 +40,27 @@ public class TaskResult {
     fWarnings.add(warning);
   }
 
+  @Override
   public long getIterationCount() {
     return fIterationCount;
   }
 
+  @Override
   public List<BenchmarkFailure> getErrors() {
     return fErrors;
   }
 
+  @Override
   public List<BenchmarkWarning> getWarnings() {
     return fWarnings;
   }
 
+  @Override
   public BenchmarkTimings getTimings() {
     return fTimings;
   }
 
+  @Override
   public double getEstimatedBenchmark() {
     return fEstimatedBenchmark;
   }

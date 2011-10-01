@@ -16,19 +16,19 @@ public class BenchmarkRunner {
     fBenchmarks.add(benchmark);
   }
 
-  public BenchmarkResult run(BenchmarkContext context) {
+  public IBenchmarkResult run(IBenchmarkContext context) {
     IProgressMonitor prgoressMonitor = context.getProgressMonitor();
     BenchmarkResult result = new BenchmarkResult();
     List<BenchmarkTask> benchmarkTasks = findAllBenchmarkTasks(context, result);
     prgoressMonitor.init(benchmarkTasks.size(), result);
-    for (BenchmarkTask task: benchmarkTasks) {
+    for (IBenchmarkTask task: benchmarkTasks) {
       task.run(result, context);
     }
     prgoressMonitor.finished();
     return result;
   }
 
-  private List<BenchmarkTask> findAllBenchmarkTasks(BenchmarkContext context, BenchmarkResult result) {
+  private List<BenchmarkTask> findAllBenchmarkTasks(IBenchmarkContext context, BenchmarkResult result) {
     List<BenchmarkTask> tasks = new ArrayList<BenchmarkTask>();
     for (Class<?> clazz: fBenchmarks) {
       addBenchmarkTasks(context, result, tasks, clazz);
@@ -36,7 +36,7 @@ public class BenchmarkRunner {
     return tasks;
   }
 
-  private void addBenchmarkTasks(BenchmarkContext context, BenchmarkResult result, List<BenchmarkTask> tasks, Class<?> clazz) {
+  private void addBenchmarkTasks(IBenchmarkContext context, BenchmarkResult result, List<BenchmarkTask> tasks, Class<?> clazz) {
 
     if (!ClassUtil.hasDefaultConstructor(clazz)) {
       result.addGeneralError(new BenchmarkClassError(clazz, "No default constructor found!"));

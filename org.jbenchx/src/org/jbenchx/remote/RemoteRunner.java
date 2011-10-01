@@ -30,7 +30,7 @@ public class RemoteRunner {
 
     }
 
-    BenchmarkContext context = BenchmarkContext.create(new ConsoleProgressMonitor());
+    IBenchmarkContext context = BenchmarkContext.create(new ConsoleProgressMonitor());
     runner.run(context);
 
   }

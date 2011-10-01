@@ -6,27 +6,29 @@ import javax.annotation.*;
 
 import org.jbenchx.*;
 
-public class BenchmarkResult {
+public class BenchmarkResult implements IBenchmarkResult {
 
-  private final List<BenchmarkFailure>         fGeneralErrors = new ArrayList<BenchmarkFailure>();
+  private final List<BenchmarkFailure>           fGeneralErrors = new ArrayList<BenchmarkFailure>();
 
-  private final Map<BenchmarkTask, TaskResult> fResults       = new LinkedHashMap<BenchmarkTask, TaskResult>();
+  private final Map<IBenchmarkTask, ITaskResult> fResults       = new LinkedHashMap<IBenchmarkTask, ITaskResult>();
 
   public void addGeneralError(BenchmarkFailure error) {
     fGeneralErrors.add(error);
   }
 
-  public void addResult(BenchmarkTask task, TaskResult result) {
+  public void addResult(IBenchmarkTask task, ITaskResult result) {
     fResults.put(task, result);
   }
 
-  public TaskResult getResult(BenchmarkTask task) {
+  @Override
+  public ITaskResult getResult(IBenchmarkTask task) {
     return fResults.get(task);
   }
 
+  @Override
   @CheckForNull
-  public BenchmarkTask findTask(String name) {
-    for (BenchmarkTask task: fResults.keySet()) {
+  public IBenchmarkTask findTask(String name) {
+    for (IBenchmarkTask task: fResults.keySet()) {
       if (task.getName().equals(name)) {
         return task;
       }
@@ -34,7 +36,8 @@ public class BenchmarkResult {
     return null;
   }
 
-  public Set<BenchmarkTask> getTasks() {
+  @Override
+  public Set<IBenchmarkTask> getTasks() {
     return fResults.keySet();
   }
 
