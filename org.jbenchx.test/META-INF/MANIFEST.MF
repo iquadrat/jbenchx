@@ -9,3 +9,5 @@ Require-Bundle: org.jbenchx.libs_external;bundle-version="0.1.0",
  org.jbenchx;bundle-version="0.1.0",
  org.junit;bundle-version="4.8.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-ClassPath: lib/easymock-3.0.jar,
+ .
