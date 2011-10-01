@@ -2,20 +2,19 @@ package org.jbenchx.test;
 
 import java.util.*;
 
-import org.jbenchx.*;
 import org.jbenchx.annotations.*;
 
-public class ArrayListBenchmark extends Benchmark {
-  
-  private ArrayList<Integer> fInteger1000;
-  
+public class ArrayListBenchmark {
+
+  private final ArrayList<Integer> fInteger1000;
+
   public ArrayListBenchmark() {
     fInteger1000 = new ArrayList<Integer>();
     for (int i = 0; i < 1000; ++i) {
       fInteger1000.add(i);
     }
   }
-  
+
   @Bench
   public Object create() {
     for(int i=0; i<1000; ++i) {
@@ -23,7 +22,7 @@ public class ArrayListBenchmark extends Benchmark {
     }
     return null;
   }
-  
+
 //  @Bench
 //  public Object createAdd1000() {
 //    ArrayList<Integer> list = new ArrayList<Integer>(100);
@@ -32,11 +31,11 @@ public class ArrayListBenchmark extends Benchmark {
 //////    }
 //    return list;
 //  }
-  
+
   @Bench
   public boolean contains() {
 //    return fInteger1000.contains(-1);
-    
+
     for (int i = 1; i <= 10; ++i) {
       if (fInteger1000.contains(-1)) {
         return true;
@@ -44,5 +43,5 @@ public class ArrayListBenchmark extends Benchmark {
     }
     return false;
   }
-  
+
 }

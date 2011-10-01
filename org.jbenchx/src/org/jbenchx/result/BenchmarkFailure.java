@@ -1,4 +1,4 @@
-package org.jbenchx.error;
+package org.jbenchx.result;
 
 import java.io.*;
 

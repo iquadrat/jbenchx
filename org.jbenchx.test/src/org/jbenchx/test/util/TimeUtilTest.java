@@ -1,12 +1,16 @@
 package org.jbenchx.test.util;
 
+import static org.junit.Assert.*;
+
 import org.jbenchx.test.*;
 import org.jbenchx.util.*;
+import org.junit.*;
 
 
 public class TimeUtilTest extends BenchmarkTestCase {
 
-  public void testToString() {
+  @Test
+  public void toString_() {
     assertEquals("0ns", TimeUtil.toString(0));
     assertEquals("1ns", TimeUtil.toString(1));
     assertEquals("-1ns", TimeUtil.toString(-1));
@@ -52,5 +56,5 @@ public class TimeUtilTest extends BenchmarkTestCase {
     assertEquals("1230s", TimeUtil.toString(1234567890123L));
     assertEquals("91200s", TimeUtil.toString(91234567890123L));
   }
-  
+
 }

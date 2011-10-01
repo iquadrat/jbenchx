@@ -4,7 +4,7 @@ import org.jbenchx.*;
 import org.jbenchx.monitor.*;
 import org.junit.*;
 
-public class BenchmarkRunnterTest extends BenchmarkTestCase {
+public class BenchmarkRunnerTest extends BenchmarkTestCase {
   
   @Test
   public void testRun_ArrayListBenchmark() {
@@ -14,7 +14,7 @@ public class BenchmarkRunnterTest extends BenchmarkTestCase {
   }
   
   public static void main(String[] args) {
-    new BenchmarkRunnterTest().testRun_ArrayListBenchmark();
+    new BenchmarkRunnerTest().testRun_ArrayListBenchmark();
   }
   
 }

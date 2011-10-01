@@ -1,26 +1,25 @@
 package org.jbenchx.util;
 
-import org.jbenchx.*;
 import org.jbenchx.annotations.*;
 
-public class SystemBenchmark extends Benchmark {
-  
+public class SystemBenchmark {
+
   private volatile double fValue;
-  
+
   public SystemBenchmark() {
     fValue = 2;
   }
-  
+
   @Bench
   public int empty() {
     return 0;
   }
-  
+
   @Bench
   public double sqrt1() {
     return Math.sqrt(fValue) + 1;
   }
-  
+
   @Bench(divisor = 1000)
   public double sqrt() {
     double result = 0;
@@ -29,5 +28,5 @@ public class SystemBenchmark extends Benchmark {
     }
     return result;
   }
-  
+
 }
