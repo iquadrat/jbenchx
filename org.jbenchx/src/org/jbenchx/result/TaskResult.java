@@ -46,7 +46,7 @@ public class TaskResult implements ITaskResult {
   }
 
   @Override
-  public List<BenchmarkFailure> getErrors() {
+  public List<BenchmarkFailure> getFailures() {
     return fErrors;
   }
 

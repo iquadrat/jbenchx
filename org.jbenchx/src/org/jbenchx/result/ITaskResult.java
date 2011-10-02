@@ -12,7 +12,7 @@ public interface ITaskResult {
 
   public long getIterationCount();
 
-  public List<BenchmarkFailure> getErrors();
+  public List<BenchmarkFailure> getFailures();
 
   public List<BenchmarkWarning> getWarnings();
 

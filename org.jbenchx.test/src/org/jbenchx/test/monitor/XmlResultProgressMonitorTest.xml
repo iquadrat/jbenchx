@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<benchmark endtime="1317564809999" starttime="1317564808888">
+  <task benchmark="11.1" iterations="11111" name="task1">
+    <params divisor="1" maxDeviation="0.05" maxRunCount="100" minRunCount="10" minSampleCount="8" targetTime="250000000"/>
+    <run runtime="1111"/>
+    <run runtime="1222"/>
+    <warning>some warning reason here</warning>
+  </task>
+  <task benchmark="222.2" iterations="22222" name="task2">
+    <params divisor="1" maxDeviation="0.05" maxRunCount="100" minRunCount="10" minSampleCount="8" targetTime="250000000"/>
+    <run runtime="2111"/>
+    <run runtime="2222">
+      <gc count="2" name="foo" time="200"/>
+      <gc count="7" name="bar" time="142"/>
+    </run>
+    <failure>BenchmarkClassError: org.jbenchx.test.monitor.XmlResultProgressMonitorTest: some failure warning here</failure>
+  </task>
+</benchmark>

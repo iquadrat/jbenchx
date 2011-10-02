@@ -31,7 +31,7 @@ public class BenchmarkTaskTest extends BenchmarkTestCase {
     IBenchmarkContext context = new BenchmarkContext(IProgressMonitor.DUMMY, 10, 100);
     task.run(result, context);
     ITaskResult taskResult = result.getResult(task);
-    Assert.assertTrue(taskResult.getErrors().isEmpty());
+    Assert.assertTrue(taskResult.getFailures().isEmpty());
     Assert.assertEquals(1, taskResult.getWarnings().size());
     Pattern pattern = Pattern.compile("Runtime of single iteration too short: [0-9]*ns, increase work in single iteration to run at least 1000ns");
     String reason = taskResult.getWarnings().get(0).getReason();

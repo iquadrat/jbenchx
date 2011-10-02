@@ -3,12 +3,26 @@ package org.jbenchx.util;
 import org.jbenchx.*;
 
 public class TimeUtil {
-  
-  public static final long MS        = 1000 * 1000;
-  public static final long US        = 1000;
-  
-  public static String     SEPARATOR = ".";
-  
+
+  public static final long           MS        = 1000 * 1000;
+
+  public static final long           US        = 1000;
+
+  public static String               SEPARATOR = ".";
+
+  private static final ITimeProvider DEFAULT_TIME_PROVIDER;
+
+  static {
+    DEFAULT_TIME_PROVIDER = new ITimeProvider() {
+
+      @Override
+      public long getCurrentTimeMs() {
+        return System.currentTimeMillis();
+      }
+
+    };
+  }
+
   public static String toString(long ns) {
     if (ns == 0) {
       return "0ns";
@@ -16,17 +30,17 @@ public class TimeUtil {
     if (ns < 0) {
       return "-" + toString(-ns);
     }
-    
+
     // always print 3 digits
     int digits = (int)Math.floor(Math.log10(ns)) + 1;
-    
+
     if (digits <= 3) {
       return ns + "ns";
     }
-    
+
     double divisor = Math.pow(10, digits - 3);
     long nsRounded = (long)(Math.round(ns / divisor) * divisor);
-    
+
     StringBuilder sb = new StringBuilder(String.valueOf(nsRounded));
     if (sb.length() <= 6) {
       return insertComma(sb, 3) + "us";
@@ -37,10 +51,10 @@ public class TimeUtil {
     if (sb.length() <= 12) {
       return insertComma(sb, 9) + "s";
     }
-    
+
     return sb.substring(0, sb.length() - 9) + "s";
   }
-  
+
   private static String insertComma(StringBuilder sb, int digitsComma) {
     if (sb.length() == digitsComma + 3) {
       return sb.substring(0, 3);
@@ -49,12 +63,12 @@ public class TimeUtil {
     sb.insert(commapos, SEPARATOR);
     return sb.substring(0, 4);
   }
-  
+
   public static String toString(double ns) {
     // TODO sub-ns time formating
     return toString(Math.round(ns));
   }
-  
+
   public static long estimateTimerGranularity(Timer timer) {
     int runs = 0;
     long sum = 0;
@@ -67,5 +81,9 @@ public class TimeUtil {
     long avg = sum / runs;
     return avg;
   }
-  
+
+  public static ITimeProvider getDefaultTimeProvider() {
+    return DEFAULT_TIME_PROVIDER;
+  }
+
 }

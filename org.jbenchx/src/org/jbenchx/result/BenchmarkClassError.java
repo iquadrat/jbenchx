@@ -20,7 +20,8 @@ public class BenchmarkClassError extends BenchmarkFailure {
 
   @Override
   public void print(PrintWriter out) {
-    out.println(toString());
+    out.print(toString());
+    out.flush();
   }
 
 }

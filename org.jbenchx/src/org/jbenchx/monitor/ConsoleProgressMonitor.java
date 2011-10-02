@@ -74,7 +74,7 @@ public class ConsoleProgressMonitor implements IProgressMonitor {
     System.out.println("\tfailed");
     System.out.flush();
     PrintWriter out = new PrintWriter(System.err);
-    for(BenchmarkFailure error: fResult.getResult(task).getErrors()) {
+    for(BenchmarkFailure error: fResult.getResult(task).getFailures()) {
       error.print(out);
     }
     out.flush();
