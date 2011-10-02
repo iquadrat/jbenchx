@@ -17,14 +17,14 @@ public class BenchmarkRunner {
   }
 
   public IBenchmarkResult run(IBenchmarkContext context) {
-    IProgressMonitor prgoressMonitor = context.getProgressMonitor();
+    IProgressMonitor progressMonitor = context.getProgressMonitor();
     BenchmarkResult result = new BenchmarkResult();
     List<BenchmarkTask> benchmarkTasks = findAllBenchmarkTasks(context, result);
-    prgoressMonitor.init(benchmarkTasks.size(), result);
+    progressMonitor.init(benchmarkTasks.size(), result);
     for (IBenchmarkTask task: benchmarkTasks) {
       task.run(result, context);
     }
-    prgoressMonitor.finished();
+    progressMonitor.finished();
     return result;
   }
 
