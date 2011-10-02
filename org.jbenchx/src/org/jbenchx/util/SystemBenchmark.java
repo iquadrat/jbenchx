@@ -29,4 +29,9 @@ public class SystemBenchmark {
     return result;
   }
 
+  @Bench
+  public Object allocate() {
+    return new Object();
+  }
+
 }
