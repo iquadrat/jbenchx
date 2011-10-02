@@ -4,9 +4,13 @@ import java.util.*;
 
 public class TimeUtil {
 
-  public static final long           MS        = 1000 * 1000;
+  public static final long           NS        = 1;
 
-  public static final long           US        = 1000;
+  public static final long           US        = 1000 * NS;
+
+  public static final long           MS        = 1000 * US;
+
+  public static final long           S         = 1000 * MS;
 
   public static String               SEPARATOR = ".";
 
