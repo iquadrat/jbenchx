@@ -19,4 +19,8 @@ public interface IBenchmarkResult {
 
   public Set<IBenchmarkTask> getTasks();
 
+  public Date getStartTime();
+
+  public Date getEndTime();
+
 }

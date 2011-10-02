@@ -36,8 +36,7 @@ public class XmlResultProgressMonitorTest {
 
     ByteArrayOutputStream out = new ByteArrayOutputStream();
 
-    XmlResultProgressMonitor monitor = new XmlResultProgressMonitor(out, timeprovider);
-    BenchmarkResult result = new BenchmarkResult();
+    XmlResultSerializer serializer = new XmlResultSerializer();
 
     BenchmarkParameters params = BenchmarkParameters.getDefaults();
     BenchmarkTimings timings1 = new BenchmarkTimings(params);
@@ -57,8 +56,9 @@ public class XmlResultProgressMonitorTest {
     BenchmarkClassError failure1 = new BenchmarkClassError(getClass(), "some failure warning here");
 
     // expectation
-    expect(timeprovider.getCurrentTimeMs()).andReturn(1317564808888L);
-    expect(timeprovider.getCurrentTimeMs()).andReturn(1317564809999L);
+    expect(timeprovider.getCurrentTime()).andReturn(new Date(1317564808888L));
+    expect(timeprovider.getCurrentTime()).andReturn(new Date(1317564809999L));
+    expect(timeprovider.getCurrentTime()).andReturn(new Date(1317564809999L));
 
     expect(task1.getName()).andReturn("task1");
     expect(result1.getIterationCount()).andReturn(11111L);
@@ -76,17 +76,11 @@ public class XmlResultProgressMonitorTest {
 
     fControl.replay();
 
-    monitor.init(2, result);
-
-    monitor.started(task1);
+    BenchmarkResult result = new BenchmarkResult(timeprovider);
     result.addResult(task1, result1);
-    monitor.done(task1);
-
-    monitor.started(task2);
     result.addResult(task2, result2);
-    monitor.done(task2);
 
-    monitor.finished();
+    serializer.serialize(result, out);
 
     fControl.verify();
 

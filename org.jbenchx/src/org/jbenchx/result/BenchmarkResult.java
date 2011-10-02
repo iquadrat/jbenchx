@@ -5,6 +5,7 @@ import java.util.*;
 import javax.annotation.*;
 
 import org.jbenchx.*;
+import org.jbenchx.util.*;
 
 public class BenchmarkResult implements IBenchmarkResult {
 
@@ -12,12 +13,29 @@ public class BenchmarkResult implements IBenchmarkResult {
 
   private final Map<IBenchmarkTask, ITaskResult> fResults       = new LinkedHashMap<IBenchmarkTask, ITaskResult>();
 
+  private final ITimeProvider                    fTimeProvider;
+
+  private final Date                             fStartTime;
+
+  private Date                                   fEndTime;
+
+  public BenchmarkResult() {
+    this(TimeUtil.getDefaultTimeProvider());
+  }
+
+  public BenchmarkResult(ITimeProvider timeProvider) {
+    fTimeProvider = timeProvider;
+    fStartTime = fTimeProvider.getCurrentTime();
+    fEndTime = fStartTime;
+  }
+
   public void addGeneralError(BenchmarkFailure error) {
     fGeneralErrors.add(error);
   }
 
   public void addResult(IBenchmarkTask task, ITaskResult result) {
     fResults.put(task, result);
+    fEndTime = fTimeProvider.getCurrentTime();
   }
 
   @Override
@@ -39,6 +57,16 @@ public class BenchmarkResult implements IBenchmarkResult {
   @Override
   public Set<IBenchmarkTask> getTasks() {
     return fResults.keySet();
+  }
+
+  @Override
+  public Date getStartTime() {
+    return fStartTime;
+  }
+
+  @Override
+  public Date getEndTime() {
+    return fEndTime;
   }
 
 }

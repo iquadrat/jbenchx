@@ -1,6 +1,6 @@
 package org.jbenchx.util;
 
-import org.jbenchx.*;
+import java.util.*;
 
 public class TimeUtil {
 
@@ -16,8 +16,8 @@ public class TimeUtil {
     DEFAULT_TIME_PROVIDER = new ITimeProvider() {
 
       @Override
-      public long getCurrentTimeMs() {
-        return System.currentTimeMillis();
+      public Date getCurrentTime() {
+        return new Date();
       }
 
     };
@@ -69,7 +69,7 @@ public class TimeUtil {
     return toString(Math.round(ns));
   }
 
-  public static long estimateTimerGranularity(Timer timer) {
+  public static long estimateTimerGranularity(org.jbenchx.Timer timer) {
     int runs = 0;
     long sum = 0;
     while (sum < 200 * TimeUtil.MS) {

@@ -4,9 +4,11 @@
  */
 package org.jbenchx.util;
 
+import java.util.*;
+
 
 public interface ITimeProvider {
 
-  public long getCurrentTimeMs();
+  public Date getCurrentTime();
 
 }

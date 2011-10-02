@@ -14,44 +14,14 @@ import javax.xml.transform.stream.*;
 
 import org.jbenchx.*;
 import org.jbenchx.result.*;
-import org.jbenchx.util.*;
 import org.w3c.dom.*;
 
-import edu.umd.cs.findbugs.annotations.*;
+public class XmlResultSerializer {
 
-public class XmlResultProgressMonitor extends IProgressMonitor.Stub implements IProgressMonitor {
+  public void serialize(IBenchmarkResult result, OutputStream out) {
 
-  private final OutputStream  fOutputStream;
-
-  private final ITimeProvider fTimeProvider;
-
-  @CheckForNull
-  private IBenchmarkResult    fResult    = null;
-
-  private long                fStartTime = Long.MIN_VALUE;
-
-  private long                fEndTime   = Long.MIN_VALUE;
-
-  public XmlResultProgressMonitor(OutputStream out) {
-    this(out, TimeUtil.getDefaultTimeProvider());
-  }
-
-  public XmlResultProgressMonitor(OutputStream out, ITimeProvider timeProvider) {
-    fOutputStream = out;
-    fTimeProvider = timeProvider;
-  }
-
-  @Override
-  public void init(int count, IBenchmarkResult result) {
-    fResult = result;
-    fStartTime = fTimeProvider.getCurrentTimeMs();
-  }
-
-  @Override
-  public void finished() {
-    Assert.isNotNull(fResult);
-
-    fEndTime = fTimeProvider.getCurrentTimeMs();
+    long startTime = result.getStartTime().getTime();
+    long endTime = result.getEndTime().getTime();
 
     DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
     // factory.setNamespaceAware( true );
@@ -61,27 +31,27 @@ public class XmlResultProgressMonitor extends IProgressMonitor.Stub implements I
 
       Document document = builder.newDocument();
       Element benchmark = document.createElement("benchmark");
-      benchmark.setAttribute("starttime", String.valueOf(fStartTime));
-      benchmark.setAttribute("endtime", String.valueOf(fEndTime));
+      benchmark.setAttribute("starttime", String.valueOf(startTime));
+      benchmark.setAttribute("endtime", String.valueOf(endTime));
       document.appendChild(benchmark);
 
-      for (IBenchmarkTask task: fResult.getTasks()) {
-        ITaskResult result = fResult.getResult(task);
+      for (IBenchmarkTask task: result.getTasks()) {
+        ITaskResult taskResult = result.getResult(task);
 
         Element taskNode = document.createElement("task");
         benchmark.appendChild(taskNode);
         taskNode.setAttribute("name", task.getName());
-        taskNode.setAttribute("iterations", String.valueOf(result.getIterationCount()));
-        taskNode.setAttribute("benchmark", String.valueOf(result.getEstimatedBenchmark()));
+        taskNode.setAttribute("iterations", String.valueOf(taskResult.getIterationCount()));
+        taskNode.setAttribute("benchmark", String.valueOf(taskResult.getEstimatedBenchmark()));
 
-        addParamNode(document, taskNode, result.getTimings().getParams());
-        addTimingsNode(document, taskNode, result.getTimings());
+        addParamNode(document, taskNode, taskResult.getTimings().getParams());
+        addTimingsNode(document, taskNode, taskResult.getTimings());
 
-        if (!result.getFailures().isEmpty()) {
-          addFailureNode(document, taskNode, result.getFailures());
+        if (!taskResult.getFailures().isEmpty()) {
+          addFailureNode(document, taskNode, taskResult.getFailures());
         }
-        if (!result.getWarnings().isEmpty()) {
-          addWarningNode(document, taskNode, result.getWarnings());
+        if (!taskResult.getWarnings().isEmpty()) {
+          addWarningNode(document, taskNode, taskResult.getWarnings());
         }
 
       }
@@ -91,10 +61,10 @@ public class XmlResultProgressMonitor extends IProgressMonitor.Stub implements I
       transformer.setOutputProperty(OutputKeys.INDENT, "yes");
       transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
       DOMSource source = new DOMSource(document);
-      StreamResult result = new StreamResult(fOutputStream);
-      transformer.transform(source, result);
+      StreamResult streamResult = new StreamResult(out);
+      transformer.transform(source, streamResult);
 
-      fOutputStream.flush();
+      out.close();
 
     } catch (ParserConfigurationException e) {
       // TODO Auto-generated catch block

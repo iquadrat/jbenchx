@@ -1,9 +1,11 @@
 package org.jbenchx.remote;
 
+import java.io.*;
 import java.util.*;
 
 import org.jbenchx.*;
 import org.jbenchx.monitor.*;
+import org.jbenchx.result.*;
 import org.jbenchx.util.*;
 
 public class RemoteRunner {
@@ -15,11 +17,18 @@ public class RemoteRunner {
     List<String> bechmarks = getBenchmarkStrings(args);
 
     ClassLoader classloader = Thread.currentThread().getContextClassLoader();
-    for (String benchmark: bechmarks) {
+    StringBuilder fileName = new StringBuilder();
+    Iterator<String> iter = bechmarks.iterator();
+    while(iter.hasNext()) {
+      String benchmark = iter.next();
 
       try {
         Class<?> benchmarkClass = classloader.loadClass(benchmark);
         runner.add(benchmarkClass);
+        fileName.append(benchmarkClass.getSimpleName());
+        if (iter.hasNext()) {
+          fileName.append("_");
+        }
       } catch (ClassNotFoundException e) {
         // TODO handle
         e.printStackTrace();
@@ -30,8 +39,19 @@ public class RemoteRunner {
 
     }
 
-    IBenchmarkContext context = BenchmarkContext.create(new ConsoleProgressMonitor());
-    runner.run(context);
+    try {
+
+      MultiProgressMonitor progressMonitor = new MultiProgressMonitor();
+      progressMonitor.add(new ConsoleProgressMonitor());
+      IBenchmarkContext context = BenchmarkContext.create(progressMonitor);
+      IBenchmarkResult result = runner.run(context);
+      FileOutputStream out = new FileOutputStream(fileName.toString() + "-"+result.getEndTime().getTime()+ ".bench");
+      new XmlResultSerializer().serialize(result, out);
+
+    } catch (FileNotFoundException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
 
   }
 
