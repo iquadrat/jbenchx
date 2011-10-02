@@ -2,7 +2,7 @@
 <feature
       id="org.jbenchx.eclipse"
       label="JBenchX for Eclipse"
-      version="0.1.1.qualifier"
+      version="0.2.0.qualifier"
       provider-name="Micha Riser">
 
    <description url="http://iquadrat.github.com/jbenchx/">
@@ -10,7 +10,7 @@
    </description>
 
    <copyright>
-      (C) by Micha Riser, 2011
+      (C) Copyright by Micha Riser, 2011
    </copyright>
 
    <license url="http://www.eclipse.org/org/documents/epl-v10.php">
