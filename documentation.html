@@ -1,0 +1,48 @@
+---
+layout: default
+title: Documentation
+---
+
+<h1>Rules</h2>
+<ul>
+<li>Benchmark classes must have a no-arg public constructor.</li>
+<li>Benchmark methods must be public.</li>
+<li>Benchmark methods must not take arguments.</li>
+<li>Benchmark methods can return values.</li>
+</ul>
+
+<h1>Annotations:</h1>
+
+<h2>@Bench</h2>
+Each benchmark methods must be annotated with the @Bench annotation.
+Each method which has this annotation or one of its overridden method
+of super class contains this annotation is considered a benchmark method
+of the class.<p>
+The @Bench annotation also allows to specify certain parameters for the benchmark.
+If some option is not set, the option's value is taken from the overridden method of
+the super-class or if the method is not an overriding method, the default
+value for the option is chosen.
+
+<h3>Parameters:</h3>
+<ul>
+<li><b>minRunCount</b>: Minimum number of runs that are performed for benchmarking the method.</li>
+<li><b>maxRunCount</b>: Maximum number of runs that are performed for benchmarking the method.</li>
+<li><b>minSampleCount</b>: Minimum number of valid samples that are needed.</li>
+<li><b>maxDeviation</b>: Maximum deviation from the minimal time allowed to consider a sample valid.</li>
+<li><b>divisor</b>: Benchmark value divisor. The measured time is divided by this value.</li>
+<li><b>targetTimeNs</b>: Target time for a single run of the benchmark.</li>
+</ul>
+
+
+<h2>@SingleRun</h2>
+If a benchmark method gets annotated with the @SingleRun annotation,
+the benchmark will be invoked only once during a benchmark run instead
+of calculating the iteration count based on the target time.
+If you use this annotation you must ensure yourself that the benchmark runs
+a meaningful amouth of time.
+
+
+<h2>@Group</h2>
+The @Group annotation allows the benchmark class to be associated to
+a certain benchmark group. The group is identified by the string given
+to the annotation.

@@ -1,0 +1,31 @@
+---
+layout: default
+title: Example
+---
+
+<h1>Secure Random Integer</h1>
+
+Example benchmark to test how long it takes to generate a truely random integer:
+
+<pre>
+import java.security.*;
+
+import org.jbenchx.*;
+import org.jbenchx.annotations.*;
+
+public class Example extends Benchmark {
+  
+  private SecureRandom fRandom;
+
+  public Example() throws Exception {
+    fRandom = SecureRandom.getInstance("SHA1PRNG");
+  }
+  
+  @Bench
+  public int random() {
+    return fRandom.nextInt();
+  }
+  
+}
+</pre>
+
