@@ -1,4 +1,4 @@
-package org.jbenchx.test;
+package org.jbenchx.example;
 
 import org.jbenchx.*;
 import org.jbenchx.annotations.*;

@@ -8,6 +8,7 @@ import java.util.*;
 
 import org.jbenchx.*;
 import org.jbenchx.result.*;
+import org.jbenchx.run.*;
 import org.jbenchx.vm.*;
 
 

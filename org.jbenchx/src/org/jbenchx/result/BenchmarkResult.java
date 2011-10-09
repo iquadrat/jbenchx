@@ -4,7 +4,7 @@ import java.util.*;
 
 import javax.annotation.*;
 
-import org.jbenchx.*;
+import org.jbenchx.run.*;
 import org.jbenchx.util.*;
 
 public class BenchmarkResult implements IBenchmarkResult {

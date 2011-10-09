@@ -4,13 +4,19 @@ import java.io.*;
 
 public class BenchmarkClassError extends BenchmarkFailure {
 
-  private final Class<?> fClass;
+  private static final long serialVersionUID = 1L;
 
-  private final String   fMessage;
+  private final Class<?>    fClass;
+
+  private final String      fMessage;
 
   public BenchmarkClassError(Class<?> clazz, String message) {
     fClass = clazz;
     fMessage = message;
+  }
+
+  public Class<?> getAffectedClass() {
+    return fClass;
   }
 
   @Override

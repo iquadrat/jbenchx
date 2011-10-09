@@ -91,7 +91,7 @@ public class BenchmarkParameters {
   
   @CheckForNull
   public static BenchmarkParameters read(Method method) {
-    List<Bench> annotations = ClassUtil.findAnnotations(method, Bench.class);
+    List<Bench> annotations = ClassUtil.findMethodAnnotations(method, Bench.class);
     ListIterator<Bench> iterator = annotations.listIterator(annotations.size());
     if (!iterator.hasPrevious()) return null;
     BenchmarkParameters result = new BenchmarkParameters(iterator.previous());

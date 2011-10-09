@@ -2,9 +2,11 @@ package org.jbenchx.result;
 
 import java.io.*;
 
-import org.jbenchx.*;
+import org.jbenchx.run.*;
 
 public class BenchmarkTaskFailure extends BenchmarkFailure {
+
+  private static final long serialVersionUID = 1L;
 
   private final IBenchmarkTask fTask;
 

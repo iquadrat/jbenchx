@@ -5,10 +5,8 @@ import java.lang.reflect.*;
 import java.security.*;
 import java.util.*;
 
-import org.jbenchx.*;
-
 public class ClassUtil {
-  
+
   public static boolean hasDefaultConstructor(Class<?> clazz) throws SecurityException {
     try {
       Constructor<?> constructor = clazz.getConstructor();
@@ -20,27 +18,27 @@ public class ClassUtil {
       return false;
     }
   }
-  
+
   public static ClassLoader createClassLoader() {
     return AccessController.doPrivileged(new PrivilegedAction<ClassLoader>() {
-      
+
       @Override
       public ClassLoader run() {
         return new BenchmarkClassLoader();
       }
-      
+
     });
   }
-  
+
   /**
    * Finds all annotations declared on a method in its class hierarchy.
    */
-  public static <A extends Annotation> List<A> findAnnotations(Method method, Class<A> annotationClass) throws SecurityException {
+  public static <A extends Annotation> List<A> findMethodAnnotations(Method method, Class<A> annotationClass) throws SecurityException {
     ArrayList<A> result = new ArrayList<A>(4);
     findAnnotations(method, annotationClass, result);
     return result;
   }
-  
+
   private static <A extends Annotation> void findAnnotations(Method method, Class<A> annotationClass, List<A> result) throws SecurityException {
     A annotation = method.getAnnotation(annotationClass);
     if (annotation != null) {
@@ -55,5 +53,5 @@ public class ClassUtil {
       }
     }
   }
-  
+
 }

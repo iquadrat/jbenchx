@@ -1,4 +1,4 @@
-package org.jbenchx.test;
+package org.jbenchx.example;
 
 import org.jbenchx.*;
 import org.jbenchx.annotations.*;
@@ -12,7 +12,7 @@ public class Example {
 
   private double          fNumber3;
 
-  private final int       fN = 1000;
+//  private final int       fN = 1000;
 
   public Example(Void v) {}
 

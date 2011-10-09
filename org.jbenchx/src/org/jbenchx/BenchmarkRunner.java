@@ -1,11 +1,13 @@
 package org.jbenchx;
 
+import java.lang.annotation.*;
 import java.lang.reflect.*;
 import java.util.*;
 
 import org.jbenchx.annotations.*;
 import org.jbenchx.monitor.*;
 import org.jbenchx.result.*;
+import org.jbenchx.run.*;
 import org.jbenchx.util.*;
 
 public class BenchmarkRunner {
@@ -51,22 +53,36 @@ public class BenchmarkRunner {
         continue;
       }
 
-      if (method.getParameterTypes().length > 0) {
-        result.addGeneralError(new BenchmarkClassError(clazz, "Benchmark method " + method.getName() + " has parameters!"));
-        continue;
-      }
+//      if (method.getParameterTypes().length > 0) {
+//        result.addGeneralError(new BenchmarkClassError(clazz, "Benchmark method " + method.getName() + " has parameters!"));
+//        continue;
+//      }
 
       params = BenchmarkParameters.merge(context.getDefaultParams(), params);
       boolean singleRun = hasSingleRunAnnotation(method);
 
-      tasks.add(new BenchmarkTask(clazz.getSimpleName(), clazz.getName(), method.getName(), params, singleRun));
+      Iterator<ParameterizationValues> paramIterator = getMethodArgumentsIterator(clazz, method);
+      while (paramIterator.hasNext()) {
+        ParameterizationValues methodArguments = paramIterator.next();
+        tasks.add(new BenchmarkTask(clazz.getSimpleName(), clazz.getName(), method.getName(), params, singleRun, methodArguments));
+      }
 
     }
 
   }
 
+  private Iterator<ParameterizationValues> getMethodArgumentsIterator(Class<?> clazz, Method method) {
+    Class<?>[] paramTypes = method.getParameterTypes();
+    Annotation[][] paramAnnotations = method.getParameterAnnotations();
+    List<Parameterization> parameterizations = new ArrayList<Parameterization>(paramTypes.length);
+    for (int i = 0; i < paramTypes.length; ++i) {
+      parameterizations.add(Parameterization.create(method, paramTypes[i], paramAnnotations[i]));
+    }
+    return new ParameterizationIterator(parameterizations);
+  }
+
   private boolean hasSingleRunAnnotation(Method method) {
-    return !ClassUtil.findAnnotations(method, SingleRun.class).isEmpty();
+    return !ClassUtil.findMethodAnnotations(method, SingleRun.class).isEmpty();
   }
 
 }

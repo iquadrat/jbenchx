@@ -1,4 +1,4 @@
-package org.jbenchx;
+package org.jbenchx.util;
 
 import java.io.*;
 import java.net.*;

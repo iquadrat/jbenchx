@@ -10,10 +10,13 @@ import org.jbenchx.*;
 import org.jbenchx.annotations.*;
 import org.jbenchx.monitor.*;
 import org.jbenchx.result.*;
+import org.jbenchx.run.*;
 import org.junit.*;
 
 
 public class BenchmarkTaskTest extends BenchmarkTestCase {
+
+  private static final ParameterizationValues NO_ARGS = ParameterizationValues.EMPTY;
 
   public static class TestBench {
 
@@ -26,7 +29,7 @@ public class BenchmarkTaskTest extends BenchmarkTestCase {
 
   @Test
   public void warningWhenIterationToFast() {
-    IBenchmarkTask task = new BenchmarkTask("empty", TestBench.class.getName(), "empty", BenchmarkParameters.getDefaults(), false);
+    IBenchmarkTask task = new BenchmarkTask("empty", TestBench.class.getName(), "empty", BenchmarkParameters.getDefaults(), false, NO_ARGS);
     BenchmarkResult result = new BenchmarkResult();
     IBenchmarkContext context = new BenchmarkContext(IProgressMonitor.DUMMY, 10, 100);
     task.run(result, context);

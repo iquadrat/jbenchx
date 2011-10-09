@@ -14,6 +14,7 @@ import javax.xml.transform.stream.*;
 
 import org.jbenchx.*;
 import org.jbenchx.result.*;
+import org.jbenchx.run.*;
 import org.w3c.dom.*;
 
 public class XmlResultSerializer {

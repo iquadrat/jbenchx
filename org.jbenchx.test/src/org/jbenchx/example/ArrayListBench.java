@@ -1,14 +1,14 @@
-package org.jbenchx.test;
+package org.jbenchx.example;
 
 import java.util.*;
 
 import org.jbenchx.annotations.*;
 
-public class ArrayListBenchmark {
+public class ArrayListBench {
 
   private final ArrayList<Integer> fInteger1000;
 
-  public ArrayListBenchmark() {
+  public ArrayListBench() {
     fInteger1000 = new ArrayList<Integer>();
     for (int i = 0; i < 1000; ++i) {
       fInteger1000.add(i);
@@ -16,9 +16,18 @@ public class ArrayListBenchmark {
   }
 
   @Bench
-  public Object create() {
-    for(int i=0; i<1000; ++i) {
-      new ArrayList<Object>(1000);
+  public Object create(@ForEachInt({10, 100, 1000, 10000}) int size) {
+    for (int i = 0; i < 1000; ++i) {
+      new ArrayList<Object>(size);
+    }
+    return null;
+  }
+
+  @Bench
+  public Object fill(@ForEachInt({10, 100, 1000, 10000}) int size, @ForEachBoolean({true, false}) boolean initSize) {
+    ArrayList<Object> list = initSize ? new ArrayList<Object>(size) : new ArrayList<Object>();
+    for (int i = 0; i < size; ++i) {
+      list.add(new Object());
     }
     return null;
   }

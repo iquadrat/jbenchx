@@ -1,33 +1,36 @@
-package org.jbenchx;
+package org.jbenchx.run;
 
 import java.lang.reflect.*;
 
+import org.jbenchx.*;
 import org.jbenchx.result.*;
 import org.jbenchx.util.*;
 import org.jbenchx.vm.*;
 
 public class BenchmarkTask implements IBenchmarkTask {
 
-//  private static final int          MIN_TARGET_TIME = 1 * 1000 * 1000;
+  private static final double          SQRT2 = Math.sqrt(2);
 
-  private static final double       SQRT2 = Math.sqrt(2);
+  private final String                 fClassName;
 
-  private final String              fClassName;
+  private final String                 fMethodName;
 
-  private final String              fMethodName;
+  private final String                 fBenchmarkName;
 
-  private final String              fBenchmarkName;
+  private final BenchmarkParameters    fParams;
 
-  private final BenchmarkParameters fParams;
+  private final boolean                fSingleRun;
 
-  private final boolean             fSingleRun;
+  private final ParameterizationValues fMethodArguments;
 
-  public BenchmarkTask(String benchmarkName, String className, String methodName, BenchmarkParameters params, boolean singleRun) {
+  public BenchmarkTask(String benchmarkName, String className, String methodName, BenchmarkParameters params, boolean singleRun,
+      ParameterizationValues methodArguments) {
     fBenchmarkName = benchmarkName;
     fClassName = className;
     fMethodName = methodName;
     fParams = params;
     fSingleRun = singleRun;
+    fMethodArguments = methodArguments;
   }
 
   @Override
@@ -94,13 +97,15 @@ public class BenchmarkTask implements IBenchmarkTask {
       InvocationTargetException {
     Timer timer = new Timer();
     timer.start();
+    Object[] arguments = fMethodArguments.getValues();
     for (long i = 0; i < iterationCount; ++i) {
-      method.invoke(benchmark);
+      method.invoke(benchmark, arguments);
     }
     return timer.stopAndReset();
   }
 
-  private long findIterationCount(IBenchmarkContext context, Object benchmark, Method method) throws IllegalAccessException, InvocationTargetException {
+  private long findIterationCount(IBenchmarkContext context, Object benchmark, Method method) throws IllegalAccessException,
+      InvocationTargetException {
     if (fSingleRun) {
       return 1;
     }
@@ -110,9 +115,10 @@ public class BenchmarkTask implements IBenchmarkTask {
     long time;
     for (;;) {
 
+      Object[] arguments = fMethodArguments.getValues();
       timer.start();
       for (int i = 0; i < iterations; ++i) {
-        method.invoke(benchmark);
+        method.invoke(benchmark, arguments);
       }
       time = timer.stopAndReset();
       if (iterations == 1 && time > fParams.getTargetTimeNs()) {
@@ -130,7 +136,7 @@ public class BenchmarkTask implements IBenchmarkTask {
   }
 
   private Method getBenchmarkMethod(Object benchmark) throws SecurityException, NoSuchMethodException {
-    return benchmark.getClass().getMethod(fMethodName);
+    return benchmark.getClass().getMethod(fMethodName, fMethodArguments.getTypes());
   }
 
   private Object createInstance() throws ClassNotFoundException, InstantiationException, IllegalAccessException {
@@ -147,7 +153,19 @@ public class BenchmarkTask implements IBenchmarkTask {
 
   @Override
   public String getName() {
-    return fBenchmarkName + "." + fMethodName;
+    StringBuilder sb = new StringBuilder();
+    sb.append(fBenchmarkName);
+    sb.append('.');
+    sb.append(fMethodName);
+    if (fMethodArguments.getValues().length != 0) {
+      sb.append('(');
+      for (Object argument: fMethodArguments.getValues()) {
+        sb.append(argument.toString());
+        sb.append(',');
+      }
+      sb.setCharAt(sb.length() - 1, ')');
+    }
+    return sb.toString();
   }
 
 }

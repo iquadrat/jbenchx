@@ -8,6 +8,7 @@ Export-Package: org.jbenchx,
  org.jbenchx.monitor,
  org.jbenchx.remote,
  org.jbenchx.result,
+ org.jbenchx.run,
  org.jbenchx.util,
  org.jbenchx.vm
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6

@@ -8,7 +8,7 @@ import java.util.*;
 
 import javax.annotation.*;
 
-import org.jbenchx.*;
+import org.jbenchx.run.*;
 
 public interface IBenchmarkResult {
 

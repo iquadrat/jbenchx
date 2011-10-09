@@ -6,8 +6,6 @@ package org.jbenchx.result;
 
 import java.util.*;
 
-import org.jbenchx.*;
-
 public interface ITaskResult {
 
   public long getIterationCount();

@@ -1,6 +1,8 @@
-package org.jbenchx;
+package org.jbenchx.result;
 
 import java.util.*;
+
+import org.jbenchx.*;
 
 public class BenchmarkTimings {
 

@@ -14,6 +14,7 @@ import org.easymock.*;
 import org.jbenchx.*;
 import org.jbenchx.monitor.*;
 import org.jbenchx.result.*;
+import org.jbenchx.run.*;
 import org.jbenchx.util.*;
 import org.junit.*;
 import org.junit.Assert;
