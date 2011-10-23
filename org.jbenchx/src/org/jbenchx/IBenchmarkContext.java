@@ -20,4 +20,6 @@ public interface IBenchmarkContext {
   @CheckForNull 
   public SystemInfo getSystemInfo();
   
+  public String getVersion();
+  
 }

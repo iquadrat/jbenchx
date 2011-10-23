@@ -66,4 +66,11 @@ public class MultiProgressMonitor implements IProgressMonitor {
     }
   }
 
+  @Override
+  public void systemInfo(SystemInfo systemInfo) {
+    for(IProgressMonitor monitor: fMonitors) {
+      monitor.systemInfo(systemInfo);
+    }
+  }
+
 }

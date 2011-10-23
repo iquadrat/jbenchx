@@ -31,7 +31,7 @@ public class BenchmarkTaskTest extends BenchmarkTestCase {
   public void warningWhenIterationToFast() {
     IBenchmarkTask task = new BenchmarkTask("empty", TestBench.class.getName(), "empty", BenchmarkParameters.getDefaults(), false, NO_ARGS);
     BenchmarkResult result = new BenchmarkResult();
-    IBenchmarkContext context = new BenchmarkContext(IProgressMonitor.DUMMY, SystemInfo.create(10, 100));
+    IBenchmarkContext context = new BenchmarkContext(IProgressMonitor.DUMMY, SystemInfo.create(10, 100, 100));
     task.run(result, context);
     ITaskResult taskResult = result.getResult(task);
     Assert.assertTrue(taskResult.getFailures().isEmpty());

@@ -8,6 +8,8 @@ public class SystemInfo {
   
   private final long   fMethodInvokeTime;
   
+  private final double fSystemBenchmark;
+  
   private final String fOsInfo;
   
   private final String fOsVersion;
@@ -16,23 +18,24 @@ public class SystemInfo {
   
   private final long   fMaxHeapSize;
   
-  public SystemInfo(long timerGranularity, long methodInvokeTime, String osInfo, String osVersion, int cpuCount, 
+  public SystemInfo(long timerGranularity, long methodInvokeTime, double systemBenchMark, String osInfo, String osVersion, int cpuCount, 
       long maxHeapSize) {
     fTimerGranularity = timerGranularity;
     fMethodInvokeTime = methodInvokeTime;
+    fSystemBenchmark = systemBenchMark;
     fOsInfo = osInfo;
     fOsVersion = osVersion;
     fCpuCount = cpuCount;
     fMaxHeapSize = maxHeapSize;
   }
   
-  public static SystemInfo create(long timerGranularity, long methodInvokeTime) {
+  public static SystemInfo create(long timerGranularity, long methodInvokeTime, double systemBenchMark) {
     String osInfo = System.getProperty("os.name");
     String osVersion = System.getProperty("os.version");
     int cpuCount = ManagementFactory.getOperatingSystemMXBean().getAvailableProcessors();
     MemoryUsage heapMemoryUsage = ManagementFactory.getMemoryMXBean().getHeapMemoryUsage();
     long maxHeapSize = heapMemoryUsage.getMax();
-    return new SystemInfo(timerGranularity, methodInvokeTime, osInfo, osVersion, cpuCount, maxHeapSize);
+    return new SystemInfo(timerGranularity, methodInvokeTime, systemBenchMark, osInfo, osVersion, cpuCount, maxHeapSize);
   }
   
   /**
@@ -47,6 +50,10 @@ public class SystemInfo {
    */
   public long getMethodInvokeTime() {
     return fMethodInvokeTime;
+  }
+  
+  public double getSystemBenchmark() {
+    return fSystemBenchmark;
   }
   
   public String getOsVersion() {
@@ -69,10 +76,6 @@ public class SystemInfo {
   public String toString() {
     return "SystemInfo [fTimerGranularity=" + fTimerGranularity + ", fMethodInvokeTime=" + fMethodInvokeTime + ", fOsInfo=" + fOsInfo
     + ", fOsVersion=" + fOsVersion + ", fCpuCount=" + fCpuCount + ", fMaxHeapSize=" + fMaxHeapSize + "]";
-  }
-  
-  public static void main(String[] args) {
-    System.out.println(create(0, 0));
   }
   
 }
