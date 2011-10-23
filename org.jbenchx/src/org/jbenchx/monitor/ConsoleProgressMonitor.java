@@ -25,7 +25,7 @@ public class ConsoleProgressMonitor implements IProgressMonitor {
   @Override
   public void systemInfo(SystemInfo systemInfo) {
     System.out.println("Running on " + systemInfo.getOsInfo() + " " + systemInfo.getOsInfo());
-    System.out.println("Max heap = " + systemInfo.getMaxHeapSize() + " System Benchmark = " + systemInfo.getSystemBenchmark());
+    System.out.println("Max heap = " + systemInfo.getMaxHeapSize() + " System Benchmark = " + TimeUtil.toString(systemInfo.getSystemBenchmark()));
   }
   
   @Override

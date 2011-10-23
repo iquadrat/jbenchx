@@ -10,7 +10,27 @@ import org.junit.*;
 public class TimeUtilTest extends BenchmarkTestCase {
 
   @Test
-  public void toString_() {
+  public void doubleToString() {
+    assertEquals("0.00ns", TimeUtil.toString(0.0));
+    assertEquals("0.03ns", TimeUtil.toString(0.03));
+    assertEquals("0.47ns", TimeUtil.toString(0.47));
+    assertEquals("0.50ns", TimeUtil.toString(0.499));
+    assertEquals("1.23ns", TimeUtil.toString(1.2345));
+    assertEquals("9.95ns", TimeUtil.toString(9.949));
+    assertEquals("9.95ns", TimeUtil.toString(9.95));
+    assertEquals("9.99ns", TimeUtil.toString(9.99));
+    assertEquals("10.0ns", TimeUtil.toString(9.995));
+    assertEquals("11.1ns", TimeUtil.toString(11.05));
+    assertEquals("49.5ns", TimeUtil.toString(49.49));
+    assertEquals("99.2ns", TimeUtil.toString(99.15));
+    assertEquals("99.6ns", TimeUtil.toString(99.55));
+    assertEquals("99.9ns", TimeUtil.toString(99.949));
+    assertEquals("100ns", TimeUtil.toString(99.95));
+    assertEquals("1.23ms", TimeUtil.toString(1234567.89));
+  }
+  
+  @Test
+  public void longToString() {
     assertEquals("0ns", TimeUtil.toString(0));
     assertEquals("1ns", TimeUtil.toString(1));
     assertEquals("-1ns", TimeUtil.toString(-1));

@@ -69,6 +69,12 @@ public class TimeUtil {
   }
 
   public static String toString(double ns) {
+    if (ns < 9.995) {
+      return String.format("%.2fns", ns);
+    }
+    if (ns < 99.95) {
+      return String.format("%.1fns", ns);
+    }
     // TODO sub-ns time formating
     return toString(Math.round(ns));
   }
