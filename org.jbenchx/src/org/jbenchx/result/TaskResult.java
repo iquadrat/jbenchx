@@ -2,13 +2,7 @@ package org.jbenchx.result;
 
 import java.util.*;
 
-import org.jbenchx.*;
-
 public class TaskResult implements ITaskResult {
-
-  private static final boolean         SUBTRACT_INVOKE_TIME = false;
-
-  private final IBenchmarkContext       fContext;
 
   private final BenchmarkTimings       fTimings;
 
@@ -20,8 +14,7 @@ public class TaskResult implements ITaskResult {
 
   private final long                   fIterationCount;
 
-  public TaskResult(IBenchmarkContext context, BenchmarkTimings timings, long iterationCount, BenchmarkFailure... errors) {
-    fContext = context;
+  public TaskResult(BenchmarkTimings timings, long iterationCount, BenchmarkFailure... errors) {
     fTimings = timings;
     fIterationCount = iterationCount;
     fErrors = Arrays.asList(errors);
@@ -30,9 +23,8 @@ public class TaskResult implements ITaskResult {
   }
 
   private double estimateBenchmark() {
-    long methodInvokeTime = SUBTRACT_INVOKE_TIME ? Math.max(0, fContext.getMethodInvokeTime()) : 0;
     double perIterationTimeRaw = 1.0 * fTimings.getEstimatedRunTime() / fIterationCount;
-    double benchmarkTime = (perIterationTimeRaw - methodInvokeTime) / fTimings.getParams().getDivisor();
+    double benchmarkTime = perIterationTimeRaw / fTimings.getParams().getDivisor();
     return Math.max(0, benchmarkTime);
   }
 
@@ -64,5 +56,5 @@ public class TaskResult implements ITaskResult {
   public double getEstimatedBenchmark() {
     return fEstimatedBenchmark;
   }
-
+  
 }

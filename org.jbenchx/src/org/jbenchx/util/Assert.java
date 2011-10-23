@@ -113,6 +113,7 @@ public class Assert {
 
   public static void log(String string) {
     // TODO logger
+    System.err.println(string);
   }
 
 }

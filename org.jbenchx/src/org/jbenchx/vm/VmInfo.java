@@ -19,8 +19,6 @@ public class VmInfo {
   
   private VmInfo() {
     fVmName = System.getProperty("java.runtime.name") + "-" + System.getProperty("java.runtime.version"); // ManagementFactory.getRuntimeMXBean().getVmName() + "-" + ManagementFactory.getRuntimeMXBean().getVmVersion();
-    fOsName = System.getProperty("os.name") + "-" + System.getProperty("os.arch") + "-" + System.getProperty("os.version");
-    fProcessors = ManagementFactory.getOperatingSystemMXBean().getAvailableProcessors();
     fJitCompiler = ManagementFactory.getCompilationMXBean().getName();
     fHostName = getHostName();
   }

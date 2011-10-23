@@ -16,6 +16,9 @@ public interface ITaskResult {
 
   public BenchmarkTimings getTimings();
 
+  /**
+   * @return estimated benchmark time in nanoseconds
+   */
   public double getEstimatedBenchmark();
 
 }

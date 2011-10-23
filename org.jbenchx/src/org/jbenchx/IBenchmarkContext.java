@@ -4,19 +4,20 @@
  */
 package org.jbenchx;
 
+import javax.annotation.CheckForNull;
+
 import org.jbenchx.monitor.*;
 import org.jbenchx.vm.*;
 
 public interface IBenchmarkContext {
   
-  public abstract VmInfo getVmInfo();
+  public VmInfo getVmInfo();
   
-  public abstract BenchmarkParameters getDefaultParams();
+  public BenchmarkParameters getDefaultParams();
   
-  public abstract IProgressMonitor getProgressMonitor();
+  public IProgressMonitor getProgressMonitor();
   
-  public abstract long getTimerGranularity();
-  
-  public abstract long getMethodInvokeTime();
+  @CheckForNull 
+  public SystemInfo getSystemInfo();
   
 }

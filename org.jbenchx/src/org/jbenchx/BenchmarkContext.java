@@ -1,5 +1,7 @@
 package org.jbenchx;
 
+import javax.annotation.CheckForNull;
+
 import org.jbenchx.monitor.*;
 import org.jbenchx.result.*;
 import org.jbenchx.run.*;
@@ -12,20 +14,18 @@ public class BenchmarkContext implements IBenchmarkContext {
   
   private final IProgressMonitor    fProgressMonitor;
   
-  private final long                fTimerGranularity;
-  
-  private final long                fMethodInvokeTime;
-  
   private final BenchmarkParameters fDefaultParams;
   
-  public BenchmarkContext(IProgressMonitor progressMonitor, long timerGranularity, long methodInvokeTime) {
-    this(progressMonitor, timerGranularity, methodInvokeTime, BenchmarkParameters.getDefaults());
+  @CheckForNull 
+  private final SystemInfo          fSystemInfo;
+  
+  public BenchmarkContext(IProgressMonitor progressMonitor, @CheckForNull SystemInfo systemInfo) {
+    this(progressMonitor, systemInfo, BenchmarkParameters.getDefaults());
   }
   
-  public BenchmarkContext(IProgressMonitor progressMonitor, long timerGranularity, long methodInvokeTime, BenchmarkParameters defaultParams) {
+  public BenchmarkContext(IProgressMonitor progressMonitor, @CheckForNull SystemInfo systemInfo, BenchmarkParameters defaultParams) {
     fProgressMonitor = progressMonitor;
-    fTimerGranularity = timerGranularity;
-    fMethodInvokeTime = methodInvokeTime;
+    fSystemInfo = systemInfo;
     fDefaultParams = defaultParams;
   }
   
@@ -43,35 +43,36 @@ public class BenchmarkContext implements IBenchmarkContext {
   public IProgressMonitor getProgressMonitor() {
     return fProgressMonitor;
   }
-  
+
   @Override
-  public long getTimerGranularity() {
-    return fTimerGranularity;
-  }
-  
-  @Override
-  public long getMethodInvokeTime() {
-    return fMethodInvokeTime;
+  public SystemInfo getSystemInfo() {
+    return fSystemInfo;
   }
   
   public static IBenchmarkContext create(IProgressMonitor progressMonitor) {
-    IBenchmarkContext systemBenchmarkContext = new BenchmarkContext(IProgressMonitor.DUMMY, -1, -1);
+    IBenchmarkContext systemBenchmarkContext = new BenchmarkContext(IProgressMonitor.DUMMY, null);
     systemBenchmarkContext.getDefaultParams().setTargetTimeNs(50 * TimeUtil.MS);
     BenchmarkRunner runner = new BenchmarkRunner();
     runner.add(SystemBenchmark.class);
     IBenchmarkResult result = runner.run(systemBenchmarkContext);
     
-    IBenchmarkTask sqrtTask = result.findTask(SystemBenchmark.class.getSimpleName() + ".sqrt");
-    IBenchmarkTask sqrt1Task = result.findTask(SystemBenchmark.class.getSimpleName() + ".sqrt1");
-    if (sqrtTask == null || sqrt1Task == null) {
-      throw new RuntimeException("Failed to run SystemBenchmark");
+    for (IBenchmarkTask task: result.getTasks()) {
+      System.out.println(task.getName() + ": " + result.getResult(task).getEstimatedBenchmark());
     }
     
-    ITaskResult sqrtResult = result.getResult(sqrt1Task);
-    ITaskResult sqrt1Result = result.getResult(sqrtTask);
+    IBenchmarkTask emptyTask = result.findTask(SystemBenchmark.class.getSimpleName() + ".empty");
+    ITaskResult emptyResult = result.getResult(emptyTask);
     
-//    System.out.println("sqrt="+sqrtResult.getEstimatedBenchmark()+" sqrt1="+sqrt1Result.getEstimatedBenchmark());
-    long methodInvokeTime = Math.round(sqrtResult.getEstimatedBenchmark() - sqrt1Result.getEstimatedBenchmark());
+//////    IBenchmarkTask sqrt1Task = result.findTask(SystemBenchmark.class.getSimpleName() + ".allocate");
+//////    if (sqrtTask == null || sqrt1Task == null) {
+//////      throw new RuntimeException("Failed to run SystemBenchmark");
+//////    }
+////    
+////    ITaskResult sqrtResult = result.getResult(sqrt1Task);
+////    ITaskResult sqrt1Result = result.getResult(sqrtTask);
+//    
+////    System.out.println("sqrt="+sqrtResult.getEstimatedBenchmark()+" sqrt1="+sqrt1Result.getEstimatedBenchmark());
+//    long methodInvokeTime = Math.round(sqrtResult.getEstimatedBenchmark() - sqrt1Result.getEstimatedBenchmark());
     
 //    long methodInvokeTime = -1;
 //    try {
@@ -81,6 +82,7 @@ public class BenchmarkContext implements IBenchmarkContext {
 //    }
     
     long timerGranularity = TimeUtil.estimateTimerGranularity(new Timer());
+    long methodInvoke = Math.round(emptyResult.getEstimatedBenchmark());
     
 //    System.out.println("Timer Granularity: " + TimeUtil.toString(timerGranularity) + ", invoke: " + TimeUtil.toString(methodInvokeTime));
 //      BenchmarkContext systemContext = new BenchmarkContext(new ConsoleProgressMonitor());
@@ -88,7 +90,8 @@ public class BenchmarkContext implements IBenchmarkContext {
 //          new BenchmarkParameters(0, 1, 5, 50, 5, 0.1));
 //      BenchmarkResult result = new BenchmarkResult();
 //      task.run(result, systemContext);
-    return new BenchmarkContext(progressMonitor, timerGranularity, methodInvokeTime);
+    SystemInfo systemInfo = SystemInfo.create(timerGranularity, methodInvoke);
+    return new BenchmarkContext(progressMonitor, systemInfo);
   }
   
 }

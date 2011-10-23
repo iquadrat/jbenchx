@@ -45,15 +45,23 @@ public class BenchmarkTask implements IBenchmarkTask {
       context.getProgressMonitor().done(this);
 
     } catch (Exception e) {
-      result.addResult(this, new TaskResult(context, new BenchmarkTimings(fParams), 0, new BenchmarkTaskFailure(this, e)));
+      result.addResult(this, new TaskResult(new BenchmarkTimings(fParams), 0, new BenchmarkTaskFailure(this, e)));
       context.getProgressMonitor().failed(this);
     }
   }
 
   private TaskResult internalRun(IBenchmarkContext context) throws Exception {
+    long timerGranularity = 10 * TimeUtil.MS;
+    long methodInvokeTime = 0;
+    SystemInfo systemInfo = context.getSystemInfo();
+    if (systemInfo != null) {
+      timerGranularity = systemInfo.getTimerGranularity();
+      methodInvokeTime = systemInfo.getMethodInvokeTime();
+    }
+    
     Object benchmark = createInstance();
     Method method = getBenchmarkMethod(benchmark);
-    long iterationCount = findIterationCount(context, benchmark, method);
+    long iterationCount = findIterationCount(benchmark, method, timerGranularity);
 
     BenchmarkTimings timings = new BenchmarkTimings(fParams);
     SystemUtil.cleanMemory();
@@ -73,7 +81,7 @@ public class BenchmarkTask implements IBenchmarkTask {
       } else {
         // restart
         timings.clear();
-        iterationCount = findIterationCount(context, benchmark, method);
+        iterationCount = findIterationCount(benchmark, method, timerGranularity);
         runtimePerIteration = Long.MAX_VALUE;
       }
       context.getProgressMonitor().run(this, timing, VmState.difference(preState, postState));
@@ -84,8 +92,8 @@ public class BenchmarkTask implements IBenchmarkTask {
 //    long avgNs = Math.round(timings.getEstimatedTime() / iterationCount / fDivisor);
 //    System.out.println();
 //    System.out.println(this + ": " + TimeUtil.toString(avgNs));
-    TaskResult result = new TaskResult(context, timings, iterationCount);
-    long minSingleIterationTime = context.getMethodInvokeTime() * 10;
+    TaskResult result = new TaskResult(timings, iterationCount);
+    long minSingleIterationTime = methodInvokeTime * 10;
     if (runtimePerIteration < minSingleIterationTime) {
       result.addWarning(new BenchmarkWarning("Runtime of single iteration too short: " + runtimePerIteration
           + "ns, increase work in single iteration to run at least " + minSingleIterationTime + "ns"));
@@ -104,12 +112,12 @@ public class BenchmarkTask implements IBenchmarkTask {
     return timer.stopAndReset();
   }
 
-  private long findIterationCount(IBenchmarkContext context, Object benchmark, Method method) throws IllegalAccessException,
+  private long findIterationCount(Object benchmark, Method method, long timerGranularity) throws IllegalAccessException,
       InvocationTargetException {
     if (fSingleRun) {
       return 1;
     }
-
+    
     Timer timer = new Timer();
     long iterations = 1;
     long time;
@@ -127,7 +135,7 @@ public class BenchmarkTask implements IBenchmarkTask {
       if (time >= fParams.getTargetTimeNs() / SQRT2 && time < fParams.getTargetTimeNs() * SQRT2) {
         break;
       }
-      time = Math.max(time, 2 * context.getTimerGranularity()); // at least two times the timer granularity
+      time = Math.max(time, 2 * timerGranularity); // at least two times the timer granularity
       double factor = (1.0 * fParams.getTargetTimeNs()) / time;
       iterations = Math.round(iterations * factor);
       iterations = Math.max(1, iterations);
