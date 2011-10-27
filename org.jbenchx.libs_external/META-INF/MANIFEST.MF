@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: JBenchX External Libraries
 Bundle-SymbolicName: org.jbenchx.libs_external
-Bundle-Version: 0.2.0.qualifier
+Bundle-Version: 0.3.0.qualifier
 Bundle-ClassPath: libs/annotations.jar,
  libs/jsr305.jar
 Export-Package: edu.umd.cs.findbugs.annotations,

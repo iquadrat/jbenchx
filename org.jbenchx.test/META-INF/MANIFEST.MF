@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: JBenchX Unit Tests
 Bundle-SymbolicName: org.jbenchx.test
-Bundle-Version: 0.2.0.qualifier
+Bundle-Version: 0.3.0.qualifier
 Export-Package: org.jbenchx.test,
  org.jbenchx.test.util
 Require-Bundle: org.jbenchx.libs_external;bundle-version="0.2.0",
