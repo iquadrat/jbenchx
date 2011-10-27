@@ -1,5 +1,7 @@
 package org.jbenchx;
 
+import java.util.List;
+
 import javax.annotation.CheckForNull;
 
 import org.jbenchx.monitor.*;
@@ -61,7 +63,12 @@ public class BenchmarkContext implements IBenchmarkContext {
     systemBenchmarkContext.getDefaultParams().setTargetTimeNs(50 * TimeUtil.MS);
     BenchmarkRunner runner = new BenchmarkRunner();
     runner.add(SystemBenchmark.class);
+    
     IBenchmarkResult result = runner.run(systemBenchmarkContext);
+    List<BenchmarkFailure> errors = result.getGeneralErrors();
+    if (!errors.isEmpty()) {
+      throw errors.get(0);
+    }
     
     IBenchmarkTask emptyTask = result.findTask(SystemBenchmark.class.getSimpleName() + ".empty");
     ITaskResult emptyResult = result.getResult(emptyTask);

@@ -15,7 +15,7 @@ public class ParameterizationIteratorTest extends BenchmarkTestCase {
 
   @Test
   public void noArgs() {
-    ParameterizationIterator iterator = new ParameterizationIterator(Collections.<Parameterization>emptyList());
+    Iterator<ParameterizationValues> iterator = new ParameterizationIterable(Collections.<Parameterization>emptyList()).iterator();
     ArrayList<ParameterizationValues> expected = new ArrayList<ParameterizationValues>();
     expected.add(new ParameterizationValues(new Class<?>[0], new Object[] {}));
     TestUtil.assertIteratesSequence(iterator, expected);
@@ -25,7 +25,7 @@ public class ParameterizationIteratorTest extends BenchmarkTestCase {
   @Test
   public void arg1d() {
     Parameterization param1 = new Parameterization(new int[] {10, 100, 1000});
-    ParameterizationIterator iterator = new ParameterizationIterator(Arrays.asList(param1));
+    Iterator<ParameterizationValues> iterator = new ParameterizationIterable(Arrays.asList(param1)).iterator();
 
     Class<?>[] types = new Class<?>[] {int.class};
 
@@ -39,7 +39,7 @@ public class ParameterizationIteratorTest extends BenchmarkTestCase {
     testEndOfIteration(iterator);
   }
 
-  private void testEndOfIteration(ParameterizationIterator iterator) {
+  private void testEndOfIteration(Iterator<ParameterizationValues> iterator) {
     Assert.assertFalse(iterator.hasNext());
     try {
       iterator.next();
@@ -54,7 +54,7 @@ public class ParameterizationIteratorTest extends BenchmarkTestCase {
   public void arg2d() {
     Parameterization param1 = new Parameterization(new int[] {10, 100, 1000});
     Parameterization param2 = new Parameterization(new String[] {"foo", "bar"});
-    ParameterizationIterator iterator = new ParameterizationIterator(Arrays.asList(param1, param2));
+    Iterator<ParameterizationValues> iterator = new ParameterizationIterable(Arrays.asList(param1, param2)).iterator();
 
     Class<?>[] types = new Class<?>[] {int.class, String.class};
 
@@ -76,7 +76,7 @@ public class ParameterizationIteratorTest extends BenchmarkTestCase {
     Parameterization param1 = new Parameterization(new int[] {10, 100, 1000});
     Parameterization param2 = new Parameterization(new String[] {"foo", "bar"});
     Parameterization param3 = new Parameterization(new float[] {3.0f});
-    ParameterizationIterator iterator = new ParameterizationIterator(Arrays.asList(param1, param2, param3));
+    Iterator<ParameterizationValues> iterator = new ParameterizationIterable(Arrays.asList(param1, param2, param3)).iterator();
 
     Class<?>[] types = new Class<?>[] {int.class, String.class, float.class};
 

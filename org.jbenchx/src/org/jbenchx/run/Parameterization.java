@@ -8,10 +8,13 @@ import java.lang.annotation.*;
 import java.lang.reflect.*;
 import java.util.*;
 
+import net.jcip.annotations.Immutable;
+
 import org.jbenchx.annotations.*;
 import org.jbenchx.result.*;
 import org.jbenchx.util.*;
 
+@Immutable
 public class Parameterization {
 
   private final Class<?> fType;
@@ -77,59 +80,61 @@ public class Parameterization {
   public int size() {
     return fValues.length;
   }
-
+  
   public static Parameterization create(Method method, Class<?> parameterType, Annotation[] annotations) {
+    return create(method.getDeclaringClass(), method, parameterType, annotations);
+  }
 
+  public static Parameterization create(Class<?> declaringClass, AccessibleObject object, Class<?> parameterType, Annotation[] annotations) {
     for (Annotation annotation: annotations) {
 
       ForEachInt forEachInt = ObjectUtil.castOrNull(ForEachInt.class, annotation);
       if (forEachInt != null) {
-        checkType(method, parameterType, int.class);
+        checkType(declaringClass, object, parameterType, int.class);
         return new Parameterization(forEachInt.value());
       }
 
       ForEachString forEachString = ObjectUtil.castOrNull(ForEachString.class, annotation);
       if (forEachString != null) {
-        checkType(method, parameterType, String.class);
+        checkType(declaringClass, object, parameterType, String.class);
         return new Parameterization(forEachString.value());
       }
 
       ForEachDouble forEachDouble = ObjectUtil.castOrNull(ForEachDouble.class, annotation);
       if (forEachDouble != null) {
-        checkType(method, parameterType, double.class);
+        checkType(declaringClass, object, parameterType, double.class);
         return new Parameterization(forEachDouble.value());
       }
 
       ForEachFloat forEachFloat = ObjectUtil.castOrNull(ForEachFloat.class, annotation);
       if (forEachFloat != null) {
-        checkType(method, parameterType, float.class);
+        checkType(declaringClass, object, parameterType, float.class);
         return new Parameterization(forEachFloat.value());
       }
 
       ForEachLong forEachLong = ObjectUtil.castOrNull(ForEachLong.class, annotation);
       if (forEachLong != null) {
-        checkType(method, parameterType, long.class);
+        checkType(declaringClass, object, parameterType, long.class);
         return new Parameterization(forEachLong.value());
       }
 
       ForEachBoolean forEachBoolean = ObjectUtil.castOrNull(ForEachBoolean.class, annotation);
       if (forEachBoolean != null) {
-        checkType(method, parameterType, boolean.class);
+        checkType(declaringClass, object, parameterType, boolean.class);
         return new Parameterization(forEachBoolean.value());
       }
 
     }
 
-    throw new BenchmarkClassError(method.getDeclaringClass(), "Argument to benchmark method " + method.toGenericString()
-        + " needs annotation to define its values during benchmark.");
-
+    throw new BenchmarkClassError(declaringClass, "All arguments to " + object.toString()
+        + " need annotations to define its values during benchmark.");
   }
 
-  private static void checkType(Method method, Class<?> actual, Class<?> expected) {
+  private static void checkType(Class<?> declaringClass, AccessibleObject object, Class<?> actual, Class<?> expected) {
     if (expected.isAssignableFrom(actual)) {
       return;
     }
-    throw new BenchmarkClassError(method.getDeclaringClass(), "Parameter of method " + method.toGenericString() + " has type " + actual.getName()
+    throw new BenchmarkClassError(declaringClass, "Parameter of " + object + " has type " + actual.getName()
         + " which does not match annotation type " + expected.getName());
   }
 

@@ -18,6 +18,10 @@ public class ParameterizationValues {
     fTypes = types;
     fValues = values;
   }
+  
+  public boolean hasArguments() {
+    return fTypes.length != 0;
+  }
 
   public Object[] getValues() {
     return fValues;

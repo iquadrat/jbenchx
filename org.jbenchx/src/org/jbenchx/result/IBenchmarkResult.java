@@ -13,6 +13,8 @@ import org.jbenchx.run.*;
 public interface IBenchmarkResult {
 
   public ITaskResult getResult(IBenchmarkTask task);
+  
+  public List<BenchmarkFailure> getGeneralErrors();
 
   @CheckForNull
   public IBenchmarkTask findTask(String name);

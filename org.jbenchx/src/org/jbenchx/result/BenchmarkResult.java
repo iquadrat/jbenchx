@@ -37,6 +37,10 @@ public class BenchmarkResult implements IBenchmarkResult {
     fResults.put(task, result);
     fEndTime = fTimeProvider.getCurrentTime();
   }
+  
+  public List<BenchmarkFailure> getGeneralErrors() {
+    return fGeneralErrors;
+  }
 
   @Override
   public ITaskResult getResult(IBenchmarkTask task) {

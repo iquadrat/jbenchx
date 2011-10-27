@@ -21,15 +21,18 @@ public class BenchmarkTask implements IBenchmarkTask {
 
   private final boolean                fSingleRun;
 
+  private final ParameterizationValues fConstructorArguments;
+  
   private final ParameterizationValues fMethodArguments;
 
   public BenchmarkTask(String benchmarkName, String className, String methodName, BenchmarkParameters params, boolean singleRun,
-      ParameterizationValues methodArguments) {
+      ParameterizationValues constructorArguments, ParameterizationValues methodArguments) {
     fBenchmarkName = benchmarkName;
     fClassName = className;
     fMethodName = methodName;
     fParams = params;
     fSingleRun = singleRun;
+    fConstructorArguments = constructorArguments;
     fMethodArguments = methodArguments;
   }
 
@@ -147,11 +150,12 @@ public class BenchmarkTask implements IBenchmarkTask {
     return benchmark.getClass().getMethod(fMethodName, fMethodArguments.getTypes());
   }
 
-  private Object createInstance() throws ClassNotFoundException, InstantiationException, IllegalAccessException {
+  private Object createInstance() throws ClassNotFoundException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
     ClassLoader classLoader = ClassUtil.createClassLoader();
 //    ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
     Class<?> clazz = classLoader.loadClass(fClassName);
-    return clazz.newInstance();
+    Constructor<?> constructor = clazz.getConstructors()[0];
+    return constructor.newInstance(fConstructorArguments.getValues());
   }
 
   @Override
@@ -163,17 +167,21 @@ public class BenchmarkTask implements IBenchmarkTask {
   public String getName() {
     StringBuilder sb = new StringBuilder();
     sb.append(fBenchmarkName);
+    appendArguments(sb, fConstructorArguments);
     sb.append('.');
     sb.append(fMethodName);
-    if (fMethodArguments.getValues().length != 0) {
-      sb.append('(');
-      for (Object argument: fMethodArguments.getValues()) {
-        sb.append(argument.toString());
-        sb.append(',');
-      }
-      sb.setCharAt(sb.length() - 1, ')');
-    }
+    appendArguments(sb, fMethodArguments);
     return sb.toString();
+  }
+
+  private void appendArguments(StringBuilder sb, ParameterizationValues arguments) {
+    if (!arguments.hasArguments()) return;
+    sb.append('(');
+    for (Object argument: arguments.getValues()) {
+      sb.append(argument.toString());
+      sb.append(',');
+    }
+    sb.setCharAt(sb.length() - 1, ')');
   }
 
 }

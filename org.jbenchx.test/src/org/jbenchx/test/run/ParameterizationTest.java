@@ -13,6 +13,7 @@ import org.junit.*;
 
 public class ParameterizationTest {
 
+  @SuppressWarnings("unused")
   public static class ParamForEachBench {
 
     @Bench
