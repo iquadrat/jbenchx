@@ -4,8 +4,30 @@ Bundle-Name: JBenchX External Libraries
 Bundle-SymbolicName: org.jbenchx.libs_external
 Bundle-Version: 0.2.0.qualifier
 Bundle-ClassPath: libs/annotations.jar,
- libs/jsr305.jar
-Export-Package: edu.umd.cs.findbugs.annotations,
+ libs/jsr305.jar,
+ libs/xstream-1.4.1.jar
+Export-Package: com.thoughtworks.xstream,
+ com.thoughtworks.xstream.annotations,
+ com.thoughtworks.xstream.converters,
+ com.thoughtworks.xstream.converters.basic,
+ com.thoughtworks.xstream.converters.collections,
+ com.thoughtworks.xstream.converters.enums,
+ com.thoughtworks.xstream.converters.extended,
+ com.thoughtworks.xstream.converters.javabean,
+ com.thoughtworks.xstream.converters.reflection,
+ com.thoughtworks.xstream.core,
+ com.thoughtworks.xstream.core.util,
+ com.thoughtworks.xstream.io,
+ com.thoughtworks.xstream.io.binary,
+ com.thoughtworks.xstream.io.copy,
+ com.thoughtworks.xstream.io.json,
+ com.thoughtworks.xstream.io.naming,
+ com.thoughtworks.xstream.io.path,
+ com.thoughtworks.xstream.io.xml,
+ com.thoughtworks.xstream.io.xml.xppdom,
+ com.thoughtworks.xstream.mapper,
+ com.thoughtworks.xstream.persistence,
+ edu.umd.cs.findbugs.annotations,
  javax.annotation,
  javax.annotation.meta,
  net.jcip.annotations
