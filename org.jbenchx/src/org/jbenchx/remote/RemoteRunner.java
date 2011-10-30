@@ -48,7 +48,7 @@ public class RemoteRunner {
       FileOutputStream out = new FileOutputStream(fileName.toString() + "-"+result.getEndTime().getTime()+ ".bench");
       new XmlResultSerializer().serialize(result, out);
 
-    } catch (FileNotFoundException e) {
+    } catch (IOException e) {
       // TODO Auto-generated catch block
       e.printStackTrace();
     }

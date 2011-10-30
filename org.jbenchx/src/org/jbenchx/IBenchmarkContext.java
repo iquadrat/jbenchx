@@ -11,8 +11,6 @@ import org.jbenchx.vm.*;
 
 public interface IBenchmarkContext {
   
-  public VmInfo getVmInfo();
-  
   public BenchmarkParameters getDefaultParams();
   
   public IProgressMonitor getProgressMonitor();

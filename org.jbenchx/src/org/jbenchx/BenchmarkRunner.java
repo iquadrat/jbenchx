@@ -20,8 +20,8 @@ public class BenchmarkRunner {
   
   public IBenchmarkResult run(IBenchmarkContext context) {
     IProgressMonitor progressMonitor = context.getProgressMonitor();
-    BenchmarkResult result = new BenchmarkResult();
-    List<BenchmarkTask> benchmarkTasks = findAllBenchmarkTasks(context, result);
+    BenchmarkResult result = new BenchmarkResult(context.getSystemInfo());
+    List<BenchmarkTask> benchmarkTasks = findAllBenchmarkTasks(context);
     progressMonitor.init(benchmarkTasks.size(), result);
     for (IBenchmarkTask task: benchmarkTasks) {
       task.run(result, context);
@@ -30,15 +30,15 @@ public class BenchmarkRunner {
     return result;
   }
   
-  private List<BenchmarkTask> findAllBenchmarkTasks(IBenchmarkContext context, BenchmarkResult result) {
+  private List<BenchmarkTask> findAllBenchmarkTasks(IBenchmarkContext context) {
     List<BenchmarkTask> tasks = new ArrayList<BenchmarkTask>();
     for (Class<?> clazz: fBenchmarks) {
-      addBenchmarkTasks(context, result, tasks, clazz);
+      addBenchmarkTasks(context, tasks, clazz);
     }
     return tasks;
   }
   
-  private void addBenchmarkTasks(IBenchmarkContext context, BenchmarkResult result, List<BenchmarkTask> tasks, Class<?> clazz) {
+  private void addBenchmarkTasks(IBenchmarkContext context, List<BenchmarkTask> tasks, Class<?> clazz) {
     
     Constructor<?>[] constructors = clazz.getConstructors();
     if (constructors.length != 1) {
@@ -73,7 +73,7 @@ public class BenchmarkRunner {
       Iterable<ParameterizationValues> methodParameterizations = getMethodArgumentsIterator(method);
       for (ParameterizationValues constructorArguments: constructorParameterizations) {
         for (ParameterizationValues methodArguments: methodParameterizations) {
-          tasks.add(new BenchmarkTask(clazz.getSimpleName(), clazz.getName(), method.getName(), params, singleRun, constructorArguments, methodArguments));
+          tasks.add(new BenchmarkTask(clazz, method, params, singleRun, constructorArguments, methodArguments));
         }
       }
       

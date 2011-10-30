@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Benchmark>
+  <Version>0.3.0</Version>
+  <GeneralErrors/>
+  <Entry>
+    <Task class="org.jbenchx.run.BenchmarkTask">
+      <ClassName>test.Task</ClassName>
+      <MethodName>task1</MethodName>
+      <Params>
+        <TargetTimeNs>250000000</TargetTimeNs>
+        <Divisor>1</Divisor>
+        <MinRunCount>10</MinRunCount>
+        <MaxRunCount>100</MaxRunCount>
+        <MinSampleCount>8</MinSampleCount>
+        <MaxDeviation>0.05</MaxDeviation>
+      </Params>
+      <SingleRun>false</SingleRun>
+      <ConstructorArguments>
+        <int>42</int>
+        <string>foo</string>
+      </ConstructorArguments>
+      <MethodArguments/>
+      <MethodArgumentTypes/>
+    </Task>
+    <Result class="org.jbenchx.result.TaskResult">
+      <Timings>
+        <Run>
+          <Time>1111</Time>
+        </Run>
+        <Run>
+          <Time>1222</Time>
+        </Run>
+        <MinTime>1111</MinTime>
+      </Timings>
+      <Errors/>
+      <Warnings>
+        <org.jbenchx.result.BenchmarkWarning>
+          <Reason>some warning reason here</Reason>
+        </org.jbenchx.result.BenchmarkWarning>
+      </Warnings>
+      <EstimatedBenchmark>0.0999909999099991</EstimatedBenchmark>
+      <IterationCount>11111</IterationCount>
+    </Result>
+  </Entry>
+  <Entry>
+    <Task class="org.jbenchx.run.BenchmarkTask">
+      <ClassName>test.Task</ClassName>
+      <MethodName>task2</MethodName>
+      <Params>
+        <TargetTimeNs>250000000</TargetTimeNs>
+        <Divisor>1</Divisor>
+        <MinRunCount>10</MinRunCount>
+        <MaxRunCount>100</MaxRunCount>
+        <MinSampleCount>8</MinSampleCount>
+        <MaxDeviation>0.05</MaxDeviation>
+      </Params>
+      <SingleRun>false</SingleRun>
+      <ConstructorArguments/>
+      <MethodArguments>
+        <int>42</int>
+        <string>foo</string>
+      </MethodArguments>
+      <MethodArgumentTypes>
+        <java-class>int</java-class>
+        <java-class>java.lang.String</java-class>
+      </MethodArgumentTypes>
+    </Task>
+    <Result class="org.jbenchx.result.TaskResult">
+      <Timings>
+        <Run>
+          <Time>1111</Time>
+        </Run>
+        <Run>
+          <Time>1222</Time>
+        </Run>
+        <MinTime>1111</MinTime>
+      </Timings>
+      <Errors>
+        <org.jbenchx.result.BenchmarkClassError>
+          <stackTrace>
+            <trace>org.jbenchx.test.result.XmlResultSerializerTest.createError(XmlResultSerializerTest.java:12)</trace>
+            <trace>org.jbenchx.test.result.XmlResultSerializerTest.writeXmlResult_readXmlResult(XmlResultSerializerTest.java:33)</trace>
+          </stackTrace>
+          <Class>org.jbenchx.test.result.XmlResultSerializerTest</Class>
+          <Message>some failure warning here</Message>
+        </org.jbenchx.result.BenchmarkClassError>
+      </Errors>
+      <Warnings/>
+      <EstimatedBenchmark>0.04999549995499955</EstimatedBenchmark>
+      <IterationCount>22222</IterationCount>
+    </Result>
+  </Entry>
+  <SystemInfo>
+    <TimerGranularity>1</TimerGranularity>
+    <MethodInvokeTime>2</MethodInvokeTime>
+    <SystemBenchmark>3.0</SystemBenchmark>
+    <OsInfo>linux</OsInfo>
+    <OsVersion>2.3.4</OsVersion>
+    <CpuCount>2</CpuCount>
+    <MaxHeapSize>10000000</MaxHeapSize>
+  </SystemInfo>
+  <StartTime>2011-10-02 14:13:28.888 UTC</StartTime>
+  <EndTime>2011-10-02 14:13:29.999 UTC</EndTime>
+</Benchmark>

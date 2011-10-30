@@ -29,4 +29,28 @@ public class BenchmarkTaskFailure extends BenchmarkFailure {
     out.flush();
   }
 
+  @Override
+  public int hashCode() {
+    final int prime = 31;
+    int result = 1;
+    result = prime * result + ((fException == null) ? 0 : fException.hashCode());
+    result = prime * result + ((fTask == null) ? 0 : fTask.hashCode());
+    return result;
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (this == obj) return true;
+    if (obj == null) return false;
+    if (getClass() != obj.getClass()) return false;
+    BenchmarkTaskFailure other = (BenchmarkTaskFailure)obj;
+    if (fException == null) {
+      if (other.fException != null) return false;
+    } else if (!fException.getMessage().equals(other.fException.getMessage())) return false;
+    if (fTask == null) {
+      if (other.fTask != null) return false;
+    } else if (!fTask.equals(other.fTask)) return false;
+    return true;
+  }
+  
 }

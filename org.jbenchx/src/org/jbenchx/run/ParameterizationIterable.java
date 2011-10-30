@@ -46,11 +46,12 @@ public class ParameterizationIterable implements Iterable<ParameterizationValues
       if (fPositions == null) {
         return ParameterizationValues.EMPTY;
       }
-      Object[] result = new Object[fPositions.length];
-      for (int i = 0; i < result.length; ++i) {
-        result[i] = fParameterizations.get(i).getValue(fPositions[i]);
+      int length = fPositions.length;
+      List<Object> result = new ArrayList<Object>(length);
+      for (int i = 0; i < length; ++i) {
+        result.add(fParameterizations.get(i).getValue(fPositions[i]));
       }
-      return new ParameterizationValues(fTypes, result);
+      return new ParameterizationValues(result);
     }
     
     private boolean findNext() {
@@ -79,14 +80,14 @@ public class ParameterizationIterable implements Iterable<ParameterizationValues
   
   private final List<Parameterization> fParameterizations;
   
-  private final Class<?>[]             fTypes;
+//  private final List<Class<?>>         fTypes;
   
   public ParameterizationIterable(List<Parameterization> parameterizations) {
     fParameterizations = new ArrayList<Parameterization>(parameterizations);
-    fTypes = new Class<?>[parameterizations.size()];
-    for (int i = 0; i < parameterizations.size(); ++i) {
-      fTypes[i] = parameterizations.get(i).getType();
-    }
+//    fTypes = new ArrayList<Class<?>>(parameterizations.size());
+//    for (int i = 0; i < parameterizations.size(); ++i) {
+//      fTypes.add(parameterizations.get(i).getType());
+//    }
   }
   
   @Override

@@ -9,6 +9,7 @@ import java.util.*;
 import javax.annotation.*;
 
 import org.jbenchx.run.*;
+import org.jbenchx.vm.SystemInfo;
 
 public interface IBenchmarkResult {
 
@@ -24,5 +25,9 @@ public interface IBenchmarkResult {
   public Date getStartTime();
 
   public Date getEndTime();
+  
+  public SystemInfo getSystemInfo();
+  
+  public String getVersion();
 
 }
