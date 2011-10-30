@@ -27,9 +27,9 @@ public class BenchmarkTask implements IBenchmarkTask {
   
   private final ArrayList<Class<?>>    fMethodArgumentTypes;
   
-  public BenchmarkTask(Method method, BenchmarkParameters params, boolean singleRun, ParameterizationValues constructorArguments,
+  public BenchmarkTask(Class<?> benchmarkClass, Method method, BenchmarkParameters params, boolean singleRun, ParameterizationValues constructorArguments,
       ParameterizationValues methodArguments) {
-    this(method.getDeclaringClass().getName(), method.getName(), new ArrayList<Class<?>>(Arrays.<Class<?>>asList(method.getParameterTypes())),
+    this(benchmarkClass.getName(),method.getName(), new ArrayList<Class<?>>(Arrays.<Class<?>>asList(method.getParameterTypes())),
         params, singleRun, constructorArguments, methodArguments);
   }
   

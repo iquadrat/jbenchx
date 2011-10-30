@@ -73,7 +73,7 @@ public class BenchmarkRunner {
       Iterable<ParameterizationValues> methodParameterizations = getMethodArgumentsIterator(method);
       for (ParameterizationValues constructorArguments: constructorParameterizations) {
         for (ParameterizationValues methodArguments: methodParameterizations) {
-          tasks.add(new BenchmarkTask(method, params, singleRun, constructorArguments, methodArguments));
+          tasks.add(new BenchmarkTask(clazz, method, params, singleRun, constructorArguments, methodArguments));
         }
       }
       
