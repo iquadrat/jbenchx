@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: JBenchX for Eclipse
 Bundle-SymbolicName: org.jbenchx.ui.eclipse; singleton:=true
-Bundle-Version: 0.2.0.qualifier
+Bundle-Version: 0.3.0.qualifier
 Bundle-Activator: org.jbenchx.ui.eclipse.Activator
 Require-Bundle: org.jbenchx.libs_external;bundle-version="0.2.0",
  org.jbenchx;bundle-version="0.2.0",
