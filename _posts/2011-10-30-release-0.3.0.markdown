@@ -1,0 +1,38 @@
+---
+layout: default
+title: Release 0.3.0
+---
+
+A new version of JBenchX is available! This release fixes some bugs
+and brings a cool new feature:
+
+The @ForEach<i>Type</i> annotation. It is best explained with an example:
+
+<pre>
+
+@Bench
+public Object createObjectArray(@ForEachInt({10,100,1000}) int size) {
+  return new Object[size];
+}
+  
+</pre>
+
+This will tell JBenchX to run the benchmark once for each given size!
+
+<pre>
+Initializing Benchmarking Framework...
+Running on Linux Linux
+Max heap = 1392508928 System Benchmark = 21.6ns
+Performing 3 benchmarking tasks..
+[0]	Example3.createObjectArray(10)*************	36.3ns
+[1]	Example3.createObjectArray(100)**********	283ns
+[2]	Example3.createObjectArray(1000)************	2.40us
+Success.
+</pre>
+
+There are annotations for all matching java base types:
+@ForEachBoolean, @ForEachDouble, @ForEachFloat, @ForEachInt, @ForEachLong, @ForEachString.
+
+Another new feature you can see from the output above is that JBenchX prints some
+basic information about the system that is used for running the benchmark. It also computes a system benchmark.
+This is useful to detect changes in the load of your computer which will affect the benchmark result!
