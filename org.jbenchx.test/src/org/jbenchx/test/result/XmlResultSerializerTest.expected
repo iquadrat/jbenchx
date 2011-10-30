@@ -78,32 +78,10 @@
       <Errors>
         <org.jbenchx.result.BenchmarkClassError>
           <stackTrace>
-            <trace>org.jbenchx.test.monitor.XmlResultSerializerTest.createError(XmlResultSerializerTest.java:27)</trace>
-            <trace>org.jbenchx.test.monitor.XmlResultSerializerTest.writeXmlResult_readXmlResult(XmlResultSerializerTest.java:55)</trace>
-            <trace>sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)</trace>
-            <trace>sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)</trace>
-            <trace>sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)</trace>
-            <trace>java.lang.reflect.Method.invoke(Method.java:597)</trace>
-            <trace>org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:44)</trace>
-            <trace>org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:15)</trace>
-            <trace>org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:41)</trace>
-            <trace>org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:20)</trace>
-            <trace>org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:76)</trace>
-            <trace>org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:50)</trace>
-            <trace>org.junit.runners.ParentRunner$3.run(ParentRunner.java:193)</trace>
-            <trace>org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:52)</trace>
-            <trace>org.junit.runners.ParentRunner.runChildren(ParentRunner.java:191)</trace>
-            <trace>org.junit.runners.ParentRunner.access$000(ParentRunner.java:42)</trace>
-            <trace>org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:184)</trace>
-            <trace>org.junit.runners.ParentRunner.run(ParentRunner.java:236)</trace>
-            <trace>org.eclipse.jdt.internal.junit4.runner.JUnit4TestReference.run(JUnit4TestReference.java:49)</trace>
-            <trace>org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:38)</trace>
-            <trace>org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:467)</trace>
-            <trace>org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:683)</trace>
-            <trace>org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:390)</trace>
-            <trace>org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:197)</trace>
+            <trace>org.jbenchx.test.result.XmlResultSerializerTest.createError(XmlResultSerializerTest.java:12)</trace>
+            <trace>org.jbenchx.test.result.XmlResultSerializerTest.writeXmlResult_readXmlResult(XmlResultSerializerTest.java:33)</trace>
           </stackTrace>
-          <Class>org.jbenchx.test.monitor.XmlResultSerializerTest</Class>
+          <Class>org.jbenchx.test.result.XmlResultSerializerTest</Class>
           <Message>some failure warning here</Message>
         </org.jbenchx.result.BenchmarkClassError>
       </Errors>

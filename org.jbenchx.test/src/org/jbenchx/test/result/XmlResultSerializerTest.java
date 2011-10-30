@@ -2,7 +2,7 @@
  * Created on 01.10.2011
  *
  */
-package org.jbenchx.test.monitor;
+package org.jbenchx.test.result;
 
 import static org.easymock.EasyMock.*;
 
@@ -24,7 +24,12 @@ public class XmlResultSerializerTest {
   private final IMocksControl fControl;
 
   private static BenchmarkClassError createError() {
-    return new BenchmarkClassError(XmlResultSerializerTest.class, "some failure warning here");
+    BenchmarkClassError error = new BenchmarkClassError(XmlResultSerializerTest.class, "some failure warning here");
+    StackTraceElement[] stackTrace = new StackTraceElement[2];
+    stackTrace[0] = new StackTraceElement(XmlResultSerializerTest.class.getName(), "createError", "XmlResultSerializerTest.java", 12);
+    stackTrace[1] = new StackTraceElement(XmlResultSerializerTest.class.getName(), "writeXmlResult_readXmlResult", "XmlResultSerializerTest.java", 33);
+    error.setStackTrace(stackTrace);
+    return error;
   }
   
   public XmlResultSerializerTest() {
