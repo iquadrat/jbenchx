@@ -19,6 +19,7 @@ public class ArrayListBench {
     }
   }
 
+  @SuppressWarnings("unused")
   @Bench
   public Object create() {
     for (int i = 0; i < 1000; ++i) {

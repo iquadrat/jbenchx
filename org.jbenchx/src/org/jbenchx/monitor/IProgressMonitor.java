@@ -1,8 +1,7 @@
 package org.jbenchx.monitor;
 
-import org.jbenchx.*;
 import org.jbenchx.result.*;
-import org.jbenchx.run.*;
+import org.jbenchx.run.IBenchmarkTask;
 import org.jbenchx.vm.*;
 
 public interface IProgressMonitor {

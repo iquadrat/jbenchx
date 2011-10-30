@@ -1,13 +1,12 @@
 package org.jbenchx.monitor;
 
-import java.io.*;
+import java.io.PrintWriter;
 
-import javax.annotation.*;
+import javax.annotation.CheckForNull;
 
-import org.jbenchx.*;
 import org.jbenchx.result.*;
-import org.jbenchx.run.*;
-import org.jbenchx.util.*;
+import org.jbenchx.run.IBenchmarkTask;
+import org.jbenchx.util.TimeUtil;
 import org.jbenchx.vm.*;
 
 public class ConsoleProgressMonitor implements IProgressMonitor {
@@ -60,7 +59,7 @@ public class ConsoleProgressMonitor implements IProgressMonitor {
   public void run(IBenchmarkTask task, Timing timing, VmState vmStateDiff) {
     if (VmState.EMPTY.equals(vmStateDiff)) {
       
-      if (timing.getGcNames().isEmpty()) {
+      if (timing.getGcEvents().isEmpty()) {
         System.out.print(".");
       } else {
         System.out.print("*");

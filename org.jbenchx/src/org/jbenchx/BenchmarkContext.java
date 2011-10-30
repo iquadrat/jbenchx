@@ -12,9 +12,7 @@ import org.jbenchx.vm.*;
 
 public class BenchmarkContext implements IBenchmarkContext {
   
-  private static final String       VERSION = "0.3.0";
-  
-  private final VmInfo              fVmInfo = VmInfo.getVmInfo();
+  public static final String        VERSION = "0.3.0";
   
   private final IProgressMonitor    fProgressMonitor;
   
@@ -31,11 +29,6 @@ public class BenchmarkContext implements IBenchmarkContext {
     fProgressMonitor = progressMonitor;
     fSystemInfo = systemInfo;
     fDefaultParams = defaultParams;
-  }
-  
-  @Override
-  public VmInfo getVmInfo() {
-    return fVmInfo;
   }
   
   @Override

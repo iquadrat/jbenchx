@@ -14,7 +14,7 @@ public class Example {
 
 //  private final int       fN = 1000;
 
-  public Example(Void v) {}
+  public Example(@SuppressWarnings("unused") Void v) {}
 
   public Example() throws Exception {
     fNumber1 = 2;

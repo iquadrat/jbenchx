@@ -2,7 +2,7 @@ package org.jbenchx.util;
 
 import java.lang.management.*;
 
-import org.jbenchx.*;
+import org.jbenchx.result.GcStats;
 
 import edu.umd.cs.findbugs.annotations.SuppressWarnings;
 

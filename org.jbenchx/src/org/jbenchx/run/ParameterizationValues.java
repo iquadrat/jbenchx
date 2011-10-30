@@ -4,38 +4,44 @@
  */
 package org.jbenchx.run;
 
+import java.lang.reflect.Field;
 import java.util.*;
 
+import net.jcip.annotations.*;
+
+@Immutable
 public class ParameterizationValues {
-
-  public static final ParameterizationValues EMPTY = new ParameterizationValues(new Class<?>[0], new Object[0]);
-
-  private final Class<?>[]                   fTypes;
-
-  private final Object[]                     fValues;
-
-  public ParameterizationValues(Class<?>[] types, Object[] values) {
-    fTypes = types;
-    fValues = values;
+  
+  public static final ParameterizationValues EMPTY = new ParameterizationValues(Collections.<Object>emptyList());
+  
+  private final List<Object>                 fValues;
+  
+  public ParameterizationValues(List<Object> values) {
+    fValues = new ArrayList<Object>(values);
   }
   
   public boolean hasArguments() {
-    return fTypes.length != 0;
+    return fValues.size() != 0;
   }
-
-  public Object[] getValues() {
+  
+  public List<Object> getValues() {
     return fValues;
   }
-
-  public Class<?>[] getTypes() {
-    return fTypes;
+  
+  private Object readResolve() throws Exception {
+    if (fValues == null) {
+      Field field = ParameterizationValues.class.getDeclaredField("fValues");
+      field.setAccessible(true);
+      field.set(this, Collections.emptyList());
+    }
+    return this;
   }
-
+  
   @Override
   public int hashCode() {
-    return getClass().hashCode() + 31 * Arrays.hashCode(fValues);
+    return getClass().hashCode() + fValues.hashCode() + 31;
   }
-
+  
   @Override
   public boolean equals(Object obj) {
     if (this == obj) {
@@ -45,15 +51,15 @@ public class ParameterizationValues {
       return false;
     }
     ParameterizationValues other = (ParameterizationValues)obj;
-    if (!Arrays.equals(fValues, other.fValues)) {
+    if (!fValues.equals(other.fValues)) {
       return false;
     }
     return true;
   }
-
+  
   @Override
   public String toString() {
-    return getClass().getSimpleName() + Arrays.toString(fValues);
+    return getClass().getSimpleName() + fValues;
   }
-
+  
 }
