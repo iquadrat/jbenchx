@@ -169,21 +169,23 @@ public class BenchmarkTask implements IBenchmarkTask {
     List<Long> memUsed = new ArrayList<Long>(iterations);
     BenchmarkTimings timings = new BenchmarkTimings();
     for (int i = 0; i < iterations; ++i) {
-      
       SystemUtil.cleanMemory();
       long memoryBefore = SystemUtil.getUsedMemory();
+      VmState preState = VmState.getCurrentState();
       
       Object[] arguments = fMethodArguments.getValues().toArray();
       resultObject = method.invoke(benchmark, arguments);
       
+      VmState postState = VmState.getCurrentState();
       SystemUtil.cleanMemory();
       long memoryAfter = SystemUtil.getUsedMemory();
       
       resultObject = null;
       
       memUsed.add(memoryAfter - memoryBefore);
-      
-      timings.add(new Timing((memoryAfter - memoryBefore) * 1000 * 1000 * 1000L, new GcStats(), new GcStats()));
+      Timing timing = new Timing((memoryAfter - memoryBefore) * 1000 * 1000 * 1000L, new GcStats(), new GcStats());
+      timings.add(timing);
+      context.getProgressMonitor().run(this, timing, VmState.difference(preState, postState));
     }
     double divisor = fMethodArguments.getfDivisor() * fConstructorArguments.getfDivisor();
     return new TaskResult(fParams, timings, 1, divisor);
