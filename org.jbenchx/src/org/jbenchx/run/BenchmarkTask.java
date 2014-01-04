@@ -185,7 +185,6 @@ public class BenchmarkTask implements IBenchmarkTask {
       
       timings.add(new Timing((memoryAfter - memoryBefore) * 1000 * 1000 * 1000L, new GcStats(), new GcStats()));
     }
-    System.out.println(memUsed);
     double divisor = fMethodArguments.getfDivisor() * fConstructorArguments.getfDivisor();
     return new TaskResult(fParams, timings, 1, divisor);
   }
