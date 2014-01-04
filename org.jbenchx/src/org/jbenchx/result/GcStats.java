@@ -1,9 +1,11 @@
 package org.jbenchx.result;
 
 import java.lang.reflect.Field;
-import java.util.*;
-
-import org.jbenchx.run.ParameterizationValues;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import net.jcip.annotations.NotThreadSafe;
 
@@ -58,7 +60,7 @@ public class GcStats {
   public String toString() {
     return fGcEvents.toString();
   }
-
+  
   @Override
   public int hashCode() {
     final int prime = 31;
@@ -66,7 +68,7 @@ public class GcStats {
     result = prime * result + ((fGcEvents == null) ? 0 : fGcEvents.hashCode());
     return result;
   }
-
+  
   @Override
   public boolean equals(Object obj) {
     if (this == obj) return true;
@@ -79,7 +81,6 @@ public class GcStats {
     return true;
   }
   
-
   private Object readResolve() throws Exception {
     if (fGcEvents == null) {
       Field field = GcStats.class.getDeclaredField("fGcEvents");

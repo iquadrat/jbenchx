@@ -4,25 +4,41 @@
  */
 package org.jbenchx.test.result;
 
-import static org.easymock.EasyMock.*;
+import static org.easymock.EasyMock.expect;
 
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 import java.net.URL;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Date;
 
-import org.easymock.*;
+import org.easymock.EasyMock;
+import org.easymock.IMocksControl;
 import org.jbenchx.BenchmarkParameters;
-import org.jbenchx.result.*;
-import org.jbenchx.run.*;
-import org.jbenchx.util.*;
+import org.jbenchx.result.BenchmarkClassError;
+import org.jbenchx.result.BenchmarkResult;
+import org.jbenchx.result.BenchmarkTimings;
+import org.jbenchx.result.BenchmarkWarning;
+import org.jbenchx.result.GcStats;
+import org.jbenchx.result.IBenchmarkResult;
+import org.jbenchx.result.TaskResult;
+import org.jbenchx.result.Timing;
+import org.jbenchx.result.XmlResultSerializer;
+import org.jbenchx.run.BenchmarkTask;
+import org.jbenchx.run.IBenchmarkTask;
+import org.jbenchx.run.ParameterizationValues;
+import org.jbenchx.util.IOUtil;
+import org.jbenchx.util.ITimeProvider;
 import org.jbenchx.vm.SystemInfo;
-import org.junit.*;
 import org.junit.Assert;
+import org.junit.Test;
 
 public class XmlResultSerializerTest {
   
   private final IMocksControl fControl;
-
+  
   private static BenchmarkClassError createError() {
     BenchmarkClassError error = new BenchmarkClassError(XmlResultSerializerTest.class, "some failure warning here");
     StackTraceElement[] stackTrace = new StackTraceElement[2];
@@ -49,7 +65,7 @@ public class XmlResultSerializerTest {
     
     ITimeProvider timeprovider = fControl.createMock("timeprovider", ITimeProvider.class);
     
-    ParameterizationValues values = new ParameterizationValues(Arrays.<Object>asList(42, "foo"));
+    ParameterizationValues values = new ParameterizationValues(Arrays.<Object>asList(42, "foo"), 1);
     
     IBenchmarkTask task1 = new BenchmarkTask("test.Task", "task1", Collections.<Class<?>>emptyList(), params, false, values,
         ParameterizationValues.EMPTY);
@@ -59,9 +75,9 @@ public class XmlResultSerializerTest {
     BenchmarkWarning warning1 = new BenchmarkWarning("some warning reason here");
     BenchmarkClassError failure1 = createError();
     
-    TaskResult result1 = new TaskResult(params, timings1, 11111L);
+    TaskResult result1 = new TaskResult(params, timings1, 11111L, 12345.6);
     result1.addWarning(warning1);
-    TaskResult result2 = new TaskResult(params, timings1, 22222L, failure1);
+    TaskResult result2 = new TaskResult(params, failure1);
     
     ByteArrayOutputStream out = new ByteArrayOutputStream();
     XmlResultSerializer serializer = new XmlResultSerializer();
@@ -77,7 +93,6 @@ public class XmlResultSerializerTest {
     expect(timeprovider.getCurrentTime()).andReturn(new Date(1317564808888L));
     expect(timeprovider.getCurrentTime()).andReturn(new Date(1317564809999L));
     expect(timeprovider.getCurrentTime()).andReturn(new Date(1317564809999L));
-    
     
     fControl.replay();
     
@@ -95,7 +110,7 @@ public class XmlResultSerializerTest {
     String actual = out.toString();
     
     Assert.assertEquals(expected, actual);
-
+    
     IBenchmarkResult deserialized = serializer.deserialize(new ByteArrayInputStream(out.toByteArray()));
     
     Assert.assertEquals(result, deserialized);

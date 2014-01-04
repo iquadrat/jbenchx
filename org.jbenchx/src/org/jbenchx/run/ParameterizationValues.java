@@ -5,19 +5,24 @@
 package org.jbenchx.run;
 
 import java.lang.reflect.Field;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
-import net.jcip.annotations.*;
+import net.jcip.annotations.Immutable;
 
 @Immutable
 public class ParameterizationValues {
   
-  public static final ParameterizationValues EMPTY = new ParameterizationValues(Collections.<Object>emptyList());
+  public static final ParameterizationValues EMPTY = new ParameterizationValues(Collections.<Object>emptyList(), 1);
   
   private final List<Object>                 fValues;
   
-  public ParameterizationValues(List<Object> values) {
+  private final double                       fDivisor;
+  
+  public ParameterizationValues(List<Object> values, double divisor) {
     fValues = new ArrayList<Object>(values);
+    fDivisor = divisor;
   }
   
   public boolean hasArguments() {
@@ -26,6 +31,10 @@ public class ParameterizationValues {
   
   public List<Object> getValues() {
     return fValues;
+  }
+  
+  public double getfDivisor() {
+    return fDivisor;
   }
   
   private Object readResolve() throws Exception {
@@ -52,6 +61,9 @@ public class ParameterizationValues {
     }
     ParameterizationValues other = (ParameterizationValues)obj;
     if (!fValues.equals(other.fValues)) {
+      return false;
+    }
+    if (fDivisor != other.fDivisor) {
       return false;
     }
     return true;

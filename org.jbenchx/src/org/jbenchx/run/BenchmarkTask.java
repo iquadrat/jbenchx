@@ -1,35 +1,55 @@
 package org.jbenchx.run;
 
-import java.lang.reflect.*;
-import java.util.*;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
-import org.jbenchx.*;
+import javax.annotation.CheckForNull;
+
+import org.jbenchx.BenchmarkParameters;
+import org.jbenchx.IBenchmarkContext;
+import org.jbenchx.SkipBenchmarkException;
 import org.jbenchx.Timer;
-import org.jbenchx.result.*;
-import org.jbenchx.util.*;
-import org.jbenchx.vm.*;
+import org.jbenchx.result.BenchmarkResult;
+import org.jbenchx.result.BenchmarkSkipped;
+import org.jbenchx.result.BenchmarkTaskFailure;
+import org.jbenchx.result.BenchmarkTimings;
+import org.jbenchx.result.BenchmarkWarning;
+import org.jbenchx.result.GcStats;
+import org.jbenchx.result.TaskResult;
+import org.jbenchx.result.Timing;
+import org.jbenchx.util.ClassUtil;
+import org.jbenchx.util.SystemUtil;
+import org.jbenchx.util.TimeUtil;
+import org.jbenchx.vm.SystemInfo;
+import org.jbenchx.vm.VmState;
 
+// TODO extract proper base class
 public class BenchmarkTask implements IBenchmarkTask {
   
-  private static final double          SQRT2 = Math.sqrt(2);
+  private static final double            SQRT2 = Math.sqrt(2);
   
-  private final String                 fClassName;
+  protected final String                 fClassName;
   
-  private final String                 fMethodName;
+  protected final String                 fMethodName;
   
-  private final BenchmarkParameters    fParams;
+  protected final BenchmarkParameters    fParams;
   
-  private final boolean                fSingleRun;
+  protected final boolean                fSingleRun;
   
-  private final ParameterizationValues fConstructorArguments;
+  protected final ParameterizationValues fConstructorArguments;
   
-  private final ParameterizationValues fMethodArguments;
+  protected final ParameterizationValues fMethodArguments;
   
-  private final ArrayList<Class<?>>    fMethodArgumentTypes;
+  protected final ArrayList<Class<?>>    fMethodArgumentTypes;
   
-  public BenchmarkTask(Class<?> benchmarkClass, Method method, BenchmarkParameters params, boolean singleRun, ParameterizationValues constructorArguments,
+  public BenchmarkTask(Class<?> benchmarkClass, Method method, BenchmarkParameters params, boolean singleRun,
+      ParameterizationValues constructorArguments,
       ParameterizationValues methodArguments) {
-    this(benchmarkClass.getName(),method.getName(), new ArrayList<Class<?>>(Arrays.<Class<?>>asList(method.getParameterTypes())),
+    this(benchmarkClass.getName(), method.getName(), new ArrayList<Class<?>>(Arrays.<Class<?>>asList(method.getParameterTypes())),
         params, singleRun, constructorArguments, methodArguments);
   }
   
@@ -50,22 +70,43 @@ public class BenchmarkTask implements IBenchmarkTask {
   
   @Override
   public void run(BenchmarkResult result, IBenchmarkContext context) {
+    
+    ClassLoader classLoader = createClassLoader();
+    //SkipBenchmarkException skipException = classLoader.loadClass(SkipBenchmarkException.class.getName()); 
+    
     try {
       
       context.getProgressMonitor().started(this);
       
-      TaskResult taskResult = internalRun(context);
+      TaskResult taskResult;
+      if (fParams.getMeasureMemory()) {
+        taskResult = measureMemory(context);
+      } else {
+        taskResult = internalRun(context, classLoader);
+      }
       
       result.addResult(this, taskResult);
       context.getProgressMonitor().done(this);
       
     } catch (Exception e) {
-      result.addResult(this, new TaskResult(fParams, new BenchmarkTimings(), 0, new BenchmarkTaskFailure(this, e)));
-      context.getProgressMonitor().failed(this);
+      if (isException(SkipBenchmarkException.class, e)) {
+        result.addResult(this, new TaskResult(fParams, new BenchmarkSkipped()));
+        context.getProgressMonitor().skipped(this);
+      } else {
+        result.addResult(this, new TaskResult(fParams, new BenchmarkTaskFailure(this, e)));
+        context.getProgressMonitor().failed(this);
+      }
     }
   }
   
-  private TaskResult internalRun(IBenchmarkContext context) throws Exception {
+  private boolean isException(Class<? extends Exception> class_, @CheckForNull Throwable e) {
+    if (e == null) {
+      return false;
+    }
+    return class_.isInstance(e) || isException(class_, e.getCause());
+  }
+  
+  protected TaskResult internalRun(IBenchmarkContext context, ClassLoader classLoader) throws Exception {
     long timerGranularity = 10 * TimeUtil.MS;
     long methodInvokeTime = 0;
     SystemInfo systemInfo = context.getSystemInfo();
@@ -74,7 +115,7 @@ public class BenchmarkTask implements IBenchmarkTask {
       methodInvokeTime = systemInfo.getMethodInvokeTime();
     }
     
-    Object benchmark = createInstance();
+    Object benchmark = createInstance(classLoader);
     Method method = getBenchmarkMethod(benchmark);
     long iterationCount = findIterationCount(benchmark, method, timerGranularity);
     
@@ -107,7 +148,8 @@ public class BenchmarkTask implements IBenchmarkTask {
 //    long avgNs = Math.round(timings.getEstimatedTime() / iterationCount / fDivisor);
 //    System.out.println();
 //    System.out.println(this + ": " + TimeUtil.toString(avgNs));
-    TaskResult result = new TaskResult(fParams, timings, iterationCount);
+    double divisor = fMethodArguments.getfDivisor() * fConstructorArguments.getfDivisor();
+    TaskResult result = new TaskResult(fParams, timings, iterationCount, divisor);
     long minSingleIterationTime = methodInvokeTime * 10;
     if (runtimePerIteration < minSingleIterationTime) {
       result.addWarning(new BenchmarkWarning("Runtime of single iteration too short: " + runtimePerIteration
@@ -116,7 +158,39 @@ public class BenchmarkTask implements IBenchmarkTask {
     return result;
   }
   
-  private long singleRun(Object benchmark, Method method, long iterationCount) throws IllegalArgumentException, IllegalAccessException,
+  @SuppressWarnings("unused")
+  private volatile Object resultObject;
+  
+  private TaskResult measureMemory(IBenchmarkContext context) throws Exception {
+    Object benchmark = createInstance(createClassLoader());
+    Method method = getBenchmarkMethod(benchmark);
+    
+    int iterations = 5;
+    List<Long> memUsed = new ArrayList<Long>(iterations);
+    BenchmarkTimings timings = new BenchmarkTimings();
+    for (int i = 0; i < iterations; ++i) {
+      
+      SystemUtil.cleanMemory();
+      long memoryBefore = SystemUtil.getUsedMemory();
+      
+      Object[] arguments = fMethodArguments.getValues().toArray();
+      resultObject = method.invoke(benchmark, arguments);
+      
+      SystemUtil.cleanMemory();
+      long memoryAfter = SystemUtil.getUsedMemory();
+      
+      resultObject = null;
+      
+      memUsed.add(memoryAfter - memoryBefore);
+      
+      timings.add(new Timing((memoryAfter - memoryBefore) * 1000 * 1000 * 1000L, new GcStats(), new GcStats()));
+    }
+    System.out.println(memUsed);
+    double divisor = fMethodArguments.getfDivisor() * fConstructorArguments.getfDivisor();
+    return new TaskResult(fParams, timings, 1, divisor);
+  }
+  
+  protected long singleRun(Object benchmark, Method method, long iterationCount) throws IllegalArgumentException, IllegalAccessException,
       InvocationTargetException {
     Timer timer = new Timer();
     timer.start();
@@ -158,14 +232,17 @@ public class BenchmarkTask implements IBenchmarkTask {
     return iterations;
   }
   
-  private Method getBenchmarkMethod(Object benchmark) throws SecurityException, NoSuchMethodException {
+  protected Method getBenchmarkMethod(Object benchmark) throws SecurityException, NoSuchMethodException {
     return benchmark.getClass().getMethod(fMethodName, fMethodArgumentTypes.toArray(new Class[fMethodArgumentTypes.size()]));
   }
   
-  private Object createInstance() throws ClassNotFoundException, InstantiationException, IllegalAccessException, IllegalArgumentException,
-      InvocationTargetException {
-    ClassLoader classLoader = ClassUtil.createClassLoader();
-//    ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+  protected ClassLoader createClassLoader() {
+    return ClassUtil.createClassLoader();
+    //return Thread.currentThread().getContextClassLoader();
+  }
+  
+  protected Object createInstance(ClassLoader classLoader) throws ClassNotFoundException, InstantiationException, IllegalAccessException,
+      IllegalArgumentException, InvocationTargetException {
     Class<?> clazz = classLoader.loadClass(fClassName);
     Constructor<?> constructor = clazz.getConstructors()[0];
     return constructor.newInstance(fConstructorArguments.getValues().toArray());
@@ -201,7 +278,7 @@ public class BenchmarkTask implements IBenchmarkTask {
     }
     sb.setCharAt(sb.length() - 1, ')');
   }
-
+  
   @Override
   public int hashCode() {
     final int prime = 31;
@@ -215,7 +292,7 @@ public class BenchmarkTask implements IBenchmarkTask {
     result = prime * result + (fSingleRun ? 1231 : 1237);
     return result;
   }
-
+  
   @Override
   public boolean equals(Object obj) {
     if (this == obj) return true;

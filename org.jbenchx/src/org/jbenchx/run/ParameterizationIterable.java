@@ -4,11 +4,16 @@
  */
 package org.jbenchx.run;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.NoSuchElementException;
 
-import javax.annotation.*;
+import javax.annotation.CheckForNull;
 
 import net.jcip.annotations.Immutable;
+
+import org.jbenchx.util.ObjectUtil;
 
 @Immutable
 public class ParameterizationIterable implements Iterable<ParameterizationValues> {
@@ -48,10 +53,19 @@ public class ParameterizationIterable implements Iterable<ParameterizationValues
       }
       int length = fPositions.length;
       List<Object> result = new ArrayList<Object>(length);
+      double divisor = 1;
       for (int i = 0; i < length; ++i) {
-        result.add(fParameterizations.get(i).getValue(fPositions[i]));
+        Parameterization parameterization = fParameterizations.get(i);
+        Object value = parameterization.getValue(fPositions[i]);
+        result.add(value);
+        if (parameterization.getDivideBy()) {
+          Number number = ObjectUtil.castOrNull(Number.class, value);
+          if (number.doubleValue() != 0) {
+            divisor *= number.doubleValue();
+          }
+        }
       }
-      return new ParameterizationValues(result);
+      return new ParameterizationValues(result, divisor);
     }
     
     private boolean findNext() {

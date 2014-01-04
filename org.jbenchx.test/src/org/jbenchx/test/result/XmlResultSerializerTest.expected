@@ -66,15 +66,6 @@
       </MethodArgumentTypes>
     </Task>
     <Result class="org.jbenchx.result.TaskResult">
-      <Timings>
-        <Run>
-          <Time>1111</Time>
-        </Run>
-        <Run>
-          <Time>1222</Time>
-        </Run>
-        <MinTime>1111</MinTime>
-      </Timings>
       <Errors>
         <org.jbenchx.result.BenchmarkClassError>
           <stackTrace>
@@ -86,8 +77,6 @@
         </org.jbenchx.result.BenchmarkClassError>
       </Errors>
       <Warnings/>
-      <EstimatedBenchmark>0.04999549995499955</EstimatedBenchmark>
-      <IterationCount>22222</IterationCount>
     </Result>
   </Entry>
   <SystemInfo>

@@ -1,21 +1,37 @@
 package org.jbenchx;
 
-import java.lang.reflect.*;
-import java.util.*;
+import java.lang.reflect.Method;
+import java.util.List;
+import java.util.ListIterator;
 
-import javax.annotation.*;
+import javax.annotation.CheckForNull;
 
-import org.jbenchx.annotations.*;
-import org.jbenchx.util.*;
+import org.jbenchx.annotations.Bench;
+import org.jbenchx.annotations.MemoryBench;
+import org.jbenchx.util.ClassUtil;
+import org.jbenchx.util.TimeUtil;
 
+// TODO use builder pattern
 public class BenchmarkParameters {
   
-  private long   fTargetTimeNs;
-  private int    fDivisor;
-  private int    fMinRunCount;
-  private int    fMaxRunCount;
-  private int    fMinSampleCount;
-  private double fMaxDeviation;
+  private long    fTargetTimeNs;
+  
+  // FIXME remove
+  private int     fDivisor;
+  
+  private int     fMinRunCount;
+  
+  private int     fMaxRunCount;
+  
+  private int     fMinSampleCount;
+  
+  private double  fMaxDeviation;
+  
+  private Boolean fMeasureMemory;
+  
+  public BenchmarkParameters() {
+    this(-1, -1, -1, -1, -1, -1);
+  }
   
   public BenchmarkParameters(long targetTimeNs, int divisor, int minRunCount, int maxRunCount, int minSampleCount, double maxDeviation) {
     fTargetTimeNs = targetTimeNs;
@@ -26,9 +42,13 @@ public class BenchmarkParameters {
     fMaxDeviation = maxDeviation;
   }
   
-  protected BenchmarkParameters(Bench annotation) {
+  public BenchmarkParameters(Bench annotation) {
     this(annotation.targetTimeNs(), annotation.divisor(), annotation.minRunCount(), annotation.maxRunCount(), annotation.minSampleCount(), annotation
         .maxDeviation());
+  }
+  
+  public boolean getMeasureMemory() {
+    return Boolean.TRUE.equals(fMeasureMemory);
   }
   
   public int getDivisor() {
@@ -86,19 +106,33 @@ public class BenchmarkParameters {
     int maxRunCount = (params.getMaxRunCount() == -1) ? paramsBase.getMaxRunCount() : params.getMaxRunCount();
     int minSampleCount = (params.getMinSampleCount() == -1) ? paramsBase.getMinSampleCount() : params.getMinSampleCount();
     double maxDeviation = (params.getMaxDeviation() == -1) ? paramsBase.getMaxDeviation() : params.getMaxDeviation();
-    return new BenchmarkParameters(targetTimeNs, divisor, minRunCount, maxRunCount, minSampleCount, maxDeviation);
+    BenchmarkParameters result = new BenchmarkParameters(targetTimeNs, divisor, minRunCount, maxRunCount, minSampleCount, maxDeviation);
+    if (params.fMeasureMemory != null) {
+      result.setMeasureMemory(params.getMeasureMemory());
+    }
+    return result;
   }
   
   @CheckForNull
   public static BenchmarkParameters read(Method method) {
     List<Bench> annotations = ClassUtil.findMethodAnnotations(method, Bench.class);
+    List<MemoryBench> memoryAnnotations = ClassUtil.findMethodAnnotations(method, MemoryBench.class);
+    if (annotations.isEmpty() && memoryAnnotations.isEmpty()) {
+      return null;
+    }
     ListIterator<Bench> iterator = annotations.listIterator(annotations.size());
-    if (!iterator.hasPrevious()) return null;
-    BenchmarkParameters result = new BenchmarkParameters(iterator.previous());
+    BenchmarkParameters result = new BenchmarkParameters();
     while (iterator.hasPrevious()) {
       result = merge(result, new BenchmarkParameters(iterator.previous()));
     }
+    if (!memoryAnnotations.isEmpty()) {
+      result.setMeasureMemory(true);
+    }
     return result;
+  }
+  
+  private void setMeasureMemory(boolean b) {
+    fMeasureMemory = true;
   }
   
   @Override
@@ -128,6 +162,7 @@ public class BenchmarkParameters {
     if (fMinRunCount != other.fMinRunCount) return false;
     if (fMinSampleCount != other.fMinSampleCount) return false;
     if (fTargetTimeNs != other.fTargetTimeNs) return false;
+    if (fMeasureMemory != other.fMeasureMemory) return false;
     return true;
   }
   

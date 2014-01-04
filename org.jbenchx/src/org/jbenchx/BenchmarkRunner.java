@@ -1,14 +1,26 @@
 package org.jbenchx;
 
-import java.lang.annotation.*;
-import java.lang.reflect.*;
-import java.util.*;
+import java.lang.annotation.Annotation;
+import java.lang.reflect.AccessibleObject;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
-import org.jbenchx.annotations.*;
-import org.jbenchx.monitor.*;
-import org.jbenchx.result.*;
-import org.jbenchx.run.*;
-import org.jbenchx.util.*;
+import org.jbenchx.annotations.Ignore;
+import org.jbenchx.annotations.SingleRun;
+import org.jbenchx.monitor.IProgressMonitor;
+import org.jbenchx.result.BenchmarkClassError;
+import org.jbenchx.result.BenchmarkResult;
+import org.jbenchx.result.IBenchmarkResult;
+import org.jbenchx.run.BenchmarkTask;
+import org.jbenchx.run.IBenchmarkTask;
+import org.jbenchx.run.Parameterization;
+import org.jbenchx.run.ParameterizationIterable;
+import org.jbenchx.run.ParameterizationValues;
+import org.jbenchx.util.ClassUtil;
+import org.jbenchx.util.MethodByNameSorter;
 
 public class BenchmarkRunner {
   
@@ -56,6 +68,9 @@ public class BenchmarkRunner {
     Method[] methods = clazz.getMethods();
     Arrays.sort(methods, MethodByNameSorter.INSTANCE);
     for (Method method: methods) {
+      if (hasIgnoreAnnoation(method)) {
+        continue;
+      }
       
       BenchmarkParameters params = BenchmarkParameters.read(method);
       if (params == null) {
@@ -100,6 +115,10 @@ public class BenchmarkRunner {
   
   private boolean hasSingleRunAnnotation(Method method) {
     return !ClassUtil.findMethodAnnotations(method, SingleRun.class).isEmpty();
+  }
+  
+  private boolean hasIgnoreAnnoation(Method method) {
+    return !ClassUtil.findMethodAnnotations(method, Ignore.class).isEmpty();
   }
   
 }

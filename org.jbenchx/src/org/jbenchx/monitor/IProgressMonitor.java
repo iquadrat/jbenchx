@@ -1,8 +1,10 @@
 package org.jbenchx.monitor;
 
-import org.jbenchx.result.*;
+import org.jbenchx.result.IBenchmarkResult;
+import org.jbenchx.result.Timing;
 import org.jbenchx.run.IBenchmarkTask;
-import org.jbenchx.vm.*;
+import org.jbenchx.vm.SystemInfo;
+import org.jbenchx.vm.VmState;
 
 public interface IProgressMonitor {
   
@@ -37,6 +39,11 @@ public interface IProgressMonitor {
   public void run(IBenchmarkTask task, Timing timing, VmState vmStateDiff);
   
   /**
+   * Notifies that the given benchmark has been skipped.
+   */
+  public void skipped(IBenchmarkTask task);
+  
+  /**
    * Notifies that the given benchmark has failed to run.
    */
   public void failed(IBenchmarkTask task);
@@ -64,6 +71,9 @@ public interface IProgressMonitor {
     
     @Override
     public void failed(IBenchmarkTask task) {}
+    
+    @Override
+    public void skipped(IBenchmarkTask task) {}
     
     @Override
     public void done(IBenchmarkTask task) {}

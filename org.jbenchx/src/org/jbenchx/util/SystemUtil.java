@@ -1,6 +1,7 @@
 package org.jbenchx.util;
 
-import java.lang.management.*;
+import java.lang.management.GarbageCollectorMXBean;
+import java.lang.management.ManagementFactory;
 
 import org.jbenchx.result.GcStats;
 
@@ -9,10 +10,10 @@ import edu.umd.cs.findbugs.annotations.SuppressWarnings;
 public class SystemUtil {
   
   private static final long MS = 1000 * 1000;
-
+  
   @SuppressWarnings("DM_GC")
   public static void cleanMemory() {
-    for (int i = 0; i < 10; ++i) {
+    for (int i = 0; i < 5; ++i) {
       System.gc();
       System.runFinalization();
     }
@@ -24,6 +25,11 @@ public class SystemUtil {
       gcStats.addGc(gc.getName(), gc.getCollectionCount(), gc.getCollectionTime() * MS);
     }
     return gcStats;
+  }
+  
+  public static long getUsedMemory() {
+    Runtime runtime = Runtime.getRuntime();
+    return runtime.totalMemory() - runtime.freeMemory();
   }
   
 //  public static long estimateMethodInvokeTime() throws Exception {

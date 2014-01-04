@@ -4,14 +4,18 @@ import java.io.PrintWriter;
 
 import javax.annotation.CheckForNull;
 
-import org.jbenchx.result.*;
+import org.jbenchx.result.BenchmarkFailure;
+import org.jbenchx.result.IBenchmarkResult;
+import org.jbenchx.result.Timing;
 import org.jbenchx.run.IBenchmarkTask;
 import org.jbenchx.util.TimeUtil;
-import org.jbenchx.vm.*;
+import org.jbenchx.vm.SystemInfo;
+import org.jbenchx.vm.VmState;
 
 public class ConsoleProgressMonitor implements IProgressMonitor {
   
   private int              fTasksTotal = 0;
+  
   private int              fTasksDone  = 0;
   
   @CheckForNull
@@ -69,6 +73,12 @@ public class ConsoleProgressMonitor implements IProgressMonitor {
     } else {
       System.out.print("!");
     }
+    System.out.flush();
+  }
+  
+  @Override
+  public void skipped(IBenchmarkTask task) {
+    System.out.println("\tskipped");
     System.out.flush();
   }
   
