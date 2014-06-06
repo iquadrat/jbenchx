@@ -9,6 +9,8 @@ import org.jbenchx.run.IBenchmarkTask;
 import org.jbenchx.util.*;
 import org.jbenchx.vm.SystemInfo;
 
+import edu.umd.cs.findbugs.annotations.Nullable;
+
 public class BenchmarkResult implements IBenchmarkResult {
   
   private final String                 fVersion       = BenchmarkContext.VERSION;
@@ -17,6 +19,7 @@ public class BenchmarkResult implements IBenchmarkResult {
   
   private final ResultMap              fResults       = new ResultMap();
   
+  @Nullable 
   private final SystemInfo             fSystemInfo;
   
   private final Date                   fStartTime;
@@ -26,11 +29,11 @@ public class BenchmarkResult implements IBenchmarkResult {
   @CheckForNull
   private transient ITimeProvider      fTimeProvider  = null;
   
-  public BenchmarkResult(SystemInfo systemInfo) {
+  public BenchmarkResult(@Nullable SystemInfo systemInfo) {
     this(systemInfo, TimeUtil.getDefaultTimeProvider());
   }
   
-  public BenchmarkResult(SystemInfo systemInfo, ITimeProvider timeProvider) {
+  public BenchmarkResult(@Nullable SystemInfo systemInfo, ITimeProvider timeProvider) {
     fSystemInfo = systemInfo;
     fTimeProvider = timeProvider;
     fStartTime = fTimeProvider.getCurrentTime();

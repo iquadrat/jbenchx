@@ -80,5 +80,11 @@ public class BenchmarkContext implements IBenchmarkContext {
     progressMonitor.systemInfo(systemInfo);
     return new BenchmarkContext(progressMonitor, systemInfo);
   }
+
+  @Override
+  public ClassLoader getClassLoader() {
+    return ClassUtil.createClassLoader(); 
+    //return Thread.currentThread().getContextClassLoader();
+  }
   
 }

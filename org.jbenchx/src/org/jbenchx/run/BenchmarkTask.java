@@ -1,14 +1,5 @@
 package org.jbenchx.run;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-import javax.annotation.CheckForNull;
-
 import org.jbenchx.BenchmarkParameters;
 import org.jbenchx.IBenchmarkContext;
 import org.jbenchx.SkipBenchmarkException;
@@ -21,11 +12,19 @@ import org.jbenchx.result.BenchmarkWarning;
 import org.jbenchx.result.GcStats;
 import org.jbenchx.result.TaskResult;
 import org.jbenchx.result.Timing;
-import org.jbenchx.util.ClassUtil;
 import org.jbenchx.util.SystemUtil;
 import org.jbenchx.util.TimeUtil;
 import org.jbenchx.vm.SystemInfo;
 import org.jbenchx.vm.VmState;
+
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import javax.annotation.CheckForNull;
 
 // TODO extract proper base class
 public class BenchmarkTask implements IBenchmarkTask {
@@ -70,8 +69,7 @@ public class BenchmarkTask implements IBenchmarkTask {
   
   @Override
   public void run(BenchmarkResult result, IBenchmarkContext context) {
-    
-    ClassLoader classLoader = createClassLoader();
+    ClassLoader classLoader = context.getClassLoader();
     //SkipBenchmarkException skipException = classLoader.loadClass(SkipBenchmarkException.class.getName()); 
     
     try {
@@ -162,7 +160,7 @@ public class BenchmarkTask implements IBenchmarkTask {
   private volatile Object resultObject;
   
   private TaskResult measureMemory(IBenchmarkContext context) throws Exception {
-    Object benchmark = createInstance(createClassLoader());
+    Object benchmark = createInstance(context.getClassLoader());
     Method method = getBenchmarkMethod(benchmark);
     
     int iterations = 5;
@@ -235,11 +233,6 @@ public class BenchmarkTask implements IBenchmarkTask {
   
   protected Method getBenchmarkMethod(Object benchmark) throws SecurityException, NoSuchMethodException {
     return benchmark.getClass().getMethod(fMethodName, fMethodArgumentTypes.toArray(new Class[fMethodArgumentTypes.size()]));
-  }
-  
-  protected ClassLoader createClassLoader() {
-    return ClassUtil.createClassLoader();
-    //return Thread.currentThread().getContextClassLoader();
   }
   
   protected Object createInstance(ClassLoader classLoader) throws ClassNotFoundException, InstantiationException, IllegalAccessException,
