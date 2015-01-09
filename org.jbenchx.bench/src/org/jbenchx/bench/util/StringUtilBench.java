@@ -1,11 +1,13 @@
 package org.jbenchx.bench.util;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
 
-import org.jbenchx.*;
-import org.jbenchx.annotations.*;
-import org.jbenchx.monitor.*;
-import org.jbenchx.util.*;
+import org.jbenchx.BenchmarkContext;
+import org.jbenchx.BenchmarkRunner;
+import org.jbenchx.annotations.Bench;
+import org.jbenchx.monitor.ConsoleProgressMonitor;
+import org.jbenchx.util.StringUtil;
 
 public class StringUtilBench {
 
