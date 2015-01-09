@@ -1,6 +1,7 @@
 package org.jbenchx.collections.jcf;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.TreeSet;
 
 public class TreeSetBenchmark extends CollectionQueryBenchmark {
   

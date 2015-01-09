@@ -1,8 +1,9 @@
 package org.jbenchx.collections.jcf;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.LinkedList;
 
-import org.jbenchx.annotations.*;
+import org.jbenchx.annotations.Bench;
 
 public class LinkedListBenchmark extends CollectionQueryBenchmark {
 

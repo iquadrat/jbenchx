@@ -1,8 +1,12 @@
 package org.jbenchx.collections.jcf;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.Random;
+import java.util.TreeSet;
 
-import org.jbenchx.annotations.*;
+import org.jbenchx.annotations.Bench;
+import org.jbenchx.annotations.ForEachInt;
+import org.jbenchx.annotations.ForEachString;
 import org.jbenchx.util.Assert;
 
 public class JavaSetBench {

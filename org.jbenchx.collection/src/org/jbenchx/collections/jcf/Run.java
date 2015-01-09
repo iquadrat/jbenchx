@@ -1,7 +1,9 @@
 package org.jbenchx.collections.jcf;
 
-import org.jbenchx.*;
-import org.jbenchx.monitor.*;
+import org.jbenchx.BenchmarkContext;
+import org.jbenchx.BenchmarkRunner;
+import org.jbenchx.monitor.ConsoleProgressMonitor;
+
 
 
 public class Run {

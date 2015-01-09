@@ -1,8 +1,11 @@
 package org.jbenchx.collections.jcf;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Iterator;
 
-import org.jbenchx.annotations.*;
+import org.jbenchx.annotations.Bench;
+import org.jbenchx.annotations.Group;
 
 /**
  * Benchmarks all queries (non-modifying) operation defined on the {@link Collection} interface.
