@@ -1,8 +1,8 @@
 package org.jbenchx.result;
 
-import net.jcip.annotations.NotThreadSafe;
+import javax.annotation.concurrent.NotThreadSafe;
 
-import org.jbenchx.util.*;
+import org.jbenchx.util.TimeUtil;
 
 @NotThreadSafe
 public class Timing extends GcStats {

@@ -9,7 +9,7 @@ import java.lang.reflect.AccessibleObject;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 
-import net.jcip.annotations.Immutable;
+import javax.annotation.concurrent.Immutable;
 
 import org.jbenchx.annotations.DivideBy;
 import org.jbenchx.annotations.ForEachBoolean;

@@ -1,8 +1,8 @@
 package org.jbenchx.result;
 
-import java.io.*;
+import java.io.PrintWriter;
 
-import org.jbenchx.run.*;
+import org.jbenchx.run.IBenchmarkTask;
 
 public class BenchmarkTaskFailure extends BenchmarkFailure {
 

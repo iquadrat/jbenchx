@@ -1,8 +1,9 @@
 package org.jbenchx.util;
 
-import java.nio.*;
+import java.nio.ByteBuffer;
+import java.nio.IntBuffer;
 
-import org.jbenchx.annotations.*;
+import org.jbenchx.annotations.Bench;
 
 public class SystemBenchmark {
   

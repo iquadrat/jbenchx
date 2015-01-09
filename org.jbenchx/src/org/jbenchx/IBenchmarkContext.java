@@ -6,8 +6,8 @@ package org.jbenchx;
 
 import javax.annotation.CheckForNull;
 
-import org.jbenchx.monitor.*;
-import org.jbenchx.vm.*;
+import org.jbenchx.monitor.IProgressMonitor;
+import org.jbenchx.vm.SystemInfo;
 
 public interface IBenchmarkContext {
   

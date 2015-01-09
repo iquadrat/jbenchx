@@ -1,4 +1,3 @@
-@DefaultAnnotation(NonNull.class)
+@javax.annotation.ParametersAreNonnullByDefault
 package org.jbenchx.monitor;
 
-import edu.umd.cs.findbugs.annotations.*;

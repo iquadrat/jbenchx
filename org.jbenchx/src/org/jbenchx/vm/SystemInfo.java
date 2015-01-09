@@ -1,6 +1,7 @@
 package org.jbenchx.vm;
 
-import java.lang.management.*;
+import java.lang.management.ManagementFactory;
+import java.lang.management.MemoryUsage;
 
 public class SystemInfo {
   

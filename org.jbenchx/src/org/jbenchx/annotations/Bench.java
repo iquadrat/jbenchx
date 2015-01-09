@@ -1,6 +1,9 @@
 package org.jbenchx.annotations;
 
-import java.lang.annotation.*;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 /**
  * Benchmark methods must be annotated with the {@link Bench} annotation.

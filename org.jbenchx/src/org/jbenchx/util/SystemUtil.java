@@ -5,8 +5,6 @@ import java.lang.management.ManagementFactory;
 
 import org.jbenchx.result.GcStats;
 
-import edu.umd.cs.findbugs.annotations.SuppressWarnings;
-
 public class SystemUtil {
   
   private static final long MS = 1000 * 1000;

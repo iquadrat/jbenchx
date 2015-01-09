@@ -1,6 +1,6 @@
 package org.jbenchx.result;
 
-import java.io.*;
+import java.io.PrintWriter;
 
 
 public abstract class BenchmarkFailure extends RuntimeException {

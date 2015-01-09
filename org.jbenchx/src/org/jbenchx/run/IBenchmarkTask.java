@@ -4,8 +4,8 @@
  */
 package org.jbenchx.run;
 
-import org.jbenchx.*;
-import org.jbenchx.result.*;
+import org.jbenchx.IBenchmarkContext;
+import org.jbenchx.result.BenchmarkResult;
 
 public interface IBenchmarkTask {
 

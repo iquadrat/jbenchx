@@ -1,6 +1,6 @@
 package org.jbenchx.result;
 
-import net.jcip.annotations.Immutable;
+import javax.annotation.concurrent.Immutable;
 
 @Immutable
 public class GcEvent {

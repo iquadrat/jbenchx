@@ -1,3 +1,3 @@
 @javax.annotation.ParametersAreNonnullByDefault
-package org.jbenchx.remote;
+package org.jbenchx.run;
 

@@ -1,6 +1,8 @@
 package org.jbenchx.vm;
 
-import java.lang.management.*;
+import java.lang.management.ClassLoadingMXBean;
+import java.lang.management.CompilationMXBean;
+import java.lang.management.ManagementFactory;
 
 public class VmState {
   

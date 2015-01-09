@@ -4,20 +4,24 @@
  */
 package org.jbenchx.result;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.lang.reflect.Field;
 import java.nio.charset.Charset;
 
 import org.jbenchx.BenchmarkParameters;
-import org.jbenchx.run.*;
+import org.jbenchx.run.ParameterizationValues;
 import org.jbenchx.util.ObjectUtil;
 
 import com.thoughtworks.xstream.XStream;
-import com.thoughtworks.xstream.converters.*;
+import com.thoughtworks.xstream.converters.UnmarshallingContext;
 import com.thoughtworks.xstream.converters.collections.CollectionConverter;
-import com.thoughtworks.xstream.io.*;
+import com.thoughtworks.xstream.io.HierarchicalStreamReader;
 import com.thoughtworks.xstream.io.xml.DomDriver;
-import com.thoughtworks.xstream.mapper.*;
+import com.thoughtworks.xstream.mapper.Mapper;
+import com.thoughtworks.xstream.mapper.MapperWrapper;
 
 public class XmlResultSerializer {
   

@@ -10,8 +10,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 import javax.annotation.CheckForNull;
-
-import net.jcip.annotations.Immutable;
+import javax.annotation.concurrent.Immutable;
 
 import org.jbenchx.util.ObjectUtil;
 

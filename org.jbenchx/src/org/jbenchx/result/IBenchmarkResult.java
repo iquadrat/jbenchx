@@ -4,14 +4,15 @@
  */
 package org.jbenchx.result;
 
-import java.util.*;
+import java.util.Date;
+import java.util.List;
+import java.util.Set;
 
-import javax.annotation.*;
+import javax.annotation.CheckForNull;
+import javax.annotation.Nullable;
 
-import org.jbenchx.run.*;
+import org.jbenchx.run.IBenchmarkTask;
 import org.jbenchx.vm.SystemInfo;
-
-import edu.umd.cs.findbugs.annotations.Nullable;
 
 public interface IBenchmarkResult {
 

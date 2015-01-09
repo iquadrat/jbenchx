@@ -1,9 +1,14 @@
 package org.jbenchx.util;
 
-import java.io.*;
-import java.util.*;
+import java.io.ByteArrayOutputStream;
+import java.io.Closeable;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.Reader;
+import java.util.Arrays;
 
-import javax.annotation.*;
+import javax.annotation.CheckForNull;
 
 public class IOUtil {
 

@@ -1,7 +1,7 @@
 package org.jbenchx.util;
 
-import java.lang.reflect.*;
-import java.util.*;
+import java.lang.reflect.Method;
+import java.util.Comparator;
 
 public class MethodByNameSorter implements Comparator<Method> {
   

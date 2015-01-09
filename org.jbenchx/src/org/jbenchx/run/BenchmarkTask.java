@@ -1,5 +1,14 @@
 package org.jbenchx.run;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import javax.annotation.CheckForNull;
+
 import org.jbenchx.BenchmarkParameters;
 import org.jbenchx.IBenchmarkContext;
 import org.jbenchx.SkipBenchmarkException;
@@ -16,15 +25,6 @@ import org.jbenchx.util.SystemUtil;
 import org.jbenchx.util.TimeUtil;
 import org.jbenchx.vm.SystemInfo;
 import org.jbenchx.vm.VmState;
-
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-import javax.annotation.CheckForNull;
 
 // TODO extract proper base class
 public class BenchmarkTask implements IBenchmarkTask {
