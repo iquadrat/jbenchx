@@ -27,9 +27,8 @@ Export-Package: com.thoughtworks.xstream,
  com.thoughtworks.xstream.io.xml.xppdom,
  com.thoughtworks.xstream.mapper,
  com.thoughtworks.xstream.persistence,
- edu.umd.cs.findbugs.annotations,
  javax.annotation,
- javax.annotation.meta,
- net.jcip.annotations
+ javax.annotation.concurrent,
+ javax.annotation.meta
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-Vendor: Micha Riser
