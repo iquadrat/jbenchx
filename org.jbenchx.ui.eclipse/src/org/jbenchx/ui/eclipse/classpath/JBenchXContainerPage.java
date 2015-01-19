@@ -1,13 +1,17 @@
 package org.jbenchx.ui.eclipse.classpath;
 
-import org.eclipse.core.runtime.*;
-import org.eclipse.jdt.core.*;
-import org.eclipse.jdt.ui.wizards.*;
-import org.eclipse.jface.wizard.*;
-import org.eclipse.swt.*;
-import org.eclipse.swt.widgets.*;
+import javax.annotation.CheckForNull;
 
-import edu.umd.cs.findbugs.annotations.*;
+import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.core.runtime.IExecutableExtension;
+import org.eclipse.core.runtime.Path;
+import org.eclipse.jdt.core.IClasspathEntry;
+import org.eclipse.jdt.core.JavaCore;
+import org.eclipse.jdt.ui.wizards.IClasspathContainerPage;
+import org.eclipse.jface.wizard.WizardPage;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Label;
 
 public class JBenchXContainerPage extends WizardPage implements IClasspathContainerPage, IExecutableExtension {
 

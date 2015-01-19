@@ -1,11 +1,18 @@
 package org.jbenchx.ui.eclipse;
 
-import org.eclipse.core.expressions.*;
-import org.eclipse.core.resources.*;
-import org.eclipse.core.runtime.*;
-import org.eclipse.jdt.core.*;
-import org.eclipse.jdt.internal.core.hierarchy.TypeHierarchy;
-import org.jbenchx.annotations.*;
+import org.eclipse.core.expressions.PropertyTester;
+import org.eclipse.core.resources.IResource;
+import org.eclipse.core.runtime.IAdaptable;
+import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.jdt.core.Flags;
+import org.eclipse.jdt.core.IAnnotation;
+import org.eclipse.jdt.core.IJavaElement;
+import org.eclipse.jdt.core.IMethod;
+import org.eclipse.jdt.core.IType;
+import org.eclipse.jdt.core.ITypeRoot;
+import org.eclipse.jdt.core.JavaCore;
+import org.eclipse.jdt.core.JavaModelException;
+import org.jbenchx.annotations.Bench;
 
 public class JBenchXPropertyTester extends PropertyTester {
 

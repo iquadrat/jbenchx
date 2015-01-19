@@ -1,14 +1,26 @@
 package org.jbenchx.ui.eclipse.classpath;
 
-import java.io.*;
-import java.net.*;
-import java.util.*;
+import java.io.IOException;
+import java.net.URI;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Set;
 
-import org.eclipse.core.runtime.*;
-import org.eclipse.jdt.core.*;
-import org.osgi.framework.*;
+import javax.annotation.CheckForNull;
 
-import edu.umd.cs.findbugs.annotations.*;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.Platform;
+import org.eclipse.jdt.core.ClasspathContainerInitializer;
+import org.eclipse.jdt.core.IClasspathContainer;
+import org.eclipse.jdt.core.IClasspathEntry;
+import org.eclipse.jdt.core.IJavaProject;
+import org.eclipse.jdt.core.JavaCore;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleException;
 
 public class JBenchXContainerInitializer extends ClasspathContainerInitializer {
   
