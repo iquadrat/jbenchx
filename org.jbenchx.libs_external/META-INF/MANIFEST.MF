@@ -30,5 +30,5 @@ Export-Package: com.thoughtworks.xstream,
  javax.annotation,
  javax.annotation.concurrent,
  javax.annotation.meta
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-Vendor: Micha Riser
