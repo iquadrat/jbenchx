@@ -1,6 +1,9 @@
 package org.jbenchx;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import javax.annotation.CheckForNull;
 
@@ -10,6 +13,7 @@ import org.jbenchx.result.IBenchmarkResult;
 import org.jbenchx.result.ITaskResult;
 import org.jbenchx.run.IBenchmarkTask;
 import org.jbenchx.util.ClassUtil;
+import org.jbenchx.util.StringUtil;
 import org.jbenchx.util.SystemBenchmark;
 import org.jbenchx.util.TimeUtil;
 import org.jbenchx.vm.SystemInfo;
@@ -25,14 +29,18 @@ public class BenchmarkContext implements IBenchmarkContext {
   @CheckForNull
   private final SystemInfo          fSystemInfo;
   
-  public BenchmarkContext(IProgressMonitor progressMonitor, @CheckForNull SystemInfo systemInfo) {
-    this(progressMonitor, systemInfo, BenchmarkParameters.getDefaults());
+  private final List<Pattern>       fTagPatterns;
+  
+  public BenchmarkContext(IProgressMonitor progressMonitor, @CheckForNull SystemInfo systemInfo, List<Pattern> patterns) {
+    this(progressMonitor, systemInfo, patterns, BenchmarkParameters.getDefaults());
   }
   
-  public BenchmarkContext(IProgressMonitor progressMonitor, @CheckForNull SystemInfo systemInfo, BenchmarkParameters defaultParams) {
+  public BenchmarkContext(IProgressMonitor progressMonitor, @CheckForNull SystemInfo systemInfo, List<Pattern> patterns,
+      BenchmarkParameters defaultParams) {
     fProgressMonitor = progressMonitor;
     fSystemInfo = systemInfo;
     fDefaultParams = defaultParams;
+    fTagPatterns = new ArrayList<>(patterns);
   }
   
   @Override
@@ -55,8 +63,22 @@ public class BenchmarkContext implements IBenchmarkContext {
     return VERSION;
   }
   
+  public static final List<Pattern> RUN_ALL;
+  static {
+    RUN_ALL = new ArrayList<>(1);
+    RUN_ALL.add(StringUtil.wildCardToRegexpPattern("*"));
+  }
+  
   public static IBenchmarkContext create(IProgressMonitor progressMonitor) {
-    IBenchmarkContext systemBenchmarkContext = new BenchmarkContext(IProgressMonitor.DUMMY, null);
+    return create(progressMonitor, "*");
+  }
+  
+  public static IBenchmarkContext create(IProgressMonitor progressMonitor, String tagPattern) {
+    return create(progressMonitor, Arrays.asList(tagPattern));
+  }
+  
+  public static IBenchmarkContext create(IProgressMonitor progressMonitor, Iterable<String> tagPatterns) {
+    IBenchmarkContext systemBenchmarkContext = new BenchmarkContext(IProgressMonitor.DUMMY, null, RUN_ALL);
     systemBenchmarkContext.getDefaultParams().setTargetTimeNs(50 * TimeUtil.MS);
     BenchmarkRunner runner = new BenchmarkRunner();
     runner.add(SystemBenchmark.class);
@@ -82,13 +104,23 @@ public class BenchmarkContext implements IBenchmarkContext {
     
     SystemInfo systemInfo = SystemInfo.create(timerGranularity, methodInvoke, systemBenchMark);
     progressMonitor.systemInfo(systemInfo);
-    return new BenchmarkContext(progressMonitor, systemInfo);
+    
+    List<Pattern> patterns = new ArrayList<>();
+    for (String tagPattern: tagPatterns) {
+      patterns.add(StringUtil.wildCardToRegexpPattern(tagPattern));
+    }
+    return new BenchmarkContext(progressMonitor, systemInfo, patterns);
   }
-
+  
   @Override
   public ClassLoader getClassLoader() {
-    return ClassUtil.createClassLoader(); 
+    return ClassUtil.createClassLoader();
     //return Thread.currentThread().getContextClassLoader();
+  }
+  
+  @Override
+  public List<Pattern> getTagPatterns() {
+    return fTagPatterns;
   }
   
 }

@@ -3,6 +3,8 @@ package org.jbenchx.util;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class StringUtil {
   
@@ -18,6 +20,25 @@ public class StringUtil {
   
   public static String join(String separator, List<String> strings) {
     return join(separator, strings, strings.size());
+  }
+  
+  private static final Pattern wildCard2RegexPattern = Pattern.compile("[^*?]+|(\\*)|(\\?)");
+  
+  public static Pattern wildCardToRegexpPattern(String wildCardPattern) {
+    Matcher matcher = wildCard2RegexPattern.matcher(wildCardPattern);
+    StringBuffer b = new StringBuffer();
+    while (matcher.find()) {
+      if (matcher.group(1) != null) {
+        matcher.appendReplacement(b, ".*");
+      } else if (matcher.group(2) != null) {
+        matcher.appendReplacement(b, ".");
+      }
+      else {
+        matcher.appendReplacement(b, "\\\\Q" + matcher.group(0) + "\\\\E");
+      }
+    }
+    matcher.appendTail(b);
+    return Pattern.compile(b.toString());
   }
   
   private static String join(String separator, Iterable<String> strings, int estimatedStringCount) {
@@ -37,7 +58,7 @@ public class StringUtil {
     }
     return builder.toString();
   }
-
+  
   public static List<String> split(String string, String regexp) {
     return Arrays.asList(string.split(regexp, -1));
   }

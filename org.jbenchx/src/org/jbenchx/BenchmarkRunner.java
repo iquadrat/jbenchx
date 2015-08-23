@@ -6,10 +6,13 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import org.jbenchx.annotations.Ignore;
 import org.jbenchx.annotations.SingleRun;
+import org.jbenchx.annotations.Tags;
 import org.jbenchx.monitor.IProgressMonitor;
 import org.jbenchx.result.BenchmarkClassError;
 import org.jbenchx.result.BenchmarkResult;
@@ -68,7 +71,7 @@ public class BenchmarkRunner {
     Method[] methods = clazz.getMethods();
     Arrays.sort(methods, MethodByNameSorter.INSTANCE);
     for (Method method: methods) {
-      if (hasIgnoreAnnoation(method)) {
+      if (hasIgnoreAnnoation(method) || !matchesTags(context, method)) {
         continue;
       }
       
@@ -96,6 +99,27 @@ public class BenchmarkRunner {
     
   }
   
+  private boolean matchesTags(IBenchmarkContext context, Method method) {
+    HashSet<String> tags = new HashSet<>();
+    tags.add("");
+    if (method.getClass().isAnnotationPresent(Tags.class)) {
+      tags.addAll(Arrays.asList(method.getClass().getAnnotation(Tags.class).value()));
+    }
+    
+    for (Tags tagsAnnotation: ClassUtil.findMethodAnnotations(method, Tags.class)) {
+      tags.addAll(Arrays.asList(tagsAnnotation.value()));
+    }
+    
+    for (Pattern pattern: context.getTagPatterns()) {
+      for (String tag: tags) {
+        if (pattern.matcher(tag).matches()) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
   private Iterable<ParameterizationValues> getConstructorArgumentsIterator(Constructor<?> constructor) {
     return getArgumentsIterator(constructor, constructor.getParameterTypes(), constructor.getParameterAnnotations(), constructor.getDeclaringClass());
   }

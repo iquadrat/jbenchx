@@ -4,6 +4,9 @@
  */
 package org.jbenchx;
 
+import java.util.List;
+import java.util.regex.Pattern;
+
 import javax.annotation.CheckForNull;
 
 import org.jbenchx.monitor.IProgressMonitor;
@@ -24,5 +27,7 @@ public interface IBenchmarkContext {
    * @return the class loader to use for loading the benchmark
    */
   public ClassLoader getClassLoader();
+  
+  public List<Pattern> getTagPatterns();
   
 }

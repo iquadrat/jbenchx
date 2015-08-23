@@ -5,13 +5,13 @@ import java.util.Collection;
 import java.util.Iterator;
 
 import org.jbenchx.annotations.Bench;
-import org.jbenchx.annotations.Group;
+import org.jbenchx.annotations.Tags;
 
 /**
  * Benchmarks all queries (non-modifying) operation defined on the {@link Collection} interface.
  * @author micha
  */
-@Group("Collection")
+@Tags({"collection", "query"})
 public abstract class CollectionQueryBenchmark {
 
   private static final int     COUNT = 100;

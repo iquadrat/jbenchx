@@ -22,7 +22,9 @@ public class ResultMap extends AbstractCollection<BenchmarkResultEntry> {
   }
   
   public ITaskResult lookup(IBenchmarkTask task) {
-    if (!fResults.containsKey(task)) throw new NoSuchElementException(task.getName());
+    if (!fResults.containsKey(task)) {
+      throw new NoSuchElementException(task.getName());
+    }
     return fResults.get(task);
   }
   
