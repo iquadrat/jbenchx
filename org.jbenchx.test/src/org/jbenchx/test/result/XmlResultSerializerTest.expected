@@ -18,8 +18,11 @@
       <ConstructorArguments>
         <int>42</int>
         <string>foo</string>
+        <Divisor>1.0</Divisor>
       </ConstructorArguments>
-      <MethodArguments/>
+      <MethodArguments>
+        <Divisor>1.0</Divisor>
+      </MethodArguments>
       <MethodArgumentTypes/>
     </Task>
     <Result class="org.jbenchx.result.TaskResult">
@@ -38,8 +41,9 @@
           <Reason>some warning reason here</Reason>
         </org.jbenchx.result.BenchmarkWarning>
       </Warnings>
-      <EstimatedBenchmark>0.0999909999099991</EstimatedBenchmark>
+      <EstimatedBenchmark>8.09932282837603E-6</EstimatedBenchmark>
       <IterationCount>11111</IterationCount>
+      <Divisor>12345.6</Divisor>
     </Result>
   </Entry>
   <Entry>
@@ -55,10 +59,13 @@
         <MaxDeviation>0.05</MaxDeviation>
       </Params>
       <SingleRun>false</SingleRun>
-      <ConstructorArguments/>
+      <ConstructorArguments>
+        <Divisor>1.0</Divisor>
+      </ConstructorArguments>
       <MethodArguments>
         <int>42</int>
         <string>foo</string>
+        <Divisor>1.0</Divisor>
       </MethodArguments>
       <MethodArgumentTypes>
         <java-class>int</java-class>
@@ -66,17 +73,27 @@
       </MethodArgumentTypes>
     </Task>
     <Result class="org.jbenchx.result.TaskResult">
+      <Timings>
+        <MinTime>9223372036854775807</MinTime>
+      </Timings>
       <Errors>
         <org.jbenchx.result.BenchmarkClassError>
           <stackTrace>
             <trace>org.jbenchx.test.result.XmlResultSerializerTest.createError(XmlResultSerializerTest.java:12)</trace>
             <trace>org.jbenchx.test.result.XmlResultSerializerTest.writeXmlResult_readXmlResult(XmlResultSerializerTest.java:33)</trace>
           </stackTrace>
+          <suppressedExceptions class="java.util.Collections$UnmodifiableRandomAccessList" resolves-to="java.util.Collections$UnmodifiableList">
+            <c class="list"/>
+            <list reference="../c"/>
+          </suppressedExceptions>
           <Class>org.jbenchx.test.result.XmlResultSerializerTest</Class>
           <Message>some failure warning here</Message>
         </org.jbenchx.result.BenchmarkClassError>
       </Errors>
       <Warnings/>
+      <EstimatedBenchmark>Infinity</EstimatedBenchmark>
+      <IterationCount>0</IterationCount>
+      <Divisor>1.0</Divisor>
     </Result>
   </Entry>
   <SystemInfo>

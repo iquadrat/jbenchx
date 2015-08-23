@@ -5,15 +5,21 @@
 package org.jbenchx.test;
 
 import java.lang.reflect.Method;
-import java.util.regex.*;
+import java.util.regex.Pattern;
 
-import org.jbenchx.*;
-import org.jbenchx.annotations.*;
-import org.jbenchx.monitor.*;
-import org.jbenchx.result.*;
-import org.jbenchx.run.*;
+import org.jbenchx.BenchmarkContext;
+import org.jbenchx.BenchmarkParameters;
+import org.jbenchx.IBenchmarkContext;
+import org.jbenchx.annotations.Bench;
+import org.jbenchx.monitor.IProgressMonitor;
+import org.jbenchx.result.BenchmarkResult;
+import org.jbenchx.result.ITaskResult;
+import org.jbenchx.run.BenchmarkTask;
+import org.jbenchx.run.IBenchmarkTask;
+import org.jbenchx.run.ParameterizationValues;
 import org.jbenchx.vm.SystemInfo;
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.Test;
 
 
 public class BenchmarkTaskTest extends BenchmarkTestCase {
@@ -34,7 +40,7 @@ public class BenchmarkTaskTest extends BenchmarkTestCase {
     Method emptyMethod = TestBench.class.getMethod("empty");
     IBenchmarkTask task = new BenchmarkTask(TestBench.class, emptyMethod, BenchmarkParameters.getDefaults(), false, NO_ARGS, NO_ARGS);
     BenchmarkResult result = new BenchmarkResult(SystemInfo.create(1, 2, 3.0));
-    IBenchmarkContext context = new BenchmarkContext(IProgressMonitor.DUMMY, SystemInfo.create(10, 100, 100));
+    IBenchmarkContext context = new BenchmarkContext(IProgressMonitor.DUMMY, SystemInfo.create(10, 100, 100), BenchmarkContext.RUN_ALL);
     task.run(result, context);
     ITaskResult taskResult = result.getResult(task);
     if (!taskResult.getFailures().isEmpty()) {

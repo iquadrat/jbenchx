@@ -16,12 +16,16 @@ import org.jbenchx.result.XmlResultSerializer;
 import org.jbenchx.util.StringUtil;
 
 public class RemoteRunner {
+  
+  private static final String FLAG_BENCHMARK = "-benchmarks";
+  
+  private static final String FLAG_TAG = "-tags";
 
   public static void main(String[] args) {
 
     BenchmarkRunner runner = new BenchmarkRunner();
 
-    List<String> bechmarks = getBenchmarkStrings(args);
+    List<String> bechmarks = getFlag(FLAG_BENCHMARK, args);
 
     ClassLoader classloader = Thread.currentThread().getContextClassLoader();
     StringBuilder fileName = new StringBuilder();
@@ -50,7 +54,7 @@ public class RemoteRunner {
 
       MultiProgressMonitor progressMonitor = new MultiProgressMonitor();
       progressMonitor.add(new ConsoleProgressMonitor());
-      IBenchmarkContext context = BenchmarkContext.create(progressMonitor);
+      IBenchmarkContext context = BenchmarkContext.create(progressMonitor, getFlag(FLAG_TAG, args));
       IBenchmarkResult result = runner.run(context);
       FileOutputStream out = new FileOutputStream(fileName.toString() + "-"+result.getEndTime().getTime()+ ".bench");
       new XmlResultSerializer().serialize(result, out);
@@ -62,11 +66,10 @@ public class RemoteRunner {
 
   }
 
-  private static List<String> getBenchmarkStrings(String[] args) {
-    String argPrefix = "-benchmarks "; // TODO public constant
+  private static List<String> getFlag(String flag, String[] args) {
     for (String arg: args) {
-      if (arg.startsWith(argPrefix)) {
-        String substring = arg.substring(argPrefix.length());
+      if (arg.startsWith(flag)) {
+        String substring = arg.substring(flag.length());
         return StringUtil.split(substring, ",");
       }
     }
