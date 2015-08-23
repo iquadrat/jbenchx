@@ -34,11 +34,8 @@ public class BenchmarkClassLoader extends ClassLoader {
       return super.loadClass(name);
     }
     
-    InputStream in;
-    try {
-      in = resources.openStream();
+    try (InputStream in = resources.openStream()) {
       byte[] data = readToEnd(in);
-      in.close();
       Class<?> clazz = defineClass(name, data, 0, data.length);
       fMyClasses.put(name, clazz);
       return clazz;
