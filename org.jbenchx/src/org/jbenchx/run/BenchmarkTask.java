@@ -123,6 +123,10 @@ public class BenchmarkTask implements IBenchmarkTask {
     long runtimePerIteration = Long.MAX_VALUE;
     do {
       
+      if (fSingleRun) {
+        benchmark = createInstance(classLoader);
+      }
+      
       GcStats preGcStats = SystemUtil.getGcStats();
       long time = singleRun(benchmark, method, iterationCount);
       GcStats postGcStats = SystemUtil.getGcStats();
