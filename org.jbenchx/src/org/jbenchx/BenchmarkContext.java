@@ -20,6 +20,12 @@ import org.jbenchx.vm.SystemInfo;
 
 public class BenchmarkContext implements IBenchmarkContext {
   
+  public static final List<Pattern> RUN_ALL;
+  static {
+    RUN_ALL = new ArrayList<>(1);
+    RUN_ALL.add(StringUtil.wildCardToRegexpPattern("*"));
+  }
+  
   public static final String        VERSION = "0.3.0";
   
   private final IProgressMonitor    fProgressMonitor;
@@ -30,6 +36,15 @@ public class BenchmarkContext implements IBenchmarkContext {
   private final SystemInfo          fSystemInfo;
   
   private final List<Pattern>       fTagPatterns;
+  
+  public BenchmarkContext(IProgressMonitor progressMonitor, @CheckForNull SystemInfo systemInfo) {
+    this(progressMonitor, systemInfo, RUN_ALL);
+  }
+  
+  @Deprecated
+  public BenchmarkContext(IProgressMonitor progressMonitor, @CheckForNull SystemInfo systemInfo, BenchmarkParameters defaultParams) {
+    this(progressMonitor, systemInfo, RUN_ALL, defaultParams); 
+  }
   
   public BenchmarkContext(IProgressMonitor progressMonitor, @CheckForNull SystemInfo systemInfo, List<Pattern> patterns) {
     this(progressMonitor, systemInfo, patterns, BenchmarkParameters.getDefaults());
@@ -61,12 +76,6 @@ public class BenchmarkContext implements IBenchmarkContext {
   @Override
   public String getVersion() {
     return VERSION;
-  }
-  
-  public static final List<Pattern> RUN_ALL;
-  static {
-    RUN_ALL = new ArrayList<>(1);
-    RUN_ALL.add(StringUtil.wildCardToRegexpPattern("*"));
   }
   
   public static IBenchmarkContext create(IProgressMonitor progressMonitor) {
