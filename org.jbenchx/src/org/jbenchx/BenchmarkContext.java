@@ -18,6 +18,7 @@ import org.jbenchx.util.SystemBenchmark;
 import org.jbenchx.util.TimeUtil;
 import org.jbenchx.vm.SystemInfo;
 
+// TODO create builder
 public class BenchmarkContext implements IBenchmarkContext {
   
   public static final List<Pattern> RUN_ALL;
