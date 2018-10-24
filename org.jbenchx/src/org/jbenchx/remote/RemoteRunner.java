@@ -69,7 +69,7 @@ public class RemoteRunner {
   private static List<String> getFlag(String flag, String[] args) {
     for (String arg: args) {
       if (arg.startsWith(flag)) {
-        String substring = arg.substring(flag.length());
+        String substring = arg.substring(flag.length()).trim();
         return StringUtil.split(substring, ",");
       }
     }
