@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import org.jbenchx.BenchmarkContext;
 import org.jbenchx.BenchmarkRunner;
@@ -54,7 +55,8 @@ public class RemoteRunner {
 
       MultiProgressMonitor progressMonitor = new MultiProgressMonitor();
       progressMonitor.add(new ConsoleProgressMonitor());
-      IBenchmarkContext context = BenchmarkContext.create(progressMonitor, getFlag(FLAG_TAG, args));
+      List<Pattern> patterns = BenchmarkContext.toPattern(getFlag(FLAG_TAG, args));
+      IBenchmarkContext context = BenchmarkContext.create(progressMonitor, patterns.isEmpty() ? BenchmarkContext.RUN_ALL : patterns);
       IBenchmarkResult result = runner.run(context);
       FileOutputStream out = new FileOutputStream(fileName.toString() + "-"+result.getEndTime().getTime()+ ".bench");
       new XmlResultSerializer().serialize(result, out);
