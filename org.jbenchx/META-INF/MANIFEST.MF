@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Jbenchx
 Bundle-SymbolicName: org.jbenchx
-Bundle-Version: 0.3.0.qualifier
+Bundle-Version: 0.3.1.qualifier
 Export-Package: org.jbenchx,
  org.jbenchx.annotations,
  org.jbenchx.monitor,
@@ -12,5 +12,5 @@ Export-Package: org.jbenchx,
  org.jbenchx.util,
  org.jbenchx.vm
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
-Require-Bundle: org.jbenchx.libs_external;bundle-version="0.2.0"
+Require-Bundle: org.jbenchx.libs_external;bundle-version="0.3.1"
 Bundle-Vendor: Micha Riser
