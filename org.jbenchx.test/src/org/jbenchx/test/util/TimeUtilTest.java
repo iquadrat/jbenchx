@@ -1,10 +1,10 @@
 package org.jbenchx.test.util;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
-import org.jbenchx.test.*;
-import org.jbenchx.util.*;
-import org.junit.*;
+import org.jbenchx.test.BenchmarkTestCase;
+import org.jbenchx.util.TimeUtil;
+import org.junit.Test;
 
 
 public class TimeUtilTest extends BenchmarkTestCase {

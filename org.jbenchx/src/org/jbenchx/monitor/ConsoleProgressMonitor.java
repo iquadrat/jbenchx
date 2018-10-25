@@ -2,11 +2,8 @@ package org.jbenchx.monitor;
 
 import java.io.PrintWriter;
 
-import javax.annotation.CheckForNull;
-
-import org.jbenchx.result.BenchmarkFailure;
-import org.jbenchx.result.IBenchmarkResult;
-import org.jbenchx.result.Timing;
+import org.jbenchx.Benchmark;
+import org.jbenchx.Benchmark.TaskResult;
 import org.jbenchx.run.IBenchmarkTask;
 import org.jbenchx.util.TimeUtil;
 import org.jbenchx.vm.SystemInfo;
@@ -14,12 +11,9 @@ import org.jbenchx.vm.VmState;
 
 public class ConsoleProgressMonitor implements IProgressMonitor {
   
-  private int              fTasksTotal = 0;
+  private int              tasksTotal = 0;
   
-  private int              fTasksDone  = 0;
-  
-  @CheckForNull
-  private IBenchmarkResult fResult     = null;
+  private int              tasksDone  = 0;
   
   public ConsoleProgressMonitor() {
     System.out.println("Initializing Benchmarking Framework...");
@@ -32,26 +26,22 @@ public class ConsoleProgressMonitor implements IProgressMonitor {
   }
   
   @Override
-  public void init(int count, IBenchmarkResult result) {
-    fTasksTotal = count;
-    fTasksDone = 0;
-    fResult = result;
-    System.out.println("Performing " + fTasksTotal + " benchmarking tasks..");
+  public void init(int count) {
+    tasksTotal = count;
+    tasksDone = 0;
+    System.out.println("Performing " + tasksTotal + " benchmarking tasks..");
   }
   
   @Override
   public void started(IBenchmarkTask task) {
-    System.out.print("[" + fTasksDone + "]\t" + task.getName());
+    System.out.print("[" + tasksDone + "]\t" + task.getName());
     System.out.flush();
   }
   
   @Override
-  public void done(IBenchmarkTask task) {
-    if (fResult == null) {
-      throw new IllegalStateException();
-    }
-    System.out.println("\t" + TimeUtil.toString(fResult.getResult(task).getEstimatedBenchmark()));
-    fTasksDone++;
+  public void done(IBenchmarkTask task, Benchmark.TaskResult result) {
+    System.out.println("\t" + TimeUtil.toString(result.getEstimatedBenchmark()));
+    tasksDone++;
   }
   
   @Override
@@ -60,16 +50,15 @@ public class ConsoleProgressMonitor implements IProgressMonitor {
   }
   
   @Override
-  public void run(IBenchmarkTask task, Timing timing, VmState vmStateDiff) {
+  public void run(IBenchmarkTask task, Benchmark.Timing timing, VmState vmStateDiff) {
     if (VmState.EMPTY.equals(vmStateDiff)) {
       
-      if (timing.getGcEvents().isEmpty()) {
+      if (timing.getGcStats().getGcEventsCount() == 0) {
         System.out.print(".");
       } else {
         System.out.print("*");
       }
       
-//      System.out.print(TimeUtil.toString(timing.getRunTime()));
     } else {
       System.out.print("!");
     }
@@ -83,15 +72,15 @@ public class ConsoleProgressMonitor implements IProgressMonitor {
   }
   
   @Override
-  public void failed(IBenchmarkTask task) {
-    if (fResult == null) {
-      throw new IllegalStateException();
-    }
+  public void failed(IBenchmarkTask task, TaskResult result) {
     System.out.println("\tfailed");
     System.out.flush();
     PrintWriter out = new PrintWriter(System.err);
-    for (BenchmarkFailure error: fResult.getResult(task).getFailures()) {
-      error.print(out);
+    for (Benchmark.Error error: result.getErrorList()) {
+      out.println(error.getMessage());
+      for(String stackTrace: error.getStackTraceList()) {
+        out.println(stackTrace);
+      }
     }
     out.flush();
   }

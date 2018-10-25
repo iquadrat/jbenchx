@@ -4,14 +4,14 @@ import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
 
 import org.jbenchx.annotations.Bench;
-import org.jbenchx.annotations.DivideBy;
-import org.jbenchx.annotations.ForEachInt;
 
 public class SystemBenchmark {
   
-  private static final int MEM_BENCH_SIZE = 8 * 1024 * 1024;
+  public static final int MEM_BENCH_SIZE       = 8 * 1024 * 1024;
   
-  private final IntBuffer  buffer;
+  public static final int CALCULATE_ITERATIONS = 1000;
+  
+  private final IntBuffer buffer;
   
   public SystemBenchmark() {
     buffer = ByteBuffer.allocateDirect(MEM_BENCH_SIZE).asIntBuffer();
@@ -26,9 +26,9 @@ public class SystemBenchmark {
    * Do some floating point number crunching.
    */
   @Bench
-  public double calculate(@DivideBy @ForEachInt({1000}) int iterations) {
+  public double calculate() {
     double result = 0;
-    for (int i = 0; i < iterations; i++) {
+    for (int i = 0; i < CALCULATE_ITERATIONS; i++) {
       result += 0.5 / i;
     }
     return result;
@@ -40,7 +40,7 @@ public class SystemBenchmark {
    * are running concurrently.
    */
   @Bench
-  public Object memory(@DivideBy @ForEachInt({MEM_BENCH_SIZE}) int memSize) {
+  public Object memory() {
     buffer.clear();
     int size = buffer.capacity();
     for (int i = 0; i < size; ++i) {

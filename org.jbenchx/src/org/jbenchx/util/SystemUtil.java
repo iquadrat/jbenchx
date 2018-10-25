@@ -3,7 +3,8 @@ package org.jbenchx.util;
 import java.lang.management.GarbageCollectorMXBean;
 import java.lang.management.ManagementFactory;
 
-import org.jbenchx.result.GcStats;
+import org.jbenchx.Benchmark;
+import org.jbenchx.Benchmark.GcEvent;
 
 public class SystemUtil {
   
@@ -16,12 +17,16 @@ public class SystemUtil {
     }
   }
   
-  public static GcStats getGcStats() {
-    GcStats gcStats = new GcStats();
+  public static Benchmark.GcStats getGcStats() {
+    Benchmark.GcStats.Builder builder = Benchmark.GcStats.newBuilder();
     for (GarbageCollectorMXBean gc: ManagementFactory.getGarbageCollectorMXBeans()) {
-      gcStats.addGc(gc.getName(), gc.getCollectionCount(), gc.getCollectionTime() * MS);
+      builder.putGcEvents(gc.getName(),
+          GcEvent.newBuilder()
+              .setCount(gc.getCollectionCount())
+              .setTimeNs(gc.getCollectionTime() * MS)
+              .build());
     }
-    return gcStats;
+    return builder.build();
   }
   
   public static long getUsedMemory() {

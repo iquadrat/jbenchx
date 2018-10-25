@@ -4,12 +4,12 @@
  */
 package org.jbenchx.run;
 
+import org.jbenchx.Benchmark;
 import org.jbenchx.IBenchmarkContext;
-import org.jbenchx.result.BenchmarkResult;
 
 public interface IBenchmarkTask {
 
-  public void run(BenchmarkResult result, IBenchmarkContext context);
+  public Benchmark.TaskResult run(IBenchmarkContext context);
 
   public String getName();
 

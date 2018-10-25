@@ -15,8 +15,6 @@ import org.jbenchx.annotations.SingleRun;
 import org.jbenchx.annotations.Tags;
 import org.jbenchx.monitor.IProgressMonitor;
 import org.jbenchx.result.BenchmarkClassError;
-import org.jbenchx.result.BenchmarkResult;
-import org.jbenchx.result.IBenchmarkResult;
 import org.jbenchx.run.BenchmarkTask;
 import org.jbenchx.run.IBenchmarkTask;
 import org.jbenchx.run.Parameterization;
@@ -33,16 +31,16 @@ public class BenchmarkRunner {
     fBenchmarks.add(benchmark);
   }
   
-  public IBenchmarkResult run(IBenchmarkContext context) {
+  public Benchmark.Result run(IBenchmarkContext context) {
     IProgressMonitor progressMonitor = context.getProgressMonitor();
-    BenchmarkResult result = new BenchmarkResult(context.getSystemInfo());
+    Benchmark.Result.Builder result = Benchmark.Result.newBuilder();
     List<BenchmarkTask> benchmarkTasks = findAllBenchmarkTasks(context);
-    progressMonitor.init(benchmarkTasks.size(), result);
+    progressMonitor.init(benchmarkTasks.size());
     for (IBenchmarkTask task: benchmarkTasks) {
-      task.run(result, context);
+      result.addTaskResult(task.run(context));
     }
     progressMonitor.finished();
-    return result;
+    return result.build();
   }
   
   private List<BenchmarkTask> findAllBenchmarkTasks(IBenchmarkContext context) {
@@ -75,7 +73,7 @@ public class BenchmarkRunner {
         continue;
       }
       
-      Benchmark.Parameters params = BenchmarkContext.getParamsFrom(method);
+      Benchmark.Parameters params = Benchmarks.getParamsFrom(method);
       if (params == null) {
         continue;
       }

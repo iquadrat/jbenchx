@@ -26,7 +26,7 @@ public interface IBenchmarkContext {
   /**
    * @return the class loader to use for loading the benchmark
    */
-  public ClassLoader getClassLoader();
+  public ClassLoader createClassLoader();
   
   public List<Pattern> getTagPatterns();
   

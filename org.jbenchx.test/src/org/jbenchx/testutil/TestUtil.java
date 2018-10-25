@@ -4,9 +4,10 @@
  */
 package org.jbenchx.testutil;
 
-import java.util.*;
+import java.util.Iterator;
+import java.util.List;
 
-import junit.framework.*;
+import junit.framework.Assert;
 
 public class TestUtil {
 

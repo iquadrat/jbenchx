@@ -1,10 +1,10 @@
 package org.jbenchx.test;
 
-import javax.annotation.*;
-
-import junit.framework.*;
+import javax.annotation.CheckForNull;
 
 import org.junit.Assert;
+
+import junit.framework.AssertionFailedError;
 
 public abstract class BenchmarkTestCase {
 

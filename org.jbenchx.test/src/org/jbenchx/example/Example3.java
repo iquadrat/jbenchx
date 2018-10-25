@@ -1,6 +1,7 @@
 package org.jbenchx.example;
 
-import org.jbenchx.annotations.*;
+import org.jbenchx.annotations.Bench;
+import org.jbenchx.annotations.ForEachInt;
 
 
 public class Example3 {

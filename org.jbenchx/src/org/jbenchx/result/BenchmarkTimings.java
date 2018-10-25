@@ -7,64 +7,31 @@ import org.jbenchx.Benchmark;
 
 public class BenchmarkTimings {
   
-//  private final BenchmarkParameters fParams;
-  private final List<Timing> timings;
+  private final List<Benchmark.Timing> timings;
   
-  private long               minTime    = Long.MAX_VALUE;
+  private long                         minTime    = Long.MAX_VALUE;
   
-  private transient boolean  lastIsBest = true;
+  private boolean            lastIsBest = true;
   
-  public BenchmarkTimings(/*BenchmarkParameters params*/) {
-//    fParams = params;
-    this.timings = new ArrayList<Timing>();
+  public BenchmarkTimings() {
+    this.timings = new ArrayList<>();
   }
   
-  public void add(Timing timing) {
+  public void add(Benchmark.Timing timing) {
     this.timings.add(timing);
-    if (timing.getRunTime() < minTime) {
-      minTime = timing.getRunTime();
+    if (timing.getRunTimeNs() < minTime) {
+      minTime = timing.getRunTimeNs();
       this.lastIsBest = true;
     } else {
       this.lastIsBest = false;
     }
   }
   
-  public List<Timing> getTimings() {
+  public List<Benchmark.Timing> getTimings() {
     return timings;
   }
   
-  public boolean needsMoreRuns(Benchmark.Parameters params) {
-    if (getRuns() >= params.getMaxRunCount()) {
-      return false;
-    }
-    if (getRuns() < params.getMinRunCount()) {
-      return true;
-    }
-    
-    if (lastIsBest) {
-      return true;
-    }
-    
-//    // find last local maxmimum
-//    long timing = fTimings.get(fTimings.size() - 1);
-//    int localMaxIdx = -1;
-//    for (int i = fTimings.size() - 1; i >= 0; --i) {
-//      if (fTimings.get(i) < timing) {
-//        localMaxIdx = i + 1;
-//        break;
-//      }
-//    }
-    
-    long maxAllowedTime = Math.round(minTime * (1 + params.getMaxDeviation()));
-    int validSampleCount = 0;
-    for (int i = 0; i < getRuns(); ++i) {
-      if (timings.get(i).getRunTime() <= maxAllowedTime) {
-        validSampleCount++;
-      }
-    }
-    
-    return validSampleCount < params.getMinSampleCount();
-  }
+
   
   /**
    * @return estimated runtime in nanoseconds
@@ -82,7 +49,7 @@ public class BenchmarkTimings {
   private int getRuns() {
     return timings.size();
   }
-
+  
   @Override
   public int hashCode() {
     final int prime = 31;
@@ -91,7 +58,7 @@ public class BenchmarkTimings {
     result = prime * result + ((timings == null) ? 0 : timings.hashCode());
     return result;
   }
-
+  
   @Override
   public boolean equals(Object obj) {
     if (this == obj) return true;

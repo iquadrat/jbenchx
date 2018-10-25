@@ -1,6 +1,9 @@
 syntax = "proto3";
+import "google/protobuf/timestamp.proto";
+
 
 package org.jbenchx;
+
 
 option java_outer_classname = "Benchmark";
 
@@ -18,9 +21,10 @@ message Warning {
 	string message = 1;
 }
 
-message Failure {
+message Error {
 	string message = 1;
 	repeated string stack_trace = 2;
+	bool skipped = 3;
 }
 
 message GcEvent {
@@ -37,20 +41,36 @@ message GcStats {
 
 message Timing {
 	GcStats gc_stats = 1;
-	int64 time_ns = 2;
+	int64 run_time_ns = 2;
 }
 
 message TaskResult {
-	repeated Timing timings = 1;
-	repeated Failure erros = 2;
-	repeated Warning warnings = 3;
-	int64 min_time = 4 ;
+	string task_name = 1;
+	repeated Timing timing = 2;
+	repeated Error error = 3;
+	repeated Warning warning = 4;
+	int64 min_run_time_ns = 5 ;
+	int64 iteration_count = 6;
+	double divisor = 7;
+	double estimated_benchmark = 8;
+	string benchmark_unit = 9;
+}
+
+message SystemInfo {
+	int64 timer_granularity_ns = 1;
+	int64 method_invoke_time_ns = 2;
+	double system_benchmark = 3;
+	string os_info = 4;
+	string os_version = 5;
+	int32 cpu_count = 6;
+	int64 max_heap_size = 7;
 }
 
 message Result {
 	string version = 1;
-	repeated Failure failures = 2;
-	double estimated_benchmark = 3;
-	int64 iteration_count = 4;
-	double divisor = 5;
+	SystemInfo system_info = 2;
+	repeated TaskResult task_result = 3;
+	repeated Error general_error = 4;
+	google.protobuf.Timestamp start_time = 5;
+	google.protobuf.Timestamp end_time = 6;
 }

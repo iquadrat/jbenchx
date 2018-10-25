@@ -1,9 +1,12 @@
 package org.jbenchx.example;
 
-import java.util.*;
+import java.util.ArrayList;
 
-import org.jbenchx.*;
-import org.jbenchx.annotations.*;
+import org.jbenchx.BenchmarkContext;
+import org.jbenchx.BenchmarkRunner;
+import org.jbenchx.annotations.Bench;
+import org.jbenchx.annotations.ForEachBoolean;
+import org.jbenchx.annotations.ForEachInt;
 import org.jbenchx.monitor.ConsoleProgressMonitor;
 
 public class ArrayListBench {

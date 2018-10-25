@@ -1,11 +1,13 @@
 package org.jbenchx.test;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
-import org.jbenchx.*;
-import org.jbenchx.annotations.*;
-import org.jbenchx.monitor.*;
-import org.junit.*;
+import org.jbenchx.BenchmarkContext;
+import org.jbenchx.BenchmarkRunner;
+import org.jbenchx.annotations.Bench;
+import org.jbenchx.monitor.ConsoleProgressMonitor;
+import org.junit.Test;
 
 public class BenchmarkRunnerTest extends BenchmarkTestCase {
 

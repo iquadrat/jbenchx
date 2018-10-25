@@ -13,14 +13,7 @@ import org.jbenchx.Benchmark;
 import org.jbenchx.IBenchmarkContext;
 import org.jbenchx.SkipBenchmarkException;
 import org.jbenchx.Timer;
-import org.jbenchx.result.BenchmarkResult;
-import org.jbenchx.result.BenchmarkSkipped;
-import org.jbenchx.result.BenchmarkTaskFailure;
-import org.jbenchx.result.BenchmarkTimings;
-import org.jbenchx.result.BenchmarkWarning;
-import org.jbenchx.result.GcStats;
-import org.jbenchx.result.TaskResult;
-import org.jbenchx.result.Timing;
+import org.jbenchx.result.ResultUtil;
 import org.jbenchx.util.SystemUtil;
 import org.jbenchx.util.TimeUtil;
 import org.jbenchx.vm.SystemInfo;
@@ -35,7 +28,7 @@ public class BenchmarkTask implements IBenchmarkTask {
   
   protected final String                 fMethodName;
   
-  protected final Benchmark.Parameters    fParams;
+  protected final Benchmark.Parameters    params;
   
   protected final boolean                fSingleRun;
   
@@ -58,40 +51,46 @@ public class BenchmarkTask implements IBenchmarkTask {
       throw new IllegalArgumentException("Method argument type count does not match the method arguments count: " + methodArgumentTypes.size()
           + " != " + methodArguments.getValues().size());
     }
-    fClassName = className;
-    fMethodName = methodName;
-    fMethodArgumentTypes = new ArrayList<Class<?>>(methodArgumentTypes);
-    fParams = params;
-    fSingleRun = singleRun;
-    fConstructorArguments = constructorArguments;
-    fMethodArguments = methodArguments;
+    this.fClassName = className;
+    this.fMethodName = methodName;
+    this.fMethodArgumentTypes = new ArrayList<Class<?>>(methodArgumentTypes);
+    this.params = params;
+    this.fSingleRun = singleRun;
+    this.fConstructorArguments = constructorArguments;
+    this.fMethodArguments = methodArguments;
   }
   
-  @Override
-  public void run(BenchmarkResult result, IBenchmarkContext context) {
-    ClassLoader classLoader = context.getClassLoader();
+  public Benchmark.TaskResult run(IBenchmarkContext context) {
+    ClassLoader classLoader = context.createClassLoader();
     
     try {
-      
       context.getProgressMonitor().started(this);
       
-      TaskResult taskResult;
-      if (fParams.getMeasureMemory()) {
+      Benchmark.TaskResult taskResult;
+      if (params.getMeasureMemory()) {
         taskResult = measureMemory(context);
       } else {
         taskResult = internalRun(context, classLoader);
       }
       
-      result.addResult(this, taskResult);
-      context.getProgressMonitor().done(this);
+      context.getProgressMonitor().done(this, taskResult);
+      return taskResult;
       
     } catch (Exception e) {
       if (isException(SkipBenchmarkException.class, e)) {
-        result.addResult(this, new TaskResult(fParams, new BenchmarkSkipped()));
         context.getProgressMonitor().skipped(this);
+        return Benchmark.TaskResult.newBuilder()
+                .setTaskName(getName())
+                .addError(Benchmark.Error.newBuilder().setSkipped(true).build())
+                .build();
       } else {
-        result.addResult(this, new TaskResult(fParams, new BenchmarkTaskFailure(this, e)));
-        context.getProgressMonitor().failed(this);
+        Benchmark.TaskResult taskResult =
+            Benchmark.TaskResult.newBuilder()
+                .setTaskName(getName())
+                .addError(ResultUtil.toFailure(e))
+                .build();
+        context.getProgressMonitor().failed(this, taskResult);
+        return taskResult;
       }
     }
   }
@@ -103,7 +102,7 @@ public class BenchmarkTask implements IBenchmarkTask {
     return class_.isInstance(e) || isException(class_, e.getCause());
   }
   
-  protected TaskResult internalRun(IBenchmarkContext context, ClassLoader classLoader) throws Exception {
+  protected Benchmark.TaskResult internalRun(IBenchmarkContext context, ClassLoader classLoader) throws Exception {
     long timerGranularity = 10 * TimeUtil.MS;
     long methodInvokeTime = 0;
     SystemInfo systemInfo = context.getSystemInfo();
@@ -116,10 +115,11 @@ public class BenchmarkTask implements IBenchmarkTask {
     Method method = getBenchmarkMethod(benchmark);
     long iterationCount = findIterationCount(benchmark, method, timerGranularity);
     
-    BenchmarkTimings timings = new BenchmarkTimings();
+    List<Benchmark.Timing> timings = new ArrayList<>();
     SystemUtil.cleanMemory();
     VmState preState = VmState.getCurrentState();
     long runtimePerIteration = Long.MAX_VALUE;
+    long minTime = Long.MAX_VALUE;
     int restarts = 0;
     do {
       
@@ -127,50 +127,78 @@ public class BenchmarkTask implements IBenchmarkTask {
         benchmark = createInstance(classLoader);
       }
       
-      GcStats preGcStats = SystemUtil.getGcStats();
+      Benchmark.GcStats preGcStats = SystemUtil.getGcStats();
       long time = singleRun(benchmark, method, iterationCount);
-      GcStats postGcStats = SystemUtil.getGcStats();
+      Benchmark.GcStats postGcStats = SystemUtil.getGcStats();
       VmState postState = VmState.getCurrentState();
       runtimePerIteration = Math.min(runtimePerIteration, time / iterationCount);
       
-      Timing timing = new Timing(time, preGcStats, postGcStats);
-      if (preState.equals(postState) /* || restarts > fParams.getMaxRestartCount() */) {
+      Benchmark.Timing timing = ResultUtil.createTiming(time, preGcStats, postGcStats);
+      if (preState.equals(postState) || restarts > params.getMaxRestartCount()) {
         timings.add(timing);
       } else {
         // restart
         restarts++;
         timings.clear();
+        minTime = Long.MAX_VALUE;
         iterationCount = findIterationCount(benchmark, method, timerGranularity);
         runtimePerIteration = Long.MAX_VALUE;
       }
       context.getProgressMonitor().run(this, timing, VmState.difference(preState, postState));
       preState = postState;
       
-    } while (timings.needsMoreRuns(fParams));
+    } while (needsMoreRuns(params, timings, minTime));
     
 //    long avgNs = Math.round(timings.getEstimatedTime() / iterationCount / fDivisor);
 //    System.out.println();
 //    System.out.println(this + ": " + TimeUtil.toString(avgNs));
     double divisor = fMethodArguments.getfDivisor() * fConstructorArguments.getfDivisor();
-    TaskResult result = new TaskResult(fParams, timings, iterationCount, divisor);
+    
+    
+    Benchmark.TaskResult.Builder result = ResultUtil.createTaskResult(getName(), params, timings, iterationCount, divisor).toBuilder();
     long minSingleIterationTime = methodInvokeTime * 10;
     if (runtimePerIteration < minSingleIterationTime) {
-      result.addWarning(new BenchmarkWarning("Runtime of single iteration too short: " + runtimePerIteration
-          + "ns, increase work in single iteration to run at least " + minSingleIterationTime + "ns"));
+      result.addWarning(
+          Benchmark.Warning.newBuilder().setMessage("Runtime of single iteration too short: " + runtimePerIteration
+          + "ns, increase work in single iteration to run at least " + minSingleIterationTime + "ns").build());
     }
-    return result;
+    return result.build();
+  }
+  
+  private boolean needsMoreRuns(Benchmark.Parameters params, List<Benchmark.Timing> timings, long minTimeNs) {
+    final int runs = timings.size();
+    if (runs >= params.getMaxRunCount()) {
+      return false;
+    }
+    if (runs < params.getMinRunCount()) {
+      return true;
+    }
+    
+    if (timings.get(timings.size() - 1).getRunTimeNs() == minTimeNs) {
+      return true;
+    }
+    
+    long maxAllowedTimeNs = Math.round(minTimeNs * (1 + params.getMaxDeviation()));
+    int validSampleCount = 0;
+    for (int i = 0; i < runs; ++i) {
+      if (timings.get(i).getRunTimeNs() <= maxAllowedTimeNs) {
+        validSampleCount++;
+      }
+    }
+    
+    return validSampleCount < params.getMinSampleCount();
   }
   
   @SuppressWarnings("unused")
   private volatile Object resultObject;
   
-  private TaskResult measureMemory(IBenchmarkContext context) throws Exception {
-    Object benchmark = createInstance(context.getClassLoader());
+  private Benchmark.TaskResult measureMemory(IBenchmarkContext context) throws Exception {
+    Object benchmark = createInstance(context.createClassLoader());
     Method method = getBenchmarkMethod(benchmark);
     
     int iterations = 5;
     List<Long> memUsed = new ArrayList<Long>(iterations);
-    BenchmarkTimings timings = new BenchmarkTimings();
+    List<Benchmark.Timing> timings = new ArrayList<>();
     for (int i = 0; i < iterations; ++i) {
       SystemUtil.cleanMemory();
       long memoryBefore = SystemUtil.getUsedMemory();
@@ -186,12 +214,16 @@ public class BenchmarkTask implements IBenchmarkTask {
       resultObject = null;
       
       memUsed.add(memoryAfter - memoryBefore);
-      Timing timing = new Timing((memoryAfter - memoryBefore) * 1000 * 1000 * 1000L, new GcStats(), new GcStats());
+      // FIXME we should not use runtime ns for reporting bytes!
+      Benchmark.Timing timing =
+          Benchmark.Timing.newBuilder()
+            .setRunTimeNs((memoryAfter - memoryBefore) * 1000 * 1000 * 1000L)
+            .build();
       timings.add(timing);
       context.getProgressMonitor().run(this, timing, VmState.difference(preState, postState));
     }
     double divisor = fMethodArguments.getfDivisor() * fConstructorArguments.getfDivisor();
-    return new TaskResult(fParams, timings, 1, divisor);
+    return ResultUtil.createTaskResult(getName(), params, timings, 1, divisor);
   }
   
   protected long singleRun(Object benchmark, Method method, long iterationCount) throws IllegalArgumentException, IllegalAccessException,
@@ -221,14 +253,14 @@ public class BenchmarkTask implements IBenchmarkTask {
         method.invoke(benchmark, arguments);
       }
       time = timer.stopAndReset();
-      if (iterations == 1 && time > fParams.getTargetTimeNs()) {
+      if (iterations == 1 && time > params.getTargetTimeNs()) {
         break;
       }
-      if (time >= fParams.getTargetTimeNs() / SQRT2 && time < fParams.getTargetTimeNs() * SQRT2) {
+      if (time >= params.getTargetTimeNs() / SQRT2 && time < params.getTargetTimeNs() * SQRT2) {
         break;
       }
       time = Math.max(time, 2 * timerGranularity); // at least two times the timer granularity
-      double factor = (1.0 * fParams.getTargetTimeNs()) / time;
+      double factor = (1.0 * params.getTargetTimeNs()) / time;
       iterations = Math.round(iterations * factor);
       iterations = Math.max(1, iterations);
       
@@ -287,7 +319,7 @@ public class BenchmarkTask implements IBenchmarkTask {
     result = prime * result + ((fMethodArgumentTypes == null) ? 0 : fMethodArgumentTypes.hashCode());
     result = prime * result + ((fMethodArguments == null) ? 0 : fMethodArguments.hashCode());
     result = prime * result + ((fMethodName == null) ? 0 : fMethodName.hashCode());
-    result = prime * result + ((fParams == null) ? 0 : fParams.hashCode());
+    result = prime * result + ((params == null) ? 0 : params.hashCode());
     result = prime * result + (fSingleRun ? 1231 : 1237);
     return result;
   }
@@ -313,9 +345,9 @@ public class BenchmarkTask implements IBenchmarkTask {
     if (fMethodName == null) {
       if (other.fMethodName != null) return false;
     } else if (!fMethodName.equals(other.fMethodName)) return false;
-    if (fParams == null) {
-      if (other.fParams != null) return false;
-    } else if (!fParams.equals(other.fParams)) return false;
+    if (params == null) {
+      if (other.params != null) return false;
+    } else if (!params.equals(other.params)) return false;
     if (fSingleRun != other.fSingleRun) return false;
     return true;
   }

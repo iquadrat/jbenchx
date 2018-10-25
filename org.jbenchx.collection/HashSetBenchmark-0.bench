@@ -1,0 +1,162 @@
+task_result {
+  task_name: "HashSetBenchmark(10).benchHashCode"
+  error {
+    stack_trace: "java.util.Collections$UnmodifiableMap.put(Collections.java:1457)"
+    stack_trace: "org.jbenchx.util.SystemUtil.getGcStats(SystemUtil.java:23)"
+    stack_trace: "org.jbenchx.run.BenchmarkTask.internalRun(BenchmarkTask.java:130)"
+    stack_trace: "org.jbenchx.run.BenchmarkTask.run(BenchmarkTask.java:73)"
+    stack_trace: "org.jbenchx.BenchmarkRunner.run(BenchmarkRunner.java:40)"
+    stack_trace: "org.jbenchx.remote.RemoteRunner.main(RemoteRunner.java:62)"
+  }
+}
+task_result {
+  task_name: "HashSetBenchmark(1000).benchHashCode"
+  error {
+    stack_trace: "java.util.Collections$UnmodifiableMap.put(Collections.java:1457)"
+    stack_trace: "org.jbenchx.util.SystemUtil.getGcStats(SystemUtil.java:23)"
+    stack_trace: "org.jbenchx.run.BenchmarkTask.internalRun(BenchmarkTask.java:130)"
+    stack_trace: "org.jbenchx.run.BenchmarkTask.run(BenchmarkTask.java:73)"
+    stack_trace: "org.jbenchx.BenchmarkRunner.run(BenchmarkRunner.java:40)"
+    stack_trace: "org.jbenchx.remote.RemoteRunner.main(RemoteRunner.java:62)"
+  }
+}
+task_result {
+  task_name: "HashSetBenchmark(100000).benchHashCode"
+  error {
+    stack_trace: "java.util.Collections$UnmodifiableMap.put(Collections.java:1457)"
+    stack_trace: "org.jbenchx.util.SystemUtil.getGcStats(SystemUtil.java:23)"
+    stack_trace: "org.jbenchx.run.BenchmarkTask.internalRun(BenchmarkTask.java:130)"
+    stack_trace: "org.jbenchx.run.BenchmarkTask.run(BenchmarkTask.java:73)"
+    stack_trace: "org.jbenchx.BenchmarkRunner.run(BenchmarkRunner.java:40)"
+    stack_trace: "org.jbenchx.remote.RemoteRunner.main(RemoteRunner.java:62)"
+  }
+}
+task_result {
+  task_name: "HashSetBenchmark(10).containsAll"
+  error {
+    stack_trace: "java.util.Collections$UnmodifiableMap.put(Collections.java:1457)"
+    stack_trace: "org.jbenchx.util.SystemUtil.getGcStats(SystemUtil.java:23)"
+    stack_trace: "org.jbenchx.run.BenchmarkTask.internalRun(BenchmarkTask.java:130)"
+    stack_trace: "org.jbenchx.run.BenchmarkTask.run(BenchmarkTask.java:73)"
+    stack_trace: "org.jbenchx.BenchmarkRunner.run(BenchmarkRunner.java:40)"
+    stack_trace: "org.jbenchx.remote.RemoteRunner.main(RemoteRunner.java:62)"
+  }
+}
+task_result {
+  task_name: "HashSetBenchmark(1000).containsAll"
+  error {
+    stack_trace: "java.util.Collections$UnmodifiableMap.put(Collections.java:1457)"
+    stack_trace: "org.jbenchx.util.SystemUtil.getGcStats(SystemUtil.java:23)"
+    stack_trace: "org.jbenchx.run.BenchmarkTask.internalRun(BenchmarkTask.java:130)"
+    stack_trace: "org.jbenchx.run.BenchmarkTask.run(BenchmarkTask.java:73)"
+    stack_trace: "org.jbenchx.BenchmarkRunner.run(BenchmarkRunner.java:40)"
+    stack_trace: "org.jbenchx.remote.RemoteRunner.main(RemoteRunner.java:62)"
+  }
+}
+task_result {
+  task_name: "HashSetBenchmark(100000).containsAll"
+  error {
+    stack_trace: "java.util.Collections$UnmodifiableMap.put(Collections.java:1457)"
+    stack_trace: "org.jbenchx.util.SystemUtil.getGcStats(SystemUtil.java:23)"
+    stack_trace: "org.jbenchx.run.BenchmarkTask.internalRun(BenchmarkTask.java:130)"
+    stack_trace: "org.jbenchx.run.BenchmarkTask.run(BenchmarkTask.java:73)"
+    stack_trace: "org.jbenchx.BenchmarkRunner.run(BenchmarkRunner.java:40)"
+    stack_trace: "org.jbenchx.remote.RemoteRunner.main(RemoteRunner.java:62)"
+  }
+}
+task_result {
+  task_name: "HashSetBenchmark(10).containsNo"
+  error {
+    stack_trace: "java.util.Collections$UnmodifiableMap.put(Collections.java:1457)"
+    stack_trace: "org.jbenchx.util.SystemUtil.getGcStats(SystemUtil.java:23)"
+    stack_trace: "org.jbenchx.run.BenchmarkTask.internalRun(BenchmarkTask.java:130)"
+    stack_trace: "org.jbenchx.run.BenchmarkTask.run(BenchmarkTask.java:73)"
+    stack_trace: "org.jbenchx.BenchmarkRunner.run(BenchmarkRunner.java:40)"
+    stack_trace: "org.jbenchx.remote.RemoteRunner.main(RemoteRunner.java:62)"
+  }
+}
+task_result {
+  task_name: "HashSetBenchmark(1000).containsNo"
+  error {
+    stack_trace: "java.util.Collections$UnmodifiableMap.put(Collections.java:1457)"
+    stack_trace: "org.jbenchx.util.SystemUtil.getGcStats(SystemUtil.java:23)"
+    stack_trace: "org.jbenchx.run.BenchmarkTask.internalRun(BenchmarkTask.java:130)"
+    stack_trace: "org.jbenchx.run.BenchmarkTask.run(BenchmarkTask.java:73)"
+    stack_trace: "org.jbenchx.BenchmarkRunner.run(BenchmarkRunner.java:40)"
+    stack_trace: "org.jbenchx.remote.RemoteRunner.main(RemoteRunner.java:62)"
+  }
+}
+task_result {
+  task_name: "HashSetBenchmark(100000).containsNo"
+  error {
+    stack_trace: "java.util.Collections$UnmodifiableMap.put(Collections.java:1457)"
+    stack_trace: "org.jbenchx.util.SystemUtil.getGcStats(SystemUtil.java:23)"
+    stack_trace: "org.jbenchx.run.BenchmarkTask.internalRun(BenchmarkTask.java:130)"
+    stack_trace: "org.jbenchx.run.BenchmarkTask.run(BenchmarkTask.java:73)"
+    stack_trace: "org.jbenchx.BenchmarkRunner.run(BenchmarkRunner.java:40)"
+    stack_trace: "org.jbenchx.remote.RemoteRunner.main(RemoteRunner.java:62)"
+  }
+}
+task_result {
+  task_name: "HashSetBenchmark(10).containsYes"
+  error {
+    stack_trace: "java.util.Collections$UnmodifiableMap.put(Collections.java:1457)"
+    stack_trace: "org.jbenchx.util.SystemUtil.getGcStats(SystemUtil.java:23)"
+    stack_trace: "org.jbenchx.run.BenchmarkTask.internalRun(BenchmarkTask.java:130)"
+    stack_trace: "org.jbenchx.run.BenchmarkTask.run(BenchmarkTask.java:73)"
+    stack_trace: "org.jbenchx.BenchmarkRunner.run(BenchmarkRunner.java:40)"
+    stack_trace: "org.jbenchx.remote.RemoteRunner.main(RemoteRunner.java:62)"
+  }
+}
+task_result {
+  task_name: "HashSetBenchmark(1000).containsYes"
+  error {
+    stack_trace: "java.util.Collections$UnmodifiableMap.put(Collections.java:1457)"
+    stack_trace: "org.jbenchx.util.SystemUtil.getGcStats(SystemUtil.java:23)"
+    stack_trace: "org.jbenchx.run.BenchmarkTask.internalRun(BenchmarkTask.java:130)"
+    stack_trace: "org.jbenchx.run.BenchmarkTask.run(BenchmarkTask.java:73)"
+    stack_trace: "org.jbenchx.BenchmarkRunner.run(BenchmarkRunner.java:40)"
+    stack_trace: "org.jbenchx.remote.RemoteRunner.main(RemoteRunner.java:62)"
+  }
+}
+task_result {
+  task_name: "HashSetBenchmark(100000).containsYes"
+  error {
+    stack_trace: "java.util.Collections$UnmodifiableMap.put(Collections.java:1457)"
+    stack_trace: "org.jbenchx.util.SystemUtil.getGcStats(SystemUtil.java:23)"
+    stack_trace: "org.jbenchx.run.BenchmarkTask.internalRun(BenchmarkTask.java:130)"
+    stack_trace: "org.jbenchx.run.BenchmarkTask.run(BenchmarkTask.java:73)"
+    stack_trace: "org.jbenchx.BenchmarkRunner.run(BenchmarkRunner.java:40)"
+    stack_trace: "org.jbenchx.remote.RemoteRunner.main(RemoteRunner.java:62)"
+  }
+}
+task_result {
+  task_name: "HashSetBenchmark(10).create"
+  error {
+    stack_trace: "java.util.Collections$UnmodifiableMap.put(Collections.java:1457)"
+    stack_trace: "org.jbenchx.util.SystemUtil.getGcStats(SystemUtil.java:23)"
+    stack_trace: "org.jbenchx.run.BenchmarkTask.internalRun(BenchmarkTask.java:130)"
+    stack_trace: "org.jbenchx.run.BenchmarkTask.run(BenchmarkTask.java:73)"
+    stack_trace: "org.jbenchx.BenchmarkRunner.run(BenchmarkRunner.java:40)"
+    stack_trace: "org.jbenchx.remote.RemoteRunner.main(RemoteRunner.java:62)"
+  }
+}
+task_result {
+  task_name: "HashSetBenchmark(1000).create"
+  error {
+    stack_trace: "java.util.Collections$UnmodifiableMap.put(Collections.java:1457)"
+    stack_trace: "org.jbenchx.util.SystemUtil.getGcStats(SystemUtil.java:23)"
+    stack_trace: "org.jbenchx.run.BenchmarkTask.internalRun(BenchmarkTask.java:130)"
+    stack_trace: "org.jbenchx.run.BenchmarkTask.run(BenchmarkTask.java:73)"
+    stack_trace: "org.jbenchx.BenchmarkRunner.run(BenchmarkRunner.java:40)"
+    stack_trace: "org.jbenchx.remote.RemoteRunner.main(RemoteRunner.java:62)"
+  }
+}
+task_result {
+  task_name: "HashSetBenchmark(100000).create"
+  error {
+    stack_trace: "java.util.Collections$UnmodifiableMap.put(Collections.java:1457)"
+    stack_trace: "org.jbenchx.util.SystemUtil.getGcStats(SystemUtil.java:23)"
+    stack_trace: "org.jbenchx.run.BenchmarkTask.internalRun(BenchmarkTask.java:130)"
+    stack_trace: "org.jbenchx.run.BenchmarkTask.run(BenchmarkTask.java:73)"
+    stack

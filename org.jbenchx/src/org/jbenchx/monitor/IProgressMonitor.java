@@ -1,7 +1,7 @@
 package org.jbenchx.monitor;
 
-import org.jbenchx.result.IBenchmarkResult;
-import org.jbenchx.result.Timing;
+import org.jbenchx.Benchmark;
+import org.jbenchx.Benchmark.TaskResult;
 import org.jbenchx.run.IBenchmarkTask;
 import org.jbenchx.vm.SystemInfo;
 import org.jbenchx.vm.VmState;
@@ -19,9 +19,8 @@ public interface IProgressMonitor {
    * Notifies that a new set of benchmarks is going to be run.
    *
    * @param count the number of benchmarks in the set
-   * @param result a reference to where the benchmark result will be stored
    */
-  public void init(int count, IBenchmarkResult result);
+  public void init(int count);
   
   /**
    * Notifies that the given benchmark task is going to be run now.
@@ -36,7 +35,7 @@ public interface IProgressMonitor {
    * @param timing the timing statistics of running the benchmark task
    * @param vmStateDiff the difference of the vm before and after running the benchmark
    */
-  public void run(IBenchmarkTask task, Timing timing, VmState vmStateDiff);
+  public void run(IBenchmarkTask task, Benchmark.Timing timing, VmState vmStateDiff);
   
   /**
    * Notifies that the given benchmark has been skipped.
@@ -46,12 +45,12 @@ public interface IProgressMonitor {
   /**
    * Notifies that the given benchmark has failed to run.
    */
-  public void failed(IBenchmarkTask task);
+  public void failed(IBenchmarkTask task, TaskResult result);
   
   /**
    * Notifies that the given benchmark has completed.
    */
-  public void done(IBenchmarkTask task);
+  public void done(IBenchmarkTask task, TaskResult result);
   
   /**
    * Notifies that all benchmark tasks in the set have been processed.
@@ -61,7 +60,7 @@ public interface IProgressMonitor {
   public class Stub implements IProgressMonitor {
     
     @Override
-    public void init(int count, IBenchmarkResult result) {}
+    public void init(int count) {}
     
     @Override
     public void finished() {}
@@ -70,16 +69,16 @@ public interface IProgressMonitor {
     public void started(IBenchmarkTask task) {}
     
     @Override
-    public void failed(IBenchmarkTask task) {}
+    public void failed(IBenchmarkTask task, TaskResult result) {}
     
     @Override
     public void skipped(IBenchmarkTask task) {}
     
     @Override
-    public void done(IBenchmarkTask task) {}
+    public void done(IBenchmarkTask task, TaskResult result) {}
     
     @Override
-    public void run(IBenchmarkTask task, Timing timing, VmState vmStateDiff) {}
+    public void run(IBenchmarkTask task, Benchmark.Timing timing, VmState vmStateDiff) {}
     
     @Override
     public void systemInfo(SystemInfo systemInfo) {}

@@ -7,12 +7,12 @@ package org.jbenchx.test;
 import java.lang.reflect.Method;
 import java.util.regex.Pattern;
 
+import org.jbenchx.Benchmark.TaskResult;
 import org.jbenchx.BenchmarkContext;
+import org.jbenchx.Benchmarks;
 import org.jbenchx.IBenchmarkContext;
 import org.jbenchx.annotations.Bench;
 import org.jbenchx.monitor.IProgressMonitor;
-import org.jbenchx.result.BenchmarkResult;
-import org.jbenchx.result.ITaskResult;
 import org.jbenchx.run.BenchmarkTask;
 import org.jbenchx.run.IBenchmarkTask;
 import org.jbenchx.run.ParameterizationValues;
@@ -37,17 +37,15 @@ public class BenchmarkTaskTest extends BenchmarkTestCase {
   @Test
   public void warningWhenIterationToFast() throws Throwable {
     Method emptyMethod = TestBench.class.getMethod("empty");
-    IBenchmarkTask task = new BenchmarkTask(TestBench.class, emptyMethod, BenchmarkContext.getDefaultParameters(), false, NO_ARGS, NO_ARGS);
-    BenchmarkResult result = new BenchmarkResult(SystemInfo.create(1, 2, 3.0));
+    IBenchmarkTask task = new BenchmarkTask(TestBench.class, emptyMethod, Benchmarks.getDefaultParameters(), false, NO_ARGS, NO_ARGS);
     IBenchmarkContext context = new BenchmarkContext(IProgressMonitor.DUMMY, SystemInfo.create(10, 100, 100), BenchmarkContext.RUN_ALL);
-    task.run(result, context);
-    ITaskResult taskResult = result.getResult(task);
-    if (!taskResult.getFailures().isEmpty()) {
-      Assert.fail(taskResult.getFailures().toString());
+    TaskResult taskResult = task.run(context);
+    if (!taskResult.getErrorList().isEmpty()) {
+      Assert.fail(taskResult.getErrorList().toString());
     }
-    Assert.assertEquals(1, taskResult.getWarnings().size());
+    Assert.assertEquals(1, taskResult.getWarningList().size());
     Pattern pattern = Pattern.compile("Runtime of single iteration too short: [0-9]*ns, increase work in single iteration to run at least 1000ns");
-    String reason = taskResult.getWarnings().get(0).getReason();
+    String reason = taskResult.getWarningList().get(0).getMessage();
     if (!pattern.matcher(reason).matches()) {
       Assert.fail("Expected: "+pattern.toString()+" but was: "+reason);
     }

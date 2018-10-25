@@ -1373,8 +1373,8 @@ public final class Benchmark {
 
   }
 
-  public interface FailureOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:org.jbenchx.Failure)
+  public interface ErrorOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:org.jbenchx.Error)
       com.google.protobuf.MessageOrBuilder {
 
     /**
@@ -1405,22 +1405,28 @@ public final class Benchmark {
      */
     com.google.protobuf.ByteString
         getStackTraceBytes(int index);
+
+    /**
+     * <code>bool skipped = 3;</code>
+     */
+    boolean getSkipped();
   }
   /**
-   * Protobuf type {@code org.jbenchx.Failure}
+   * Protobuf type {@code org.jbenchx.Error}
    */
-  public  static final class Failure extends
+  public  static final class Error extends
       com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:org.jbenchx.Failure)
-      FailureOrBuilder {
+      // @@protoc_insertion_point(message_implements:org.jbenchx.Error)
+      ErrorOrBuilder {
   private static final long serialVersionUID = 0L;
-    // Use Failure.newBuilder() to construct.
-    private Failure(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+    // Use Error.newBuilder() to construct.
+    private Error(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
     }
-    private Failure() {
+    private Error() {
       message_ = "";
       stackTrace_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+      skipped_ = false;
     }
 
     @java.lang.Override
@@ -1428,7 +1434,7 @@ public final class Benchmark {
     getUnknownFields() {
       return this.unknownFields;
     }
-    private Failure(
+    private Error(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -1469,6 +1475,11 @@ public final class Benchmark {
               stackTrace_.add(s);
               break;
             }
+            case 24: {
+
+              skipped_ = input.readBool();
+              break;
+            }
           }
         }
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
@@ -1486,14 +1497,14 @@ public final class Benchmark {
     }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return org.jbenchx.Benchmark.internal_static_org_jbenchx_Failure_descriptor;
+      return org.jbenchx.Benchmark.internal_static_org_jbenchx_Error_descriptor;
     }
 
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return org.jbenchx.Benchmark.internal_static_org_jbenchx_Failure_fieldAccessorTable
+      return org.jbenchx.Benchmark.internal_static_org_jbenchx_Error_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              org.jbenchx.Benchmark.Failure.class, org.jbenchx.Benchmark.Failure.Builder.class);
+              org.jbenchx.Benchmark.Error.class, org.jbenchx.Benchmark.Error.Builder.class);
     }
 
     private int bitField0_;
@@ -1560,6 +1571,15 @@ public final class Benchmark {
       return stackTrace_.getByteString(index);
     }
 
+    public static final int SKIPPED_FIELD_NUMBER = 3;
+    private boolean skipped_;
+    /**
+     * <code>bool skipped = 3;</code>
+     */
+    public boolean getSkipped() {
+      return skipped_;
+    }
+
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
@@ -1577,6 +1597,9 @@ public final class Benchmark {
       }
       for (int i = 0; i < stackTrace_.size(); i++) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 2, stackTrace_.getRaw(i));
+      }
+      if (skipped_ != false) {
+        output.writeBool(3, skipped_);
       }
       unknownFields.writeTo(output);
     }
@@ -1597,6 +1620,10 @@ public final class Benchmark {
         size += dataSize;
         size += 1 * getStackTraceList().size();
       }
+      if (skipped_ != false) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBoolSize(3, skipped_);
+      }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
       return size;
@@ -1607,16 +1634,18 @@ public final class Benchmark {
       if (obj == this) {
        return true;
       }
-      if (!(obj instanceof org.jbenchx.Benchmark.Failure)) {
+      if (!(obj instanceof org.jbenchx.Benchmark.Error)) {
         return super.equals(obj);
       }
-      org.jbenchx.Benchmark.Failure other = (org.jbenchx.Benchmark.Failure) obj;
+      org.jbenchx.Benchmark.Error other = (org.jbenchx.Benchmark.Error) obj;
 
       boolean result = true;
       result = result && getMessage()
           .equals(other.getMessage());
       result = result && getStackTraceList()
           .equals(other.getStackTraceList());
+      result = result && (getSkipped()
+          == other.getSkipped());
       result = result && unknownFields.equals(other.unknownFields);
       return result;
     }
@@ -1634,74 +1663,77 @@ public final class Benchmark {
         hash = (37 * hash) + STACK_TRACE_FIELD_NUMBER;
         hash = (53 * hash) + getStackTraceList().hashCode();
       }
+      hash = (37 * hash) + SKIPPED_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
+          getSkipped());
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
     }
 
-    public static org.jbenchx.Benchmark.Failure parseFrom(
+    public static org.jbenchx.Benchmark.Error parseFrom(
         java.nio.ByteBuffer data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static org.jbenchx.Benchmark.Failure parseFrom(
+    public static org.jbenchx.Benchmark.Error parseFrom(
         java.nio.ByteBuffer data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static org.jbenchx.Benchmark.Failure parseFrom(
+    public static org.jbenchx.Benchmark.Error parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static org.jbenchx.Benchmark.Failure parseFrom(
+    public static org.jbenchx.Benchmark.Error parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static org.jbenchx.Benchmark.Failure parseFrom(byte[] data)
+    public static org.jbenchx.Benchmark.Error parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static org.jbenchx.Benchmark.Failure parseFrom(
+    public static org.jbenchx.Benchmark.Error parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static org.jbenchx.Benchmark.Failure parseFrom(java.io.InputStream input)
+    public static org.jbenchx.Benchmark.Error parseFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input);
     }
-    public static org.jbenchx.Benchmark.Failure parseFrom(
+    public static org.jbenchx.Benchmark.Error parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
-    public static org.jbenchx.Benchmark.Failure parseDelimitedFrom(java.io.InputStream input)
+    public static org.jbenchx.Benchmark.Error parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input);
     }
-    public static org.jbenchx.Benchmark.Failure parseDelimitedFrom(
+    public static org.jbenchx.Benchmark.Error parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
     }
-    public static org.jbenchx.Benchmark.Failure parseFrom(
+    public static org.jbenchx.Benchmark.Error parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input);
     }
-    public static org.jbenchx.Benchmark.Failure parseFrom(
+    public static org.jbenchx.Benchmark.Error parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -1713,7 +1745,7 @@ public final class Benchmark {
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
     }
-    public static Builder newBuilder(org.jbenchx.Benchmark.Failure prototype) {
+    public static Builder newBuilder(org.jbenchx.Benchmark.Error prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
     public Builder toBuilder() {
@@ -1728,25 +1760,25 @@ public final class Benchmark {
       return builder;
     }
     /**
-     * Protobuf type {@code org.jbenchx.Failure}
+     * Protobuf type {@code org.jbenchx.Error}
      */
     public static final class Builder extends
         com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:org.jbenchx.Failure)
-        org.jbenchx.Benchmark.FailureOrBuilder {
+        // @@protoc_insertion_point(builder_implements:org.jbenchx.Error)
+        org.jbenchx.Benchmark.ErrorOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return org.jbenchx.Benchmark.internal_static_org_jbenchx_Failure_descriptor;
+        return org.jbenchx.Benchmark.internal_static_org_jbenchx_Error_descriptor;
       }
 
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return org.jbenchx.Benchmark.internal_static_org_jbenchx_Failure_fieldAccessorTable
+        return org.jbenchx.Benchmark.internal_static_org_jbenchx_Error_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
-                org.jbenchx.Benchmark.Failure.class, org.jbenchx.Benchmark.Failure.Builder.class);
+                org.jbenchx.Benchmark.Error.class, org.jbenchx.Benchmark.Error.Builder.class);
       }
 
-      // Construct using org.jbenchx.Benchmark.Failure.newBuilder()
+      // Construct using org.jbenchx.Benchmark.Error.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -1767,28 +1799,30 @@ public final class Benchmark {
 
         stackTrace_ = com.google.protobuf.LazyStringArrayList.EMPTY;
         bitField0_ = (bitField0_ & ~0x00000002);
+        skipped_ = false;
+
         return this;
       }
 
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return org.jbenchx.Benchmark.internal_static_org_jbenchx_Failure_descriptor;
+        return org.jbenchx.Benchmark.internal_static_org_jbenchx_Error_descriptor;
       }
 
-      public org.jbenchx.Benchmark.Failure getDefaultInstanceForType() {
-        return org.jbenchx.Benchmark.Failure.getDefaultInstance();
+      public org.jbenchx.Benchmark.Error getDefaultInstanceForType() {
+        return org.jbenchx.Benchmark.Error.getDefaultInstance();
       }
 
-      public org.jbenchx.Benchmark.Failure build() {
-        org.jbenchx.Benchmark.Failure result = buildPartial();
+      public org.jbenchx.Benchmark.Error build() {
+        org.jbenchx.Benchmark.Error result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
         return result;
       }
 
-      public org.jbenchx.Benchmark.Failure buildPartial() {
-        org.jbenchx.Benchmark.Failure result = new org.jbenchx.Benchmark.Failure(this);
+      public org.jbenchx.Benchmark.Error buildPartial() {
+        org.jbenchx.Benchmark.Error result = new org.jbenchx.Benchmark.Error(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
         result.message_ = message_;
@@ -1797,6 +1831,7 @@ public final class Benchmark {
           bitField0_ = (bitField0_ & ~0x00000002);
         }
         result.stackTrace_ = stackTrace_;
+        result.skipped_ = skipped_;
         result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
@@ -1829,16 +1864,16 @@ public final class Benchmark {
         return (Builder) super.addRepeatedField(field, value);
       }
       public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof org.jbenchx.Benchmark.Failure) {
-          return mergeFrom((org.jbenchx.Benchmark.Failure)other);
+        if (other instanceof org.jbenchx.Benchmark.Error) {
+          return mergeFrom((org.jbenchx.Benchmark.Error)other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
 
-      public Builder mergeFrom(org.jbenchx.Benchmark.Failure other) {
-        if (other == org.jbenchx.Benchmark.Failure.getDefaultInstance()) return this;
+      public Builder mergeFrom(org.jbenchx.Benchmark.Error other) {
+        if (other == org.jbenchx.Benchmark.Error.getDefaultInstance()) return this;
         if (!other.getMessage().isEmpty()) {
           message_ = other.message_;
           onChanged();
@@ -1853,6 +1888,9 @@ public final class Benchmark {
           }
           onChanged();
         }
+        if (other.getSkipped() != false) {
+          setSkipped(other.getSkipped());
+        }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
         return this;
@@ -1866,11 +1904,11 @@ public final class Benchmark {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-        org.jbenchx.Benchmark.Failure parsedMessage = null;
+        org.jbenchx.Benchmark.Error parsedMessage = null;
         try {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (org.jbenchx.Benchmark.Failure) e.getUnfinishedMessage();
+          parsedMessage = (org.jbenchx.Benchmark.Error) e.getUnfinishedMessage();
           throw e.unwrapIOException();
         } finally {
           if (parsedMessage != null) {
@@ -2043,6 +2081,32 @@ public final class Benchmark {
         onChanged();
         return this;
       }
+
+      private boolean skipped_ ;
+      /**
+       * <code>bool skipped = 3;</code>
+       */
+      public boolean getSkipped() {
+        return skipped_;
+      }
+      /**
+       * <code>bool skipped = 3;</code>
+       */
+      public Builder setSkipped(boolean value) {
+        
+        skipped_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>bool skipped = 3;</code>
+       */
+      public Builder clearSkipped() {
+        
+        skipped_ = false;
+        onChanged();
+        return this;
+      }
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.setUnknownFieldsProto3(unknownFields);
@@ -2054,39 +2118,39 @@ public final class Benchmark {
       }
 
 
-      // @@protoc_insertion_point(builder_scope:org.jbenchx.Failure)
+      // @@protoc_insertion_point(builder_scope:org.jbenchx.Error)
     }
 
-    // @@protoc_insertion_point(class_scope:org.jbenchx.Failure)
-    private static final org.jbenchx.Benchmark.Failure DEFAULT_INSTANCE;
+    // @@protoc_insertion_point(class_scope:org.jbenchx.Error)
+    private static final org.jbenchx.Benchmark.Error DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new org.jbenchx.Benchmark.Failure();
+      DEFAULT_INSTANCE = new org.jbenchx.Benchmark.Error();
     }
 
-    public static org.jbenchx.Benchmark.Failure getDefaultInstance() {
+    public static org.jbenchx.Benchmark.Error getDefaultInstance() {
       return DEFAULT_INSTANCE;
     }
 
-    private static final com.google.protobuf.Parser<Failure>
-        PARSER = new com.google.protobuf.AbstractParser<Failure>() {
-      public Failure parsePartialFrom(
+    private static final com.google.protobuf.Parser<Error>
+        PARSER = new com.google.protobuf.AbstractParser<Error>() {
+      public Error parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-        return new Failure(input, extensionRegistry);
+        return new Error(input, extensionRegistry);
       }
     };
 
-    public static com.google.protobuf.Parser<Failure> parser() {
+    public static com.google.protobuf.Parser<Error> parser() {
       return PARSER;
     }
 
     @java.lang.Override
-    public com.google.protobuf.Parser<Failure> getParserForType() {
+    public com.google.protobuf.Parser<Error> getParserForType() {
       return PARSER;
     }
 
-    public org.jbenchx.Benchmark.Failure getDefaultInstanceForType() {
+    public org.jbenchx.Benchmark.Error getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
 
@@ -3426,9 +3490,9 @@ public final class Benchmark {
     org.jbenchx.Benchmark.GcStatsOrBuilder getGcStatsOrBuilder();
 
     /**
-     * <code>int64 time_ns = 2;</code>
+     * <code>int64 run_time_ns = 2;</code>
      */
-    long getTimeNs();
+    long getRunTimeNs();
   }
   /**
    * Protobuf type {@code org.jbenchx.Timing}
@@ -3443,7 +3507,7 @@ public final class Benchmark {
       super(builder);
     }
     private Timing() {
-      timeNs_ = 0L;
+      runTimeNs_ = 0L;
     }
 
     @java.lang.Override
@@ -3492,7 +3556,7 @@ public final class Benchmark {
             }
             case 16: {
 
-              timeNs_ = input.readInt64();
+              runTimeNs_ = input.readInt64();
               break;
             }
           }
@@ -3540,13 +3604,13 @@ public final class Benchmark {
       return getGcStats();
     }
 
-    public static final int TIME_NS_FIELD_NUMBER = 2;
-    private long timeNs_;
+    public static final int RUN_TIME_NS_FIELD_NUMBER = 2;
+    private long runTimeNs_;
     /**
-     * <code>int64 time_ns = 2;</code>
+     * <code>int64 run_time_ns = 2;</code>
      */
-    public long getTimeNs() {
-      return timeNs_;
+    public long getRunTimeNs() {
+      return runTimeNs_;
     }
 
     private byte memoizedIsInitialized = -1;
@@ -3564,8 +3628,8 @@ public final class Benchmark {
       if (gcStats_ != null) {
         output.writeMessage(1, getGcStats());
       }
-      if (timeNs_ != 0L) {
-        output.writeInt64(2, timeNs_);
+      if (runTimeNs_ != 0L) {
+        output.writeInt64(2, runTimeNs_);
       }
       unknownFields.writeTo(output);
     }
@@ -3579,9 +3643,9 @@ public final class Benchmark {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(1, getGcStats());
       }
-      if (timeNs_ != 0L) {
+      if (runTimeNs_ != 0L) {
         size += com.google.protobuf.CodedOutputStream
-          .computeInt64Size(2, timeNs_);
+          .computeInt64Size(2, runTimeNs_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -3604,8 +3668,8 @@ public final class Benchmark {
         result = result && getGcStats()
             .equals(other.getGcStats());
       }
-      result = result && (getTimeNs()
-          == other.getTimeNs());
+      result = result && (getRunTimeNs()
+          == other.getRunTimeNs());
       result = result && unknownFields.equals(other.unknownFields);
       return result;
     }
@@ -3621,9 +3685,9 @@ public final class Benchmark {
         hash = (37 * hash) + GC_STATS_FIELD_NUMBER;
         hash = (53 * hash) + getGcStats().hashCode();
       }
-      hash = (37 * hash) + TIME_NS_FIELD_NUMBER;
+      hash = (37 * hash) + RUN_TIME_NS_FIELD_NUMBER;
       hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
-          getTimeNs());
+          getRunTimeNs());
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -3759,7 +3823,7 @@ public final class Benchmark {
           gcStats_ = null;
           gcStatsBuilder_ = null;
         }
-        timeNs_ = 0L;
+        runTimeNs_ = 0L;
 
         return this;
       }
@@ -3788,7 +3852,7 @@ public final class Benchmark {
         } else {
           result.gcStats_ = gcStatsBuilder_.build();
         }
-        result.timeNs_ = timeNs_;
+        result.runTimeNs_ = runTimeNs_;
         onBuilt();
         return result;
       }
@@ -3833,8 +3897,8 @@ public final class Benchmark {
         if (other.hasGcStats()) {
           mergeGcStats(other.getGcStats());
         }
-        if (other.getTimeNs() != 0L) {
-          setTimeNs(other.getTimeNs());
+        if (other.getRunTimeNs() != 0L) {
+          setRunTimeNs(other.getRunTimeNs());
         }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
@@ -3980,28 +4044,28 @@ public final class Benchmark {
         return gcStatsBuilder_;
       }
 
-      private long timeNs_ ;
+      private long runTimeNs_ ;
       /**
-       * <code>int64 time_ns = 2;</code>
+       * <code>int64 run_time_ns = 2;</code>
        */
-      public long getTimeNs() {
-        return timeNs_;
+      public long getRunTimeNs() {
+        return runTimeNs_;
       }
       /**
-       * <code>int64 time_ns = 2;</code>
+       * <code>int64 run_time_ns = 2;</code>
        */
-      public Builder setTimeNs(long value) {
+      public Builder setRunTimeNs(long value) {
         
-        timeNs_ = value;
+        runTimeNs_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>int64 time_ns = 2;</code>
+       * <code>int64 run_time_ns = 2;</code>
        */
-      public Builder clearTimeNs() {
+      public Builder clearRunTimeNs() {
         
-        timeNs_ = 0L;
+        runTimeNs_ = 0L;
         onChanged();
         return this;
       }
@@ -4059,81 +4123,116 @@ public final class Benchmark {
       com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <code>repeated .org.jbenchx.Timing timings = 1;</code>
+     * <code>string task_name = 1;</code>
+     */
+    java.lang.String getTaskName();
+    /**
+     * <code>string task_name = 1;</code>
+     */
+    com.google.protobuf.ByteString
+        getTaskNameBytes();
+
+    /**
+     * <code>repeated .org.jbenchx.Timing timing = 2;</code>
      */
     java.util.List<org.jbenchx.Benchmark.Timing> 
-        getTimingsList();
+        getTimingList();
     /**
-     * <code>repeated .org.jbenchx.Timing timings = 1;</code>
+     * <code>repeated .org.jbenchx.Timing timing = 2;</code>
      */
-    org.jbenchx.Benchmark.Timing getTimings(int index);
+    org.jbenchx.Benchmark.Timing getTiming(int index);
     /**
-     * <code>repeated .org.jbenchx.Timing timings = 1;</code>
+     * <code>repeated .org.jbenchx.Timing timing = 2;</code>
      */
-    int getTimingsCount();
+    int getTimingCount();
     /**
-     * <code>repeated .org.jbenchx.Timing timings = 1;</code>
+     * <code>repeated .org.jbenchx.Timing timing = 2;</code>
      */
     java.util.List<? extends org.jbenchx.Benchmark.TimingOrBuilder> 
-        getTimingsOrBuilderList();
+        getTimingOrBuilderList();
     /**
-     * <code>repeated .org.jbenchx.Timing timings = 1;</code>
+     * <code>repeated .org.jbenchx.Timing timing = 2;</code>
      */
-    org.jbenchx.Benchmark.TimingOrBuilder getTimingsOrBuilder(
+    org.jbenchx.Benchmark.TimingOrBuilder getTimingOrBuilder(
         int index);
 
     /**
-     * <code>repeated .org.jbenchx.Failure erros = 2;</code>
+     * <code>repeated .org.jbenchx.Error error = 3;</code>
      */
-    java.util.List<org.jbenchx.Benchmark.Failure> 
-        getErrosList();
+    java.util.List<org.jbenchx.Benchmark.Error> 
+        getErrorList();
     /**
-     * <code>repeated .org.jbenchx.Failure erros = 2;</code>
+     * <code>repeated .org.jbenchx.Error error = 3;</code>
      */
-    org.jbenchx.Benchmark.Failure getErros(int index);
+    org.jbenchx.Benchmark.Error getError(int index);
     /**
-     * <code>repeated .org.jbenchx.Failure erros = 2;</code>
+     * <code>repeated .org.jbenchx.Error error = 3;</code>
      */
-    int getErrosCount();
+    int getErrorCount();
     /**
-     * <code>repeated .org.jbenchx.Failure erros = 2;</code>
+     * <code>repeated .org.jbenchx.Error error = 3;</code>
      */
-    java.util.List<? extends org.jbenchx.Benchmark.FailureOrBuilder> 
-        getErrosOrBuilderList();
+    java.util.List<? extends org.jbenchx.Benchmark.ErrorOrBuilder> 
+        getErrorOrBuilderList();
     /**
-     * <code>repeated .org.jbenchx.Failure erros = 2;</code>
+     * <code>repeated .org.jbenchx.Error error = 3;</code>
      */
-    org.jbenchx.Benchmark.FailureOrBuilder getErrosOrBuilder(
+    org.jbenchx.Benchmark.ErrorOrBuilder getErrorOrBuilder(
         int index);
 
     /**
-     * <code>repeated .org.jbenchx.Warning warnings = 3;</code>
+     * <code>repeated .org.jbenchx.Warning warning = 4;</code>
      */
     java.util.List<org.jbenchx.Benchmark.Warning> 
-        getWarningsList();
+        getWarningList();
     /**
-     * <code>repeated .org.jbenchx.Warning warnings = 3;</code>
+     * <code>repeated .org.jbenchx.Warning warning = 4;</code>
      */
-    org.jbenchx.Benchmark.Warning getWarnings(int index);
+    org.jbenchx.Benchmark.Warning getWarning(int index);
     /**
-     * <code>repeated .org.jbenchx.Warning warnings = 3;</code>
+     * <code>repeated .org.jbenchx.Warning warning = 4;</code>
      */
-    int getWarningsCount();
+    int getWarningCount();
     /**
-     * <code>repeated .org.jbenchx.Warning warnings = 3;</code>
+     * <code>repeated .org.jbenchx.Warning warning = 4;</code>
      */
     java.util.List<? extends org.jbenchx.Benchmark.WarningOrBuilder> 
-        getWarningsOrBuilderList();
+        getWarningOrBuilderList();
     /**
-     * <code>repeated .org.jbenchx.Warning warnings = 3;</code>
+     * <code>repeated .org.jbenchx.Warning warning = 4;</code>
      */
-    org.jbenchx.Benchmark.WarningOrBuilder getWarningsOrBuilder(
+    org.jbenchx.Benchmark.WarningOrBuilder getWarningOrBuilder(
         int index);
 
     /**
-     * <code>int64 min_time = 4;</code>
+     * <code>int64 min_run_time_ns = 5;</code>
      */
-    long getMinTime();
+    long getMinRunTimeNs();
+
+    /**
+     * <code>int64 iteration_count = 6;</code>
+     */
+    long getIterationCount();
+
+    /**
+     * <code>double divisor = 7;</code>
+     */
+    double getDivisor();
+
+    /**
+     * <code>double estimated_benchmark = 8;</code>
+     */
+    double getEstimatedBenchmark();
+
+    /**
+     * <code>string benchmark_unit = 9;</code>
+     */
+    java.lang.String getBenchmarkUnit();
+    /**
+     * <code>string benchmark_unit = 9;</code>
+     */
+    com.google.protobuf.ByteString
+        getBenchmarkUnitBytes();
   }
   /**
    * Protobuf type {@code org.jbenchx.TaskResult}
@@ -4148,10 +4247,15 @@ public final class Benchmark {
       super(builder);
     }
     private TaskResult() {
-      timings_ = java.util.Collections.emptyList();
-      erros_ = java.util.Collections.emptyList();
-      warnings_ = java.util.Collections.emptyList();
-      minTime_ = 0L;
+      taskName_ = "";
+      timing_ = java.util.Collections.emptyList();
+      error_ = java.util.Collections.emptyList();
+      warning_ = java.util.Collections.emptyList();
+      minRunTimeNs_ = 0L;
+      iterationCount_ = 0L;
+      divisor_ = 0D;
+      estimatedBenchmark_ = 0D;
+      benchmarkUnit_ = "";
     }
 
     @java.lang.Override
@@ -4186,35 +4290,62 @@ public final class Benchmark {
               break;
             }
             case 10: {
-              if (!((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
-                timings_ = new java.util.ArrayList<org.jbenchx.Benchmark.Timing>();
-                mutable_bitField0_ |= 0x00000001;
-              }
-              timings_.add(
-                  input.readMessage(org.jbenchx.Benchmark.Timing.parser(), extensionRegistry));
+              java.lang.String s = input.readStringRequireUtf8();
+
+              taskName_ = s;
               break;
             }
             case 18: {
               if (!((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
-                erros_ = new java.util.ArrayList<org.jbenchx.Benchmark.Failure>();
+                timing_ = new java.util.ArrayList<org.jbenchx.Benchmark.Timing>();
                 mutable_bitField0_ |= 0x00000002;
               }
-              erros_.add(
-                  input.readMessage(org.jbenchx.Benchmark.Failure.parser(), extensionRegistry));
+              timing_.add(
+                  input.readMessage(org.jbenchx.Benchmark.Timing.parser(), extensionRegistry));
               break;
             }
             case 26: {
               if (!((mutable_bitField0_ & 0x00000004) == 0x00000004)) {
-                warnings_ = new java.util.ArrayList<org.jbenchx.Benchmark.Warning>();
+                error_ = new java.util.ArrayList<org.jbenchx.Benchmark.Error>();
                 mutable_bitField0_ |= 0x00000004;
               }
-              warnings_.add(
+              error_.add(
+                  input.readMessage(org.jbenchx.Benchmark.Error.parser(), extensionRegistry));
+              break;
+            }
+            case 34: {
+              if (!((mutable_bitField0_ & 0x00000008) == 0x00000008)) {
+                warning_ = new java.util.ArrayList<org.jbenchx.Benchmark.Warning>();
+                mutable_bitField0_ |= 0x00000008;
+              }
+              warning_.add(
                   input.readMessage(org.jbenchx.Benchmark.Warning.parser(), extensionRegistry));
               break;
             }
-            case 32: {
+            case 40: {
 
-              minTime_ = input.readInt64();
+              minRunTimeNs_ = input.readInt64();
+              break;
+            }
+            case 48: {
+
+              iterationCount_ = input.readInt64();
+              break;
+            }
+            case 57: {
+
+              divisor_ = input.readDouble();
+              break;
+            }
+            case 65: {
+
+              estimatedBenchmark_ = input.readDouble();
+              break;
+            }
+            case 74: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              benchmarkUnit_ = s;
               break;
             }
           }
@@ -4225,14 +4356,14 @@ public final class Benchmark {
         throw new com.google.protobuf.InvalidProtocolBufferException(
             e).setUnfinishedMessage(this);
       } finally {
-        if (((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
-          timings_ = java.util.Collections.unmodifiableList(timings_);
-        }
         if (((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
-          erros_ = java.util.Collections.unmodifiableList(erros_);
+          timing_ = java.util.Collections.unmodifiableList(timing_);
         }
         if (((mutable_bitField0_ & 0x00000004) == 0x00000004)) {
-          warnings_ = java.util.Collections.unmodifiableList(warnings_);
+          error_ = java.util.Collections.unmodifiableList(error_);
+        }
+        if (((mutable_bitField0_ & 0x00000008) == 0x00000008)) {
+          warning_ = java.util.Collections.unmodifiableList(warning_);
         }
         this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
@@ -4251,118 +4382,213 @@ public final class Benchmark {
     }
 
     private int bitField0_;
-    public static final int TIMINGS_FIELD_NUMBER = 1;
-    private java.util.List<org.jbenchx.Benchmark.Timing> timings_;
+    public static final int TASK_NAME_FIELD_NUMBER = 1;
+    private volatile java.lang.Object taskName_;
     /**
-     * <code>repeated .org.jbenchx.Timing timings = 1;</code>
+     * <code>string task_name = 1;</code>
      */
-    public java.util.List<org.jbenchx.Benchmark.Timing> getTimingsList() {
-      return timings_;
+    public java.lang.String getTaskName() {
+      java.lang.Object ref = taskName_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        taskName_ = s;
+        return s;
+      }
     }
     /**
-     * <code>repeated .org.jbenchx.Timing timings = 1;</code>
+     * <code>string task_name = 1;</code>
+     */
+    public com.google.protobuf.ByteString
+        getTaskNameBytes() {
+      java.lang.Object ref = taskName_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        taskName_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int TIMING_FIELD_NUMBER = 2;
+    private java.util.List<org.jbenchx.Benchmark.Timing> timing_;
+    /**
+     * <code>repeated .org.jbenchx.Timing timing = 2;</code>
+     */
+    public java.util.List<org.jbenchx.Benchmark.Timing> getTimingList() {
+      return timing_;
+    }
+    /**
+     * <code>repeated .org.jbenchx.Timing timing = 2;</code>
      */
     public java.util.List<? extends org.jbenchx.Benchmark.TimingOrBuilder> 
-        getTimingsOrBuilderList() {
-      return timings_;
+        getTimingOrBuilderList() {
+      return timing_;
     }
     /**
-     * <code>repeated .org.jbenchx.Timing timings = 1;</code>
+     * <code>repeated .org.jbenchx.Timing timing = 2;</code>
      */
-    public int getTimingsCount() {
-      return timings_.size();
+    public int getTimingCount() {
+      return timing_.size();
     }
     /**
-     * <code>repeated .org.jbenchx.Timing timings = 1;</code>
+     * <code>repeated .org.jbenchx.Timing timing = 2;</code>
      */
-    public org.jbenchx.Benchmark.Timing getTimings(int index) {
-      return timings_.get(index);
+    public org.jbenchx.Benchmark.Timing getTiming(int index) {
+      return timing_.get(index);
     }
     /**
-     * <code>repeated .org.jbenchx.Timing timings = 1;</code>
+     * <code>repeated .org.jbenchx.Timing timing = 2;</code>
      */
-    public org.jbenchx.Benchmark.TimingOrBuilder getTimingsOrBuilder(
+    public org.jbenchx.Benchmark.TimingOrBuilder getTimingOrBuilder(
         int index) {
-      return timings_.get(index);
+      return timing_.get(index);
     }
 
-    public static final int ERROS_FIELD_NUMBER = 2;
-    private java.util.List<org.jbenchx.Benchmark.Failure> erros_;
+    public static final int ERROR_FIELD_NUMBER = 3;
+    private java.util.List<org.jbenchx.Benchmark.Error> error_;
     /**
-     * <code>repeated .org.jbenchx.Failure erros = 2;</code>
+     * <code>repeated .org.jbenchx.Error error = 3;</code>
      */
-    public java.util.List<org.jbenchx.Benchmark.Failure> getErrosList() {
-      return erros_;
+    public java.util.List<org.jbenchx.Benchmark.Error> getErrorList() {
+      return error_;
     }
     /**
-     * <code>repeated .org.jbenchx.Failure erros = 2;</code>
+     * <code>repeated .org.jbenchx.Error error = 3;</code>
      */
-    public java.util.List<? extends org.jbenchx.Benchmark.FailureOrBuilder> 
-        getErrosOrBuilderList() {
-      return erros_;
+    public java.util.List<? extends org.jbenchx.Benchmark.ErrorOrBuilder> 
+        getErrorOrBuilderList() {
+      return error_;
     }
     /**
-     * <code>repeated .org.jbenchx.Failure erros = 2;</code>
+     * <code>repeated .org.jbenchx.Error error = 3;</code>
      */
-    public int getErrosCount() {
-      return erros_.size();
+    public int getErrorCount() {
+      return error_.size();
     }
     /**
-     * <code>repeated .org.jbenchx.Failure erros = 2;</code>
+     * <code>repeated .org.jbenchx.Error error = 3;</code>
      */
-    public org.jbenchx.Benchmark.Failure getErros(int index) {
-      return erros_.get(index);
+    public org.jbenchx.Benchmark.Error getError(int index) {
+      return error_.get(index);
     }
     /**
-     * <code>repeated .org.jbenchx.Failure erros = 2;</code>
+     * <code>repeated .org.jbenchx.Error error = 3;</code>
      */
-    public org.jbenchx.Benchmark.FailureOrBuilder getErrosOrBuilder(
+    public org.jbenchx.Benchmark.ErrorOrBuilder getErrorOrBuilder(
         int index) {
-      return erros_.get(index);
+      return error_.get(index);
     }
 
-    public static final int WARNINGS_FIELD_NUMBER = 3;
-    private java.util.List<org.jbenchx.Benchmark.Warning> warnings_;
+    public static final int WARNING_FIELD_NUMBER = 4;
+    private java.util.List<org.jbenchx.Benchmark.Warning> warning_;
     /**
-     * <code>repeated .org.jbenchx.Warning warnings = 3;</code>
+     * <code>repeated .org.jbenchx.Warning warning = 4;</code>
      */
-    public java.util.List<org.jbenchx.Benchmark.Warning> getWarningsList() {
-      return warnings_;
+    public java.util.List<org.jbenchx.Benchmark.Warning> getWarningList() {
+      return warning_;
     }
     /**
-     * <code>repeated .org.jbenchx.Warning warnings = 3;</code>
+     * <code>repeated .org.jbenchx.Warning warning = 4;</code>
      */
     public java.util.List<? extends org.jbenchx.Benchmark.WarningOrBuilder> 
-        getWarningsOrBuilderList() {
-      return warnings_;
+        getWarningOrBuilderList() {
+      return warning_;
     }
     /**
-     * <code>repeated .org.jbenchx.Warning warnings = 3;</code>
+     * <code>repeated .org.jbenchx.Warning warning = 4;</code>
      */
-    public int getWarningsCount() {
-      return warnings_.size();
+    public int getWarningCount() {
+      return warning_.size();
     }
     /**
-     * <code>repeated .org.jbenchx.Warning warnings = 3;</code>
+     * <code>repeated .org.jbenchx.Warning warning = 4;</code>
      */
-    public org.jbenchx.Benchmark.Warning getWarnings(int index) {
-      return warnings_.get(index);
+    public org.jbenchx.Benchmark.Warning getWarning(int index) {
+      return warning_.get(index);
     }
     /**
-     * <code>repeated .org.jbenchx.Warning warnings = 3;</code>
+     * <code>repeated .org.jbenchx.Warning warning = 4;</code>
      */
-    public org.jbenchx.Benchmark.WarningOrBuilder getWarningsOrBuilder(
+    public org.jbenchx.Benchmark.WarningOrBuilder getWarningOrBuilder(
         int index) {
-      return warnings_.get(index);
+      return warning_.get(index);
     }
 
-    public static final int MIN_TIME_FIELD_NUMBER = 4;
-    private long minTime_;
+    public static final int MIN_RUN_TIME_NS_FIELD_NUMBER = 5;
+    private long minRunTimeNs_;
     /**
-     * <code>int64 min_time = 4;</code>
+     * <code>int64 min_run_time_ns = 5;</code>
      */
-    public long getMinTime() {
-      return minTime_;
+    public long getMinRunTimeNs() {
+      return minRunTimeNs_;
+    }
+
+    public static final int ITERATION_COUNT_FIELD_NUMBER = 6;
+    private long iterationCount_;
+    /**
+     * <code>int64 iteration_count = 6;</code>
+     */
+    public long getIterationCount() {
+      return iterationCount_;
+    }
+
+    public static final int DIVISOR_FIELD_NUMBER = 7;
+    private double divisor_;
+    /**
+     * <code>double divisor = 7;</code>
+     */
+    public double getDivisor() {
+      return divisor_;
+    }
+
+    public static final int ESTIMATED_BENCHMARK_FIELD_NUMBER = 8;
+    private double estimatedBenchmark_;
+    /**
+     * <code>double estimated_benchmark = 8;</code>
+     */
+    public double getEstimatedBenchmark() {
+      return estimatedBenchmark_;
+    }
+
+    public static final int BENCHMARK_UNIT_FIELD_NUMBER = 9;
+    private volatile java.lang.Object benchmarkUnit_;
+    /**
+     * <code>string benchmark_unit = 9;</code>
+     */
+    public java.lang.String getBenchmarkUnit() {
+      java.lang.Object ref = benchmarkUnit_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        benchmarkUnit_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>string benchmark_unit = 9;</code>
+     */
+    public com.google.protobuf.ByteString
+        getBenchmarkUnitBytes() {
+      java.lang.Object ref = benchmarkUnit_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        benchmarkUnit_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
     }
 
     private byte memoizedIsInitialized = -1;
@@ -4377,17 +4603,32 @@ public final class Benchmark {
 
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      for (int i = 0; i < timings_.size(); i++) {
-        output.writeMessage(1, timings_.get(i));
+      if (!getTaskNameBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, taskName_);
       }
-      for (int i = 0; i < erros_.size(); i++) {
-        output.writeMessage(2, erros_.get(i));
+      for (int i = 0; i < timing_.size(); i++) {
+        output.writeMessage(2, timing_.get(i));
       }
-      for (int i = 0; i < warnings_.size(); i++) {
-        output.writeMessage(3, warnings_.get(i));
+      for (int i = 0; i < error_.size(); i++) {
+        output.writeMessage(3, error_.get(i));
       }
-      if (minTime_ != 0L) {
-        output.writeInt64(4, minTime_);
+      for (int i = 0; i < warning_.size(); i++) {
+        output.writeMessage(4, warning_.get(i));
+      }
+      if (minRunTimeNs_ != 0L) {
+        output.writeInt64(5, minRunTimeNs_);
+      }
+      if (iterationCount_ != 0L) {
+        output.writeInt64(6, iterationCount_);
+      }
+      if (divisor_ != 0D) {
+        output.writeDouble(7, divisor_);
+      }
+      if (estimatedBenchmark_ != 0D) {
+        output.writeDouble(8, estimatedBenchmark_);
+      }
+      if (!getBenchmarkUnitBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 9, benchmarkUnit_);
       }
       unknownFields.writeTo(output);
     }
@@ -4397,21 +4638,39 @@ public final class Benchmark {
       if (size != -1) return size;
 
       size = 0;
-      for (int i = 0; i < timings_.size(); i++) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(1, timings_.get(i));
+      if (!getTaskNameBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, taskName_);
       }
-      for (int i = 0; i < erros_.size(); i++) {
+      for (int i = 0; i < timing_.size(); i++) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(2, erros_.get(i));
+          .computeMessageSize(2, timing_.get(i));
       }
-      for (int i = 0; i < warnings_.size(); i++) {
+      for (int i = 0; i < error_.size(); i++) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(3, warnings_.get(i));
+          .computeMessageSize(3, error_.get(i));
       }
-      if (minTime_ != 0L) {
+      for (int i = 0; i < warning_.size(); i++) {
         size += com.google.protobuf.CodedOutputStream
-          .computeInt64Size(4, minTime_);
+          .computeMessageSize(4, warning_.get(i));
+      }
+      if (minRunTimeNs_ != 0L) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt64Size(5, minRunTimeNs_);
+      }
+      if (iterationCount_ != 0L) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt64Size(6, iterationCount_);
+      }
+      if (divisor_ != 0D) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeDoubleSize(7, divisor_);
+      }
+      if (estimatedBenchmark_ != 0D) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeDoubleSize(8, estimatedBenchmark_);
+      }
+      if (!getBenchmarkUnitBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(9, benchmarkUnit_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -4429,14 +4688,28 @@ public final class Benchmark {
       org.jbenchx.Benchmark.TaskResult other = (org.jbenchx.Benchmark.TaskResult) obj;
 
       boolean result = true;
-      result = result && getTimingsList()
-          .equals(other.getTimingsList());
-      result = result && getErrosList()
-          .equals(other.getErrosList());
-      result = result && getWarningsList()
-          .equals(other.getWarningsList());
-      result = result && (getMinTime()
-          == other.getMinTime());
+      result = result && getTaskName()
+          .equals(other.getTaskName());
+      result = result && getTimingList()
+          .equals(other.getTimingList());
+      result = result && getErrorList()
+          .equals(other.getErrorList());
+      result = result && getWarningList()
+          .equals(other.getWarningList());
+      result = result && (getMinRunTimeNs()
+          == other.getMinRunTimeNs());
+      result = result && (getIterationCount()
+          == other.getIterationCount());
+      result = result && (
+          java.lang.Double.doubleToLongBits(getDivisor())
+          == java.lang.Double.doubleToLongBits(
+              other.getDivisor()));
+      result = result && (
+          java.lang.Double.doubleToLongBits(getEstimatedBenchmark())
+          == java.lang.Double.doubleToLongBits(
+              other.getEstimatedBenchmark()));
+      result = result && getBenchmarkUnit()
+          .equals(other.getBenchmarkUnit());
       result = result && unknownFields.equals(other.unknownFields);
       return result;
     }
@@ -4448,21 +4721,34 @@ public final class Benchmark {
       }
       int hash = 41;
       hash = (19 * hash) + getDescriptor().hashCode();
-      if (getTimingsCount() > 0) {
-        hash = (37 * hash) + TIMINGS_FIELD_NUMBER;
-        hash = (53 * hash) + getTimingsList().hashCode();
+      hash = (37 * hash) + TASK_NAME_FIELD_NUMBER;
+      hash = (53 * hash) + getTaskName().hashCode();
+      if (getTimingCount() > 0) {
+        hash = (37 * hash) + TIMING_FIELD_NUMBER;
+        hash = (53 * hash) + getTimingList().hashCode();
       }
-      if (getErrosCount() > 0) {
-        hash = (37 * hash) + ERROS_FIELD_NUMBER;
-        hash = (53 * hash) + getErrosList().hashCode();
+      if (getErrorCount() > 0) {
+        hash = (37 * hash) + ERROR_FIELD_NUMBER;
+        hash = (53 * hash) + getErrorList().hashCode();
       }
-      if (getWarningsCount() > 0) {
-        hash = (37 * hash) + WARNINGS_FIELD_NUMBER;
-        hash = (53 * hash) + getWarningsList().hashCode();
+      if (getWarningCount() > 0) {
+        hash = (37 * hash) + WARNING_FIELD_NUMBER;
+        hash = (53 * hash) + getWarningList().hashCode();
       }
-      hash = (37 * hash) + MIN_TIME_FIELD_NUMBER;
+      hash = (37 * hash) + MIN_RUN_TIME_NS_FIELD_NUMBER;
       hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
-          getMinTime());
+          getMinRunTimeNs());
+      hash = (37 * hash) + ITERATION_COUNT_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+          getIterationCount());
+      hash = (37 * hash) + DIVISOR_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+          java.lang.Double.doubleToLongBits(getDivisor()));
+      hash = (37 * hash) + ESTIMATED_BENCHMARK_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+          java.lang.Double.doubleToLongBits(getEstimatedBenchmark()));
+      hash = (37 * hash) + BENCHMARK_UNIT_FIELD_NUMBER;
+      hash = (53 * hash) + getBenchmarkUnit().hashCode();
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -4588,32 +4874,42 @@ public final class Benchmark {
       private void maybeForceBuilderInitialization() {
         if (com.google.protobuf.GeneratedMessageV3
                 .alwaysUseFieldBuilders) {
-          getTimingsFieldBuilder();
-          getErrosFieldBuilder();
-          getWarningsFieldBuilder();
+          getTimingFieldBuilder();
+          getErrorFieldBuilder();
+          getWarningFieldBuilder();
         }
       }
       public Builder clear() {
         super.clear();
-        if (timingsBuilder_ == null) {
-          timings_ = java.util.Collections.emptyList();
-          bitField0_ = (bitField0_ & ~0x00000001);
-        } else {
-          timingsBuilder_.clear();
-        }
-        if (errosBuilder_ == null) {
-          erros_ = java.util.Collections.emptyList();
+        taskName_ = "";
+
+        if (timingBuilder_ == null) {
+          timing_ = java.util.Collections.emptyList();
           bitField0_ = (bitField0_ & ~0x00000002);
         } else {
-          errosBuilder_.clear();
+          timingBuilder_.clear();
         }
-        if (warningsBuilder_ == null) {
-          warnings_ = java.util.Collections.emptyList();
+        if (errorBuilder_ == null) {
+          error_ = java.util.Collections.emptyList();
           bitField0_ = (bitField0_ & ~0x00000004);
         } else {
-          warningsBuilder_.clear();
+          errorBuilder_.clear();
         }
-        minTime_ = 0L;
+        if (warningBuilder_ == null) {
+          warning_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000008);
+        } else {
+          warningBuilder_.clear();
+        }
+        minRunTimeNs_ = 0L;
+
+        iterationCount_ = 0L;
+
+        divisor_ = 0D;
+
+        estimatedBenchmark_ = 0D;
+
+        benchmarkUnit_ = "";
 
         return this;
       }
@@ -4639,34 +4935,39 @@ public final class Benchmark {
         org.jbenchx.Benchmark.TaskResult result = new org.jbenchx.Benchmark.TaskResult(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
-        if (timingsBuilder_ == null) {
-          if (((bitField0_ & 0x00000001) == 0x00000001)) {
-            timings_ = java.util.Collections.unmodifiableList(timings_);
-            bitField0_ = (bitField0_ & ~0x00000001);
-          }
-          result.timings_ = timings_;
-        } else {
-          result.timings_ = timingsBuilder_.build();
-        }
-        if (errosBuilder_ == null) {
+        result.taskName_ = taskName_;
+        if (timingBuilder_ == null) {
           if (((bitField0_ & 0x00000002) == 0x00000002)) {
-            erros_ = java.util.Collections.unmodifiableList(erros_);
+            timing_ = java.util.Collections.unmodifiableList(timing_);
             bitField0_ = (bitField0_ & ~0x00000002);
           }
-          result.erros_ = erros_;
+          result.timing_ = timing_;
         } else {
-          result.erros_ = errosBuilder_.build();
+          result.timing_ = timingBuilder_.build();
         }
-        if (warningsBuilder_ == null) {
+        if (errorBuilder_ == null) {
           if (((bitField0_ & 0x00000004) == 0x00000004)) {
-            warnings_ = java.util.Collections.unmodifiableList(warnings_);
+            error_ = java.util.Collections.unmodifiableList(error_);
             bitField0_ = (bitField0_ & ~0x00000004);
           }
-          result.warnings_ = warnings_;
+          result.error_ = error_;
         } else {
-          result.warnings_ = warningsBuilder_.build();
+          result.error_ = errorBuilder_.build();
         }
-        result.minTime_ = minTime_;
+        if (warningBuilder_ == null) {
+          if (((bitField0_ & 0x00000008) == 0x00000008)) {
+            warning_ = java.util.Collections.unmodifiableList(warning_);
+            bitField0_ = (bitField0_ & ~0x00000008);
+          }
+          result.warning_ = warning_;
+        } else {
+          result.warning_ = warningBuilder_.build();
+        }
+        result.minRunTimeNs_ = minRunTimeNs_;
+        result.iterationCount_ = iterationCount_;
+        result.divisor_ = divisor_;
+        result.estimatedBenchmark_ = estimatedBenchmark_;
+        result.benchmarkUnit_ = benchmarkUnit_;
         result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
@@ -4709,86 +5010,103 @@ public final class Benchmark {
 
       public Builder mergeFrom(org.jbenchx.Benchmark.TaskResult other) {
         if (other == org.jbenchx.Benchmark.TaskResult.getDefaultInstance()) return this;
-        if (timingsBuilder_ == null) {
-          if (!other.timings_.isEmpty()) {
-            if (timings_.isEmpty()) {
-              timings_ = other.timings_;
-              bitField0_ = (bitField0_ & ~0x00000001);
-            } else {
-              ensureTimingsIsMutable();
-              timings_.addAll(other.timings_);
-            }
-            onChanged();
-          }
-        } else {
-          if (!other.timings_.isEmpty()) {
-            if (timingsBuilder_.isEmpty()) {
-              timingsBuilder_.dispose();
-              timingsBuilder_ = null;
-              timings_ = other.timings_;
-              bitField0_ = (bitField0_ & ~0x00000001);
-              timingsBuilder_ = 
-                com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
-                   getTimingsFieldBuilder() : null;
-            } else {
-              timingsBuilder_.addAllMessages(other.timings_);
-            }
-          }
+        if (!other.getTaskName().isEmpty()) {
+          taskName_ = other.taskName_;
+          onChanged();
         }
-        if (errosBuilder_ == null) {
-          if (!other.erros_.isEmpty()) {
-            if (erros_.isEmpty()) {
-              erros_ = other.erros_;
+        if (timingBuilder_ == null) {
+          if (!other.timing_.isEmpty()) {
+            if (timing_.isEmpty()) {
+              timing_ = other.timing_;
               bitField0_ = (bitField0_ & ~0x00000002);
             } else {
-              ensureErrosIsMutable();
-              erros_.addAll(other.erros_);
+              ensureTimingIsMutable();
+              timing_.addAll(other.timing_);
             }
             onChanged();
           }
         } else {
-          if (!other.erros_.isEmpty()) {
-            if (errosBuilder_.isEmpty()) {
-              errosBuilder_.dispose();
-              errosBuilder_ = null;
-              erros_ = other.erros_;
+          if (!other.timing_.isEmpty()) {
+            if (timingBuilder_.isEmpty()) {
+              timingBuilder_.dispose();
+              timingBuilder_ = null;
+              timing_ = other.timing_;
               bitField0_ = (bitField0_ & ~0x00000002);
-              errosBuilder_ = 
+              timingBuilder_ = 
                 com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
-                   getErrosFieldBuilder() : null;
+                   getTimingFieldBuilder() : null;
             } else {
-              errosBuilder_.addAllMessages(other.erros_);
+              timingBuilder_.addAllMessages(other.timing_);
             }
           }
         }
-        if (warningsBuilder_ == null) {
-          if (!other.warnings_.isEmpty()) {
-            if (warnings_.isEmpty()) {
-              warnings_ = other.warnings_;
+        if (errorBuilder_ == null) {
+          if (!other.error_.isEmpty()) {
+            if (error_.isEmpty()) {
+              error_ = other.error_;
               bitField0_ = (bitField0_ & ~0x00000004);
             } else {
-              ensureWarningsIsMutable();
-              warnings_.addAll(other.warnings_);
+              ensureErrorIsMutable();
+              error_.addAll(other.error_);
             }
             onChanged();
           }
         } else {
-          if (!other.warnings_.isEmpty()) {
-            if (warningsBuilder_.isEmpty()) {
-              warningsBuilder_.dispose();
-              warningsBuilder_ = null;
-              warnings_ = other.warnings_;
+          if (!other.error_.isEmpty()) {
+            if (errorBuilder_.isEmpty()) {
+              errorBuilder_.dispose();
+              errorBuilder_ = null;
+              error_ = other.error_;
               bitField0_ = (bitField0_ & ~0x00000004);
-              warningsBuilder_ = 
+              errorBuilder_ = 
                 com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
-                   getWarningsFieldBuilder() : null;
+                   getErrorFieldBuilder() : null;
             } else {
-              warningsBuilder_.addAllMessages(other.warnings_);
+              errorBuilder_.addAllMessages(other.error_);
             }
           }
         }
-        if (other.getMinTime() != 0L) {
-          setMinTime(other.getMinTime());
+        if (warningBuilder_ == null) {
+          if (!other.warning_.isEmpty()) {
+            if (warning_.isEmpty()) {
+              warning_ = other.warning_;
+              bitField0_ = (bitField0_ & ~0x00000008);
+            } else {
+              ensureWarningIsMutable();
+              warning_.addAll(other.warning_);
+            }
+            onChanged();
+          }
+        } else {
+          if (!other.warning_.isEmpty()) {
+            if (warningBuilder_.isEmpty()) {
+              warningBuilder_.dispose();
+              warningBuilder_ = null;
+              warning_ = other.warning_;
+              bitField0_ = (bitField0_ & ~0x00000008);
+              warningBuilder_ = 
+                com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
+                   getWarningFieldBuilder() : null;
+            } else {
+              warningBuilder_.addAllMessages(other.warning_);
+            }
+          }
+        }
+        if (other.getMinRunTimeNs() != 0L) {
+          setMinRunTimeNs(other.getMinRunTimeNs());
+        }
+        if (other.getIterationCount() != 0L) {
+          setIterationCount(other.getIterationCount());
+        }
+        if (other.getDivisor() != 0D) {
+          setDivisor(other.getDivisor());
+        }
+        if (other.getEstimatedBenchmark() != 0D) {
+          setEstimatedBenchmark(other.getEstimatedBenchmark());
+        }
+        if (!other.getBenchmarkUnit().isEmpty()) {
+          benchmarkUnit_ = other.benchmarkUnit_;
+          onChanged();
         }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
@@ -4818,748 +5136,964 @@ public final class Benchmark {
       }
       private int bitField0_;
 
-      private java.util.List<org.jbenchx.Benchmark.Timing> timings_ =
+      private java.lang.Object taskName_ = "";
+      /**
+       * <code>string task_name = 1;</code>
+       */
+      public java.lang.String getTaskName() {
+        java.lang.Object ref = taskName_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          taskName_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>string task_name = 1;</code>
+       */
+      public com.google.protobuf.ByteString
+          getTaskNameBytes() {
+        java.lang.Object ref = taskName_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          taskName_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>string task_name = 1;</code>
+       */
+      public Builder setTaskName(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        taskName_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string task_name = 1;</code>
+       */
+      public Builder clearTaskName() {
+        
+        taskName_ = getDefaultInstance().getTaskName();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string task_name = 1;</code>
+       */
+      public Builder setTaskNameBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        taskName_ = value;
+        onChanged();
+        return this;
+      }
+
+      private java.util.List<org.jbenchx.Benchmark.Timing> timing_ =
         java.util.Collections.emptyList();
-      private void ensureTimingsIsMutable() {
-        if (!((bitField0_ & 0x00000001) == 0x00000001)) {
-          timings_ = new java.util.ArrayList<org.jbenchx.Benchmark.Timing>(timings_);
-          bitField0_ |= 0x00000001;
-         }
-      }
-
-      private com.google.protobuf.RepeatedFieldBuilderV3<
-          org.jbenchx.Benchmark.Timing, org.jbenchx.Benchmark.Timing.Builder, org.jbenchx.Benchmark.TimingOrBuilder> timingsBuilder_;
-
-      /**
-       * <code>repeated .org.jbenchx.Timing timings = 1;</code>
-       */
-      public java.util.List<org.jbenchx.Benchmark.Timing> getTimingsList() {
-        if (timingsBuilder_ == null) {
-          return java.util.Collections.unmodifiableList(timings_);
-        } else {
-          return timingsBuilder_.getMessageList();
-        }
-      }
-      /**
-       * <code>repeated .org.jbenchx.Timing timings = 1;</code>
-       */
-      public int getTimingsCount() {
-        if (timingsBuilder_ == null) {
-          return timings_.size();
-        } else {
-          return timingsBuilder_.getCount();
-        }
-      }
-      /**
-       * <code>repeated .org.jbenchx.Timing timings = 1;</code>
-       */
-      public org.jbenchx.Benchmark.Timing getTimings(int index) {
-        if (timingsBuilder_ == null) {
-          return timings_.get(index);
-        } else {
-          return timingsBuilder_.getMessage(index);
-        }
-      }
-      /**
-       * <code>repeated .org.jbenchx.Timing timings = 1;</code>
-       */
-      public Builder setTimings(
-          int index, org.jbenchx.Benchmark.Timing value) {
-        if (timingsBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          ensureTimingsIsMutable();
-          timings_.set(index, value);
-          onChanged();
-        } else {
-          timingsBuilder_.setMessage(index, value);
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .org.jbenchx.Timing timings = 1;</code>
-       */
-      public Builder setTimings(
-          int index, org.jbenchx.Benchmark.Timing.Builder builderForValue) {
-        if (timingsBuilder_ == null) {
-          ensureTimingsIsMutable();
-          timings_.set(index, builderForValue.build());
-          onChanged();
-        } else {
-          timingsBuilder_.setMessage(index, builderForValue.build());
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .org.jbenchx.Timing timings = 1;</code>
-       */
-      public Builder addTimings(org.jbenchx.Benchmark.Timing value) {
-        if (timingsBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          ensureTimingsIsMutable();
-          timings_.add(value);
-          onChanged();
-        } else {
-          timingsBuilder_.addMessage(value);
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .org.jbenchx.Timing timings = 1;</code>
-       */
-      public Builder addTimings(
-          int index, org.jbenchx.Benchmark.Timing value) {
-        if (timingsBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          ensureTimingsIsMutable();
-          timings_.add(index, value);
-          onChanged();
-        } else {
-          timingsBuilder_.addMessage(index, value);
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .org.jbenchx.Timing timings = 1;</code>
-       */
-      public Builder addTimings(
-          org.jbenchx.Benchmark.Timing.Builder builderForValue) {
-        if (timingsBuilder_ == null) {
-          ensureTimingsIsMutable();
-          timings_.add(builderForValue.build());
-          onChanged();
-        } else {
-          timingsBuilder_.addMessage(builderForValue.build());
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .org.jbenchx.Timing timings = 1;</code>
-       */
-      public Builder addTimings(
-          int index, org.jbenchx.Benchmark.Timing.Builder builderForValue) {
-        if (timingsBuilder_ == null) {
-          ensureTimingsIsMutable();
-          timings_.add(index, builderForValue.build());
-          onChanged();
-        } else {
-          timingsBuilder_.addMessage(index, builderForValue.build());
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .org.jbenchx.Timing timings = 1;</code>
-       */
-      public Builder addAllTimings(
-          java.lang.Iterable<? extends org.jbenchx.Benchmark.Timing> values) {
-        if (timingsBuilder_ == null) {
-          ensureTimingsIsMutable();
-          com.google.protobuf.AbstractMessageLite.Builder.addAll(
-              values, timings_);
-          onChanged();
-        } else {
-          timingsBuilder_.addAllMessages(values);
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .org.jbenchx.Timing timings = 1;</code>
-       */
-      public Builder clearTimings() {
-        if (timingsBuilder_ == null) {
-          timings_ = java.util.Collections.emptyList();
-          bitField0_ = (bitField0_ & ~0x00000001);
-          onChanged();
-        } else {
-          timingsBuilder_.clear();
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .org.jbenchx.Timing timings = 1;</code>
-       */
-      public Builder removeTimings(int index) {
-        if (timingsBuilder_ == null) {
-          ensureTimingsIsMutable();
-          timings_.remove(index);
-          onChanged();
-        } else {
-          timingsBuilder_.remove(index);
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .org.jbenchx.Timing timings = 1;</code>
-       */
-      public org.jbenchx.Benchmark.Timing.Builder getTimingsBuilder(
-          int index) {
-        return getTimingsFieldBuilder().getBuilder(index);
-      }
-      /**
-       * <code>repeated .org.jbenchx.Timing timings = 1;</code>
-       */
-      public org.jbenchx.Benchmark.TimingOrBuilder getTimingsOrBuilder(
-          int index) {
-        if (timingsBuilder_ == null) {
-          return timings_.get(index);  } else {
-          return timingsBuilder_.getMessageOrBuilder(index);
-        }
-      }
-      /**
-       * <code>repeated .org.jbenchx.Timing timings = 1;</code>
-       */
-      public java.util.List<? extends org.jbenchx.Benchmark.TimingOrBuilder> 
-           getTimingsOrBuilderList() {
-        if (timingsBuilder_ != null) {
-          return timingsBuilder_.getMessageOrBuilderList();
-        } else {
-          return java.util.Collections.unmodifiableList(timings_);
-        }
-      }
-      /**
-       * <code>repeated .org.jbenchx.Timing timings = 1;</code>
-       */
-      public org.jbenchx.Benchmark.Timing.Builder addTimingsBuilder() {
-        return getTimingsFieldBuilder().addBuilder(
-            org.jbenchx.Benchmark.Timing.getDefaultInstance());
-      }
-      /**
-       * <code>repeated .org.jbenchx.Timing timings = 1;</code>
-       */
-      public org.jbenchx.Benchmark.Timing.Builder addTimingsBuilder(
-          int index) {
-        return getTimingsFieldBuilder().addBuilder(
-            index, org.jbenchx.Benchmark.Timing.getDefaultInstance());
-      }
-      /**
-       * <code>repeated .org.jbenchx.Timing timings = 1;</code>
-       */
-      public java.util.List<org.jbenchx.Benchmark.Timing.Builder> 
-           getTimingsBuilderList() {
-        return getTimingsFieldBuilder().getBuilderList();
-      }
-      private com.google.protobuf.RepeatedFieldBuilderV3<
-          org.jbenchx.Benchmark.Timing, org.jbenchx.Benchmark.Timing.Builder, org.jbenchx.Benchmark.TimingOrBuilder> 
-          getTimingsFieldBuilder() {
-        if (timingsBuilder_ == null) {
-          timingsBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
-              org.jbenchx.Benchmark.Timing, org.jbenchx.Benchmark.Timing.Builder, org.jbenchx.Benchmark.TimingOrBuilder>(
-                  timings_,
-                  ((bitField0_ & 0x00000001) == 0x00000001),
-                  getParentForChildren(),
-                  isClean());
-          timings_ = null;
-        }
-        return timingsBuilder_;
-      }
-
-      private java.util.List<org.jbenchx.Benchmark.Failure> erros_ =
-        java.util.Collections.emptyList();
-      private void ensureErrosIsMutable() {
+      private void ensureTimingIsMutable() {
         if (!((bitField0_ & 0x00000002) == 0x00000002)) {
-          erros_ = new java.util.ArrayList<org.jbenchx.Benchmark.Failure>(erros_);
+          timing_ = new java.util.ArrayList<org.jbenchx.Benchmark.Timing>(timing_);
           bitField0_ |= 0x00000002;
          }
       }
 
       private com.google.protobuf.RepeatedFieldBuilderV3<
-          org.jbenchx.Benchmark.Failure, org.jbenchx.Benchmark.Failure.Builder, org.jbenchx.Benchmark.FailureOrBuilder> errosBuilder_;
+          org.jbenchx.Benchmark.Timing, org.jbenchx.Benchmark.Timing.Builder, org.jbenchx.Benchmark.TimingOrBuilder> timingBuilder_;
 
       /**
-       * <code>repeated .org.jbenchx.Failure erros = 2;</code>
+       * <code>repeated .org.jbenchx.Timing timing = 2;</code>
        */
-      public java.util.List<org.jbenchx.Benchmark.Failure> getErrosList() {
-        if (errosBuilder_ == null) {
-          return java.util.Collections.unmodifiableList(erros_);
+      public java.util.List<org.jbenchx.Benchmark.Timing> getTimingList() {
+        if (timingBuilder_ == null) {
+          return java.util.Collections.unmodifiableList(timing_);
         } else {
-          return errosBuilder_.getMessageList();
+          return timingBuilder_.getMessageList();
         }
       }
       /**
-       * <code>repeated .org.jbenchx.Failure erros = 2;</code>
+       * <code>repeated .org.jbenchx.Timing timing = 2;</code>
        */
-      public int getErrosCount() {
-        if (errosBuilder_ == null) {
-          return erros_.size();
+      public int getTimingCount() {
+        if (timingBuilder_ == null) {
+          return timing_.size();
         } else {
-          return errosBuilder_.getCount();
+          return timingBuilder_.getCount();
         }
       }
       /**
-       * <code>repeated .org.jbenchx.Failure erros = 2;</code>
+       * <code>repeated .org.jbenchx.Timing timing = 2;</code>
        */
-      public org.jbenchx.Benchmark.Failure getErros(int index) {
-        if (errosBuilder_ == null) {
-          return erros_.get(index);
+      public org.jbenchx.Benchmark.Timing getTiming(int index) {
+        if (timingBuilder_ == null) {
+          return timing_.get(index);
         } else {
-          return errosBuilder_.getMessage(index);
+          return timingBuilder_.getMessage(index);
         }
       }
       /**
-       * <code>repeated .org.jbenchx.Failure erros = 2;</code>
+       * <code>repeated .org.jbenchx.Timing timing = 2;</code>
        */
-      public Builder setErros(
-          int index, org.jbenchx.Benchmark.Failure value) {
-        if (errosBuilder_ == null) {
+      public Builder setTiming(
+          int index, org.jbenchx.Benchmark.Timing value) {
+        if (timingBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
           }
-          ensureErrosIsMutable();
-          erros_.set(index, value);
+          ensureTimingIsMutable();
+          timing_.set(index, value);
           onChanged();
         } else {
-          errosBuilder_.setMessage(index, value);
+          timingBuilder_.setMessage(index, value);
         }
         return this;
       }
       /**
-       * <code>repeated .org.jbenchx.Failure erros = 2;</code>
+       * <code>repeated .org.jbenchx.Timing timing = 2;</code>
        */
-      public Builder setErros(
-          int index, org.jbenchx.Benchmark.Failure.Builder builderForValue) {
-        if (errosBuilder_ == null) {
-          ensureErrosIsMutable();
-          erros_.set(index, builderForValue.build());
+      public Builder setTiming(
+          int index, org.jbenchx.Benchmark.Timing.Builder builderForValue) {
+        if (timingBuilder_ == null) {
+          ensureTimingIsMutable();
+          timing_.set(index, builderForValue.build());
           onChanged();
         } else {
-          errosBuilder_.setMessage(index, builderForValue.build());
+          timingBuilder_.setMessage(index, builderForValue.build());
         }
         return this;
       }
       /**
-       * <code>repeated .org.jbenchx.Failure erros = 2;</code>
+       * <code>repeated .org.jbenchx.Timing timing = 2;</code>
        */
-      public Builder addErros(org.jbenchx.Benchmark.Failure value) {
-        if (errosBuilder_ == null) {
+      public Builder addTiming(org.jbenchx.Benchmark.Timing value) {
+        if (timingBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
           }
-          ensureErrosIsMutable();
-          erros_.add(value);
+          ensureTimingIsMutable();
+          timing_.add(value);
           onChanged();
         } else {
-          errosBuilder_.addMessage(value);
+          timingBuilder_.addMessage(value);
         }
         return this;
       }
       /**
-       * <code>repeated .org.jbenchx.Failure erros = 2;</code>
+       * <code>repeated .org.jbenchx.Timing timing = 2;</code>
        */
-      public Builder addErros(
-          int index, org.jbenchx.Benchmark.Failure value) {
-        if (errosBuilder_ == null) {
+      public Builder addTiming(
+          int index, org.jbenchx.Benchmark.Timing value) {
+        if (timingBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
           }
-          ensureErrosIsMutable();
-          erros_.add(index, value);
+          ensureTimingIsMutable();
+          timing_.add(index, value);
           onChanged();
         } else {
-          errosBuilder_.addMessage(index, value);
+          timingBuilder_.addMessage(index, value);
         }
         return this;
       }
       /**
-       * <code>repeated .org.jbenchx.Failure erros = 2;</code>
+       * <code>repeated .org.jbenchx.Timing timing = 2;</code>
        */
-      public Builder addErros(
-          org.jbenchx.Benchmark.Failure.Builder builderForValue) {
-        if (errosBuilder_ == null) {
-          ensureErrosIsMutable();
-          erros_.add(builderForValue.build());
+      public Builder addTiming(
+          org.jbenchx.Benchmark.Timing.Builder builderForValue) {
+        if (timingBuilder_ == null) {
+          ensureTimingIsMutable();
+          timing_.add(builderForValue.build());
           onChanged();
         } else {
-          errosBuilder_.addMessage(builderForValue.build());
+          timingBuilder_.addMessage(builderForValue.build());
         }
         return this;
       }
       /**
-       * <code>repeated .org.jbenchx.Failure erros = 2;</code>
+       * <code>repeated .org.jbenchx.Timing timing = 2;</code>
        */
-      public Builder addErros(
-          int index, org.jbenchx.Benchmark.Failure.Builder builderForValue) {
-        if (errosBuilder_ == null) {
-          ensureErrosIsMutable();
-          erros_.add(index, builderForValue.build());
+      public Builder addTiming(
+          int index, org.jbenchx.Benchmark.Timing.Builder builderForValue) {
+        if (timingBuilder_ == null) {
+          ensureTimingIsMutable();
+          timing_.add(index, builderForValue.build());
           onChanged();
         } else {
-          errosBuilder_.addMessage(index, builderForValue.build());
+          timingBuilder_.addMessage(index, builderForValue.build());
         }
         return this;
       }
       /**
-       * <code>repeated .org.jbenchx.Failure erros = 2;</code>
+       * <code>repeated .org.jbenchx.Timing timing = 2;</code>
        */
-      public Builder addAllErros(
-          java.lang.Iterable<? extends org.jbenchx.Benchmark.Failure> values) {
-        if (errosBuilder_ == null) {
-          ensureErrosIsMutable();
+      public Builder addAllTiming(
+          java.lang.Iterable<? extends org.jbenchx.Benchmark.Timing> values) {
+        if (timingBuilder_ == null) {
+          ensureTimingIsMutable();
           com.google.protobuf.AbstractMessageLite.Builder.addAll(
-              values, erros_);
+              values, timing_);
           onChanged();
         } else {
-          errosBuilder_.addAllMessages(values);
+          timingBuilder_.addAllMessages(values);
         }
         return this;
       }
       /**
-       * <code>repeated .org.jbenchx.Failure erros = 2;</code>
+       * <code>repeated .org.jbenchx.Timing timing = 2;</code>
        */
-      public Builder clearErros() {
-        if (errosBuilder_ == null) {
-          erros_ = java.util.Collections.emptyList();
+      public Builder clearTiming() {
+        if (timingBuilder_ == null) {
+          timing_ = java.util.Collections.emptyList();
           bitField0_ = (bitField0_ & ~0x00000002);
           onChanged();
         } else {
-          errosBuilder_.clear();
+          timingBuilder_.clear();
         }
         return this;
       }
       /**
-       * <code>repeated .org.jbenchx.Failure erros = 2;</code>
+       * <code>repeated .org.jbenchx.Timing timing = 2;</code>
        */
-      public Builder removeErros(int index) {
-        if (errosBuilder_ == null) {
-          ensureErrosIsMutable();
-          erros_.remove(index);
+      public Builder removeTiming(int index) {
+        if (timingBuilder_ == null) {
+          ensureTimingIsMutable();
+          timing_.remove(index);
           onChanged();
         } else {
-          errosBuilder_.remove(index);
+          timingBuilder_.remove(index);
         }
         return this;
       }
       /**
-       * <code>repeated .org.jbenchx.Failure erros = 2;</code>
+       * <code>repeated .org.jbenchx.Timing timing = 2;</code>
        */
-      public org.jbenchx.Benchmark.Failure.Builder getErrosBuilder(
+      public org.jbenchx.Benchmark.Timing.Builder getTimingBuilder(
           int index) {
-        return getErrosFieldBuilder().getBuilder(index);
+        return getTimingFieldBuilder().getBuilder(index);
       }
       /**
-       * <code>repeated .org.jbenchx.Failure erros = 2;</code>
+       * <code>repeated .org.jbenchx.Timing timing = 2;</code>
        */
-      public org.jbenchx.Benchmark.FailureOrBuilder getErrosOrBuilder(
+      public org.jbenchx.Benchmark.TimingOrBuilder getTimingOrBuilder(
           int index) {
-        if (errosBuilder_ == null) {
-          return erros_.get(index);  } else {
-          return errosBuilder_.getMessageOrBuilder(index);
+        if (timingBuilder_ == null) {
+          return timing_.get(index);  } else {
+          return timingBuilder_.getMessageOrBuilder(index);
         }
       }
       /**
-       * <code>repeated .org.jbenchx.Failure erros = 2;</code>
+       * <code>repeated .org.jbenchx.Timing timing = 2;</code>
        */
-      public java.util.List<? extends org.jbenchx.Benchmark.FailureOrBuilder> 
-           getErrosOrBuilderList() {
-        if (errosBuilder_ != null) {
-          return errosBuilder_.getMessageOrBuilderList();
+      public java.util.List<? extends org.jbenchx.Benchmark.TimingOrBuilder> 
+           getTimingOrBuilderList() {
+        if (timingBuilder_ != null) {
+          return timingBuilder_.getMessageOrBuilderList();
         } else {
-          return java.util.Collections.unmodifiableList(erros_);
+          return java.util.Collections.unmodifiableList(timing_);
         }
       }
       /**
-       * <code>repeated .org.jbenchx.Failure erros = 2;</code>
+       * <code>repeated .org.jbenchx.Timing timing = 2;</code>
        */
-      public org.jbenchx.Benchmark.Failure.Builder addErrosBuilder() {
-        return getErrosFieldBuilder().addBuilder(
-            org.jbenchx.Benchmark.Failure.getDefaultInstance());
+      public org.jbenchx.Benchmark.Timing.Builder addTimingBuilder() {
+        return getTimingFieldBuilder().addBuilder(
+            org.jbenchx.Benchmark.Timing.getDefaultInstance());
       }
       /**
-       * <code>repeated .org.jbenchx.Failure erros = 2;</code>
+       * <code>repeated .org.jbenchx.Timing timing = 2;</code>
        */
-      public org.jbenchx.Benchmark.Failure.Builder addErrosBuilder(
+      public org.jbenchx.Benchmark.Timing.Builder addTimingBuilder(
           int index) {
-        return getErrosFieldBuilder().addBuilder(
-            index, org.jbenchx.Benchmark.Failure.getDefaultInstance());
+        return getTimingFieldBuilder().addBuilder(
+            index, org.jbenchx.Benchmark.Timing.getDefaultInstance());
       }
       /**
-       * <code>repeated .org.jbenchx.Failure erros = 2;</code>
+       * <code>repeated .org.jbenchx.Timing timing = 2;</code>
        */
-      public java.util.List<org.jbenchx.Benchmark.Failure.Builder> 
-           getErrosBuilderList() {
-        return getErrosFieldBuilder().getBuilderList();
+      public java.util.List<org.jbenchx.Benchmark.Timing.Builder> 
+           getTimingBuilderList() {
+        return getTimingFieldBuilder().getBuilderList();
       }
       private com.google.protobuf.RepeatedFieldBuilderV3<
-          org.jbenchx.Benchmark.Failure, org.jbenchx.Benchmark.Failure.Builder, org.jbenchx.Benchmark.FailureOrBuilder> 
-          getErrosFieldBuilder() {
-        if (errosBuilder_ == null) {
-          errosBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
-              org.jbenchx.Benchmark.Failure, org.jbenchx.Benchmark.Failure.Builder, org.jbenchx.Benchmark.FailureOrBuilder>(
-                  erros_,
+          org.jbenchx.Benchmark.Timing, org.jbenchx.Benchmark.Timing.Builder, org.jbenchx.Benchmark.TimingOrBuilder> 
+          getTimingFieldBuilder() {
+        if (timingBuilder_ == null) {
+          timingBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
+              org.jbenchx.Benchmark.Timing, org.jbenchx.Benchmark.Timing.Builder, org.jbenchx.Benchmark.TimingOrBuilder>(
+                  timing_,
                   ((bitField0_ & 0x00000002) == 0x00000002),
                   getParentForChildren(),
                   isClean());
-          erros_ = null;
+          timing_ = null;
         }
-        return errosBuilder_;
+        return timingBuilder_;
       }
 
-      private java.util.List<org.jbenchx.Benchmark.Warning> warnings_ =
+      private java.util.List<org.jbenchx.Benchmark.Error> error_ =
         java.util.Collections.emptyList();
-      private void ensureWarningsIsMutable() {
+      private void ensureErrorIsMutable() {
         if (!((bitField0_ & 0x00000004) == 0x00000004)) {
-          warnings_ = new java.util.ArrayList<org.jbenchx.Benchmark.Warning>(warnings_);
+          error_ = new java.util.ArrayList<org.jbenchx.Benchmark.Error>(error_);
           bitField0_ |= 0x00000004;
          }
       }
 
       private com.google.protobuf.RepeatedFieldBuilderV3<
-          org.jbenchx.Benchmark.Warning, org.jbenchx.Benchmark.Warning.Builder, org.jbenchx.Benchmark.WarningOrBuilder> warningsBuilder_;
+          org.jbenchx.Benchmark.Error, org.jbenchx.Benchmark.Error.Builder, org.jbenchx.Benchmark.ErrorOrBuilder> errorBuilder_;
 
       /**
-       * <code>repeated .org.jbenchx.Warning warnings = 3;</code>
+       * <code>repeated .org.jbenchx.Error error = 3;</code>
        */
-      public java.util.List<org.jbenchx.Benchmark.Warning> getWarningsList() {
-        if (warningsBuilder_ == null) {
-          return java.util.Collections.unmodifiableList(warnings_);
+      public java.util.List<org.jbenchx.Benchmark.Error> getErrorList() {
+        if (errorBuilder_ == null) {
+          return java.util.Collections.unmodifiableList(error_);
         } else {
-          return warningsBuilder_.getMessageList();
+          return errorBuilder_.getMessageList();
         }
       }
       /**
-       * <code>repeated .org.jbenchx.Warning warnings = 3;</code>
+       * <code>repeated .org.jbenchx.Error error = 3;</code>
        */
-      public int getWarningsCount() {
-        if (warningsBuilder_ == null) {
-          return warnings_.size();
+      public int getErrorCount() {
+        if (errorBuilder_ == null) {
+          return error_.size();
         } else {
-          return warningsBuilder_.getCount();
+          return errorBuilder_.getCount();
         }
       }
       /**
-       * <code>repeated .org.jbenchx.Warning warnings = 3;</code>
+       * <code>repeated .org.jbenchx.Error error = 3;</code>
        */
-      public org.jbenchx.Benchmark.Warning getWarnings(int index) {
-        if (warningsBuilder_ == null) {
-          return warnings_.get(index);
+      public org.jbenchx.Benchmark.Error getError(int index) {
+        if (errorBuilder_ == null) {
+          return error_.get(index);
         } else {
-          return warningsBuilder_.getMessage(index);
+          return errorBuilder_.getMessage(index);
         }
       }
       /**
-       * <code>repeated .org.jbenchx.Warning warnings = 3;</code>
+       * <code>repeated .org.jbenchx.Error error = 3;</code>
        */
-      public Builder setWarnings(
-          int index, org.jbenchx.Benchmark.Warning value) {
-        if (warningsBuilder_ == null) {
+      public Builder setError(
+          int index, org.jbenchx.Benchmark.Error value) {
+        if (errorBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
           }
-          ensureWarningsIsMutable();
-          warnings_.set(index, value);
+          ensureErrorIsMutable();
+          error_.set(index, value);
           onChanged();
         } else {
-          warningsBuilder_.setMessage(index, value);
+          errorBuilder_.setMessage(index, value);
         }
         return this;
       }
       /**
-       * <code>repeated .org.jbenchx.Warning warnings = 3;</code>
+       * <code>repeated .org.jbenchx.Error error = 3;</code>
        */
-      public Builder setWarnings(
-          int index, org.jbenchx.Benchmark.Warning.Builder builderForValue) {
-        if (warningsBuilder_ == null) {
-          ensureWarningsIsMutable();
-          warnings_.set(index, builderForValue.build());
+      public Builder setError(
+          int index, org.jbenchx.Benchmark.Error.Builder builderForValue) {
+        if (errorBuilder_ == null) {
+          ensureErrorIsMutable();
+          error_.set(index, builderForValue.build());
           onChanged();
         } else {
-          warningsBuilder_.setMessage(index, builderForValue.build());
+          errorBuilder_.setMessage(index, builderForValue.build());
         }
         return this;
       }
       /**
-       * <code>repeated .org.jbenchx.Warning warnings = 3;</code>
+       * <code>repeated .org.jbenchx.Error error = 3;</code>
        */
-      public Builder addWarnings(org.jbenchx.Benchmark.Warning value) {
-        if (warningsBuilder_ == null) {
+      public Builder addError(org.jbenchx.Benchmark.Error value) {
+        if (errorBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
           }
-          ensureWarningsIsMutable();
-          warnings_.add(value);
+          ensureErrorIsMutable();
+          error_.add(value);
           onChanged();
         } else {
-          warningsBuilder_.addMessage(value);
+          errorBuilder_.addMessage(value);
         }
         return this;
       }
       /**
-       * <code>repeated .org.jbenchx.Warning warnings = 3;</code>
+       * <code>repeated .org.jbenchx.Error error = 3;</code>
        */
-      public Builder addWarnings(
-          int index, org.jbenchx.Benchmark.Warning value) {
-        if (warningsBuilder_ == null) {
+      public Builder addError(
+          int index, org.jbenchx.Benchmark.Error value) {
+        if (errorBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
           }
-          ensureWarningsIsMutable();
-          warnings_.add(index, value);
+          ensureErrorIsMutable();
+          error_.add(index, value);
           onChanged();
         } else {
-          warningsBuilder_.addMessage(index, value);
+          errorBuilder_.addMessage(index, value);
         }
         return this;
       }
       /**
-       * <code>repeated .org.jbenchx.Warning warnings = 3;</code>
+       * <code>repeated .org.jbenchx.Error error = 3;</code>
        */
-      public Builder addWarnings(
-          org.jbenchx.Benchmark.Warning.Builder builderForValue) {
-        if (warningsBuilder_ == null) {
-          ensureWarningsIsMutable();
-          warnings_.add(builderForValue.build());
+      public Builder addError(
+          org.jbenchx.Benchmark.Error.Builder builderForValue) {
+        if (errorBuilder_ == null) {
+          ensureErrorIsMutable();
+          error_.add(builderForValue.build());
           onChanged();
         } else {
-          warningsBuilder_.addMessage(builderForValue.build());
+          errorBuilder_.addMessage(builderForValue.build());
         }
         return this;
       }
       /**
-       * <code>repeated .org.jbenchx.Warning warnings = 3;</code>
+       * <code>repeated .org.jbenchx.Error error = 3;</code>
        */
-      public Builder addWarnings(
-          int index, org.jbenchx.Benchmark.Warning.Builder builderForValue) {
-        if (warningsBuilder_ == null) {
-          ensureWarningsIsMutable();
-          warnings_.add(index, builderForValue.build());
+      public Builder addError(
+          int index, org.jbenchx.Benchmark.Error.Builder builderForValue) {
+        if (errorBuilder_ == null) {
+          ensureErrorIsMutable();
+          error_.add(index, builderForValue.build());
           onChanged();
         } else {
-          warningsBuilder_.addMessage(index, builderForValue.build());
+          errorBuilder_.addMessage(index, builderForValue.build());
         }
         return this;
       }
       /**
-       * <code>repeated .org.jbenchx.Warning warnings = 3;</code>
+       * <code>repeated .org.jbenchx.Error error = 3;</code>
        */
-      public Builder addAllWarnings(
-          java.lang.Iterable<? extends org.jbenchx.Benchmark.Warning> values) {
-        if (warningsBuilder_ == null) {
-          ensureWarningsIsMutable();
+      public Builder addAllError(
+          java.lang.Iterable<? extends org.jbenchx.Benchmark.Error> values) {
+        if (errorBuilder_ == null) {
+          ensureErrorIsMutable();
           com.google.protobuf.AbstractMessageLite.Builder.addAll(
-              values, warnings_);
+              values, error_);
           onChanged();
         } else {
-          warningsBuilder_.addAllMessages(values);
+          errorBuilder_.addAllMessages(values);
         }
         return this;
       }
       /**
-       * <code>repeated .org.jbenchx.Warning warnings = 3;</code>
+       * <code>repeated .org.jbenchx.Error error = 3;</code>
        */
-      public Builder clearWarnings() {
-        if (warningsBuilder_ == null) {
-          warnings_ = java.util.Collections.emptyList();
+      public Builder clearError() {
+        if (errorBuilder_ == null) {
+          error_ = java.util.Collections.emptyList();
           bitField0_ = (bitField0_ & ~0x00000004);
           onChanged();
         } else {
-          warningsBuilder_.clear();
+          errorBuilder_.clear();
         }
         return this;
       }
       /**
-       * <code>repeated .org.jbenchx.Warning warnings = 3;</code>
+       * <code>repeated .org.jbenchx.Error error = 3;</code>
        */
-      public Builder removeWarnings(int index) {
-        if (warningsBuilder_ == null) {
-          ensureWarningsIsMutable();
-          warnings_.remove(index);
+      public Builder removeError(int index) {
+        if (errorBuilder_ == null) {
+          ensureErrorIsMutable();
+          error_.remove(index);
           onChanged();
         } else {
-          warningsBuilder_.remove(index);
+          errorBuilder_.remove(index);
         }
         return this;
       }
       /**
-       * <code>repeated .org.jbenchx.Warning warnings = 3;</code>
+       * <code>repeated .org.jbenchx.Error error = 3;</code>
        */
-      public org.jbenchx.Benchmark.Warning.Builder getWarningsBuilder(
+      public org.jbenchx.Benchmark.Error.Builder getErrorBuilder(
           int index) {
-        return getWarningsFieldBuilder().getBuilder(index);
+        return getErrorFieldBuilder().getBuilder(index);
       }
       /**
-       * <code>repeated .org.jbenchx.Warning warnings = 3;</code>
+       * <code>repeated .org.jbenchx.Error error = 3;</code>
        */
-      public org.jbenchx.Benchmark.WarningOrBuilder getWarningsOrBuilder(
+      public org.jbenchx.Benchmark.ErrorOrBuilder getErrorOrBuilder(
           int index) {
-        if (warningsBuilder_ == null) {
-          return warnings_.get(index);  } else {
-          return warningsBuilder_.getMessageOrBuilder(index);
+        if (errorBuilder_ == null) {
+          return error_.get(index);  } else {
+          return errorBuilder_.getMessageOrBuilder(index);
         }
       }
       /**
-       * <code>repeated .org.jbenchx.Warning warnings = 3;</code>
+       * <code>repeated .org.jbenchx.Error error = 3;</code>
        */
-      public java.util.List<? extends org.jbenchx.Benchmark.WarningOrBuilder> 
-           getWarningsOrBuilderList() {
-        if (warningsBuilder_ != null) {
-          return warningsBuilder_.getMessageOrBuilderList();
+      public java.util.List<? extends org.jbenchx.Benchmark.ErrorOrBuilder> 
+           getErrorOrBuilderList() {
+        if (errorBuilder_ != null) {
+          return errorBuilder_.getMessageOrBuilderList();
         } else {
-          return java.util.Collections.unmodifiableList(warnings_);
+          return java.util.Collections.unmodifiableList(error_);
         }
       }
       /**
-       * <code>repeated .org.jbenchx.Warning warnings = 3;</code>
+       * <code>repeated .org.jbenchx.Error error = 3;</code>
        */
-      public org.jbenchx.Benchmark.Warning.Builder addWarningsBuilder() {
-        return getWarningsFieldBuilder().addBuilder(
-            org.jbenchx.Benchmark.Warning.getDefaultInstance());
+      public org.jbenchx.Benchmark.Error.Builder addErrorBuilder() {
+        return getErrorFieldBuilder().addBuilder(
+            org.jbenchx.Benchmark.Error.getDefaultInstance());
       }
       /**
-       * <code>repeated .org.jbenchx.Warning warnings = 3;</code>
+       * <code>repeated .org.jbenchx.Error error = 3;</code>
        */
-      public org.jbenchx.Benchmark.Warning.Builder addWarningsBuilder(
+      public org.jbenchx.Benchmark.Error.Builder addErrorBuilder(
           int index) {
-        return getWarningsFieldBuilder().addBuilder(
-            index, org.jbenchx.Benchmark.Warning.getDefaultInstance());
+        return getErrorFieldBuilder().addBuilder(
+            index, org.jbenchx.Benchmark.Error.getDefaultInstance());
       }
       /**
-       * <code>repeated .org.jbenchx.Warning warnings = 3;</code>
+       * <code>repeated .org.jbenchx.Error error = 3;</code>
        */
-      public java.util.List<org.jbenchx.Benchmark.Warning.Builder> 
-           getWarningsBuilderList() {
-        return getWarningsFieldBuilder().getBuilderList();
+      public java.util.List<org.jbenchx.Benchmark.Error.Builder> 
+           getErrorBuilderList() {
+        return getErrorFieldBuilder().getBuilderList();
       }
       private com.google.protobuf.RepeatedFieldBuilderV3<
-          org.jbenchx.Benchmark.Warning, org.jbenchx.Benchmark.Warning.Builder, org.jbenchx.Benchmark.WarningOrBuilder> 
-          getWarningsFieldBuilder() {
-        if (warningsBuilder_ == null) {
-          warningsBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
-              org.jbenchx.Benchmark.Warning, org.jbenchx.Benchmark.Warning.Builder, org.jbenchx.Benchmark.WarningOrBuilder>(
-                  warnings_,
+          org.jbenchx.Benchmark.Error, org.jbenchx.Benchmark.Error.Builder, org.jbenchx.Benchmark.ErrorOrBuilder> 
+          getErrorFieldBuilder() {
+        if (errorBuilder_ == null) {
+          errorBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
+              org.jbenchx.Benchmark.Error, org.jbenchx.Benchmark.Error.Builder, org.jbenchx.Benchmark.ErrorOrBuilder>(
+                  error_,
                   ((bitField0_ & 0x00000004) == 0x00000004),
                   getParentForChildren(),
                   isClean());
-          warnings_ = null;
+          error_ = null;
         }
-        return warningsBuilder_;
+        return errorBuilder_;
       }
 
-      private long minTime_ ;
+      private java.util.List<org.jbenchx.Benchmark.Warning> warning_ =
+        java.util.Collections.emptyList();
+      private void ensureWarningIsMutable() {
+        if (!((bitField0_ & 0x00000008) == 0x00000008)) {
+          warning_ = new java.util.ArrayList<org.jbenchx.Benchmark.Warning>(warning_);
+          bitField0_ |= 0x00000008;
+         }
+      }
+
+      private com.google.protobuf.RepeatedFieldBuilderV3<
+          org.jbenchx.Benchmark.Warning, org.jbenchx.Benchmark.Warning.Builder, org.jbenchx.Benchmark.WarningOrBuilder> warningBuilder_;
+
       /**
-       * <code>int64 min_time = 4;</code>
+       * <code>repeated .org.jbenchx.Warning warning = 4;</code>
        */
-      public long getMinTime() {
-        return minTime_;
+      public java.util.List<org.jbenchx.Benchmark.Warning> getWarningList() {
+        if (warningBuilder_ == null) {
+          return java.util.Collections.unmodifiableList(warning_);
+        } else {
+          return warningBuilder_.getMessageList();
+        }
       }
       /**
-       * <code>int64 min_time = 4;</code>
+       * <code>repeated .org.jbenchx.Warning warning = 4;</code>
        */
-      public Builder setMinTime(long value) {
+      public int getWarningCount() {
+        if (warningBuilder_ == null) {
+          return warning_.size();
+        } else {
+          return warningBuilder_.getCount();
+        }
+      }
+      /**
+       * <code>repeated .org.jbenchx.Warning warning = 4;</code>
+       */
+      public org.jbenchx.Benchmark.Warning getWarning(int index) {
+        if (warningBuilder_ == null) {
+          return warning_.get(index);
+        } else {
+          return warningBuilder_.getMessage(index);
+        }
+      }
+      /**
+       * <code>repeated .org.jbenchx.Warning warning = 4;</code>
+       */
+      public Builder setWarning(
+          int index, org.jbenchx.Benchmark.Warning value) {
+        if (warningBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureWarningIsMutable();
+          warning_.set(index, value);
+          onChanged();
+        } else {
+          warningBuilder_.setMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .org.jbenchx.Warning warning = 4;</code>
+       */
+      public Builder setWarning(
+          int index, org.jbenchx.Benchmark.Warning.Builder builderForValue) {
+        if (warningBuilder_ == null) {
+          ensureWarningIsMutable();
+          warning_.set(index, builderForValue.build());
+          onChanged();
+        } else {
+          warningBuilder_.setMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .org.jbenchx.Warning warning = 4;</code>
+       */
+      public Builder addWarning(org.jbenchx.Benchmark.Warning value) {
+        if (warningBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureWarningIsMutable();
+          warning_.add(value);
+          onChanged();
+        } else {
+          warningBuilder_.addMessage(value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .org.jbenchx.Warning warning = 4;</code>
+       */
+      public Builder addWarning(
+          int index, org.jbenchx.Benchmark.Warning value) {
+        if (warningBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureWarningIsMutable();
+          warning_.add(index, value);
+          onChanged();
+        } else {
+          warningBuilder_.addMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .org.jbenchx.Warning warning = 4;</code>
+       */
+      public Builder addWarning(
+          org.jbenchx.Benchmark.Warning.Builder builderForValue) {
+        if (warningBuilder_ == null) {
+          ensureWarningIsMutable();
+          warning_.add(builderForValue.build());
+          onChanged();
+        } else {
+          warningBuilder_.addMessage(builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .org.jbenchx.Warning warning = 4;</code>
+       */
+      public Builder addWarning(
+          int index, org.jbenchx.Benchmark.Warning.Builder builderForValue) {
+        if (warningBuilder_ == null) {
+          ensureWarningIsMutable();
+          warning_.add(index, builderForValue.build());
+          onChanged();
+        } else {
+          warningBuilder_.addMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .org.jbenchx.Warning warning = 4;</code>
+       */
+      public Builder addAllWarning(
+          java.lang.Iterable<? extends org.jbenchx.Benchmark.Warning> values) {
+        if (warningBuilder_ == null) {
+          ensureWarningIsMutable();
+          com.google.protobuf.AbstractMessageLite.Builder.addAll(
+              values, warning_);
+          onChanged();
+        } else {
+          warningBuilder_.addAllMessages(values);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .org.jbenchx.Warning warning = 4;</code>
+       */
+      public Builder clearWarning() {
+        if (warningBuilder_ == null) {
+          warning_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000008);
+          onChanged();
+        } else {
+          warningBuilder_.clear();
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .org.jbenchx.Warning warning = 4;</code>
+       */
+      public Builder removeWarning(int index) {
+        if (warningBuilder_ == null) {
+          ensureWarningIsMutable();
+          warning_.remove(index);
+          onChanged();
+        } else {
+          warningBuilder_.remove(index);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .org.jbenchx.Warning warning = 4;</code>
+       */
+      public org.jbenchx.Benchmark.Warning.Builder getWarningBuilder(
+          int index) {
+        return getWarningFieldBuilder().getBuilder(index);
+      }
+      /**
+       * <code>repeated .org.jbenchx.Warning warning = 4;</code>
+       */
+      public org.jbenchx.Benchmark.WarningOrBuilder getWarningOrBuilder(
+          int index) {
+        if (warningBuilder_ == null) {
+          return warning_.get(index);  } else {
+          return warningBuilder_.getMessageOrBuilder(index);
+        }
+      }
+      /**
+       * <code>repeated .org.jbenchx.Warning warning = 4;</code>
+       */
+      public java.util.List<? extends org.jbenchx.Benchmark.WarningOrBuilder> 
+           getWarningOrBuilderList() {
+        if (warningBuilder_ != null) {
+          return warningBuilder_.getMessageOrBuilderList();
+        } else {
+          return java.util.Collections.unmodifiableList(warning_);
+        }
+      }
+      /**
+       * <code>repeated .org.jbenchx.Warning warning = 4;</code>
+       */
+      public org.jbenchx.Benchmark.Warning.Builder addWarningBuilder() {
+        return getWarningFieldBuilder().addBuilder(
+            org.jbenchx.Benchmark.Warning.getDefaultInstance());
+      }
+      /**
+       * <code>repeated .org.jbenchx.Warning warning = 4;</code>
+       */
+      public org.jbenchx.Benchmark.Warning.Builder addWarningBuilder(
+          int index) {
+        return getWarningFieldBuilder().addBuilder(
+            index, org.jbenchx.Benchmark.Warning.getDefaultInstance());
+      }
+      /**
+       * <code>repeated .org.jbenchx.Warning warning = 4;</code>
+       */
+      public java.util.List<org.jbenchx.Benchmark.Warning.Builder> 
+           getWarningBuilderList() {
+        return getWarningFieldBuilder().getBuilderList();
+      }
+      private com.google.protobuf.RepeatedFieldBuilderV3<
+          org.jbenchx.Benchmark.Warning, org.jbenchx.Benchmark.Warning.Builder, org.jbenchx.Benchmark.WarningOrBuilder> 
+          getWarningFieldBuilder() {
+        if (warningBuilder_ == null) {
+          warningBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
+              org.jbenchx.Benchmark.Warning, org.jbenchx.Benchmark.Warning.Builder, org.jbenchx.Benchmark.WarningOrBuilder>(
+                  warning_,
+                  ((bitField0_ & 0x00000008) == 0x00000008),
+                  getParentForChildren(),
+                  isClean());
+          warning_ = null;
+        }
+        return warningBuilder_;
+      }
+
+      private long minRunTimeNs_ ;
+      /**
+       * <code>int64 min_run_time_ns = 5;</code>
+       */
+      public long getMinRunTimeNs() {
+        return minRunTimeNs_;
+      }
+      /**
+       * <code>int64 min_run_time_ns = 5;</code>
+       */
+      public Builder setMinRunTimeNs(long value) {
         
-        minTime_ = value;
+        minRunTimeNs_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>int64 min_time = 4;</code>
+       * <code>int64 min_run_time_ns = 5;</code>
        */
-      public Builder clearMinTime() {
+      public Builder clearMinRunTimeNs() {
         
-        minTime_ = 0L;
+        minRunTimeNs_ = 0L;
+        onChanged();
+        return this;
+      }
+
+      private long iterationCount_ ;
+      /**
+       * <code>int64 iteration_count = 6;</code>
+       */
+      public long getIterationCount() {
+        return iterationCount_;
+      }
+      /**
+       * <code>int64 iteration_count = 6;</code>
+       */
+      public Builder setIterationCount(long value) {
+        
+        iterationCount_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>int64 iteration_count = 6;</code>
+       */
+      public Builder clearIterationCount() {
+        
+        iterationCount_ = 0L;
+        onChanged();
+        return this;
+      }
+
+      private double divisor_ ;
+      /**
+       * <code>double divisor = 7;</code>
+       */
+      public double getDivisor() {
+        return divisor_;
+      }
+      /**
+       * <code>double divisor = 7;</code>
+       */
+      public Builder setDivisor(double value) {
+        
+        divisor_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>double divisor = 7;</code>
+       */
+      public Builder clearDivisor() {
+        
+        divisor_ = 0D;
+        onChanged();
+        return this;
+      }
+
+      private double estimatedBenchmark_ ;
+      /**
+       * <code>double estimated_benchmark = 8;</code>
+       */
+      public double getEstimatedBenchmark() {
+        return estimatedBenchmark_;
+      }
+      /**
+       * <code>double estimated_benchmark = 8;</code>
+       */
+      public Builder setEstimatedBenchmark(double value) {
+        
+        estimatedBenchmark_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>double estimated_benchmark = 8;</code>
+       */
+      public Builder clearEstimatedBenchmark() {
+        
+        estimatedBenchmark_ = 0D;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object benchmarkUnit_ = "";
+      /**
+       * <code>string benchmark_unit = 9;</code>
+       */
+      public java.lang.String getBenchmarkUnit() {
+        java.lang.Object ref = benchmarkUnit_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          benchmarkUnit_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>string benchmark_unit = 9;</code>
+       */
+      public com.google.protobuf.ByteString
+          getBenchmarkUnitBytes() {
+        java.lang.Object ref = benchmarkUnit_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          benchmarkUnit_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>string benchmark_unit = 9;</code>
+       */
+      public Builder setBenchmarkUnit(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        benchmarkUnit_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string benchmark_unit = 9;</code>
+       */
+      public Builder clearBenchmarkUnit() {
+        
+        benchmarkUnit_ = getDefaultInstance().getBenchmarkUnit();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string benchmark_unit = 9;</code>
+       */
+      public Builder setBenchmarkUnitBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        benchmarkUnit_ = value;
         onChanged();
         return this;
       }
@@ -5612,6 +6146,989 @@ public final class Benchmark {
 
   }
 
+  public interface SystemInfoOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:org.jbenchx.SystemInfo)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>int64 timer_granularity_ns = 1;</code>
+     */
+    long getTimerGranularityNs();
+
+    /**
+     * <code>int64 method_invoke_time_ns = 2;</code>
+     */
+    long getMethodInvokeTimeNs();
+
+    /**
+     * <code>double system_benchmark = 3;</code>
+     */
+    double getSystemBenchmark();
+
+    /**
+     * <code>string os_info = 4;</code>
+     */
+    java.lang.String getOsInfo();
+    /**
+     * <code>string os_info = 4;</code>
+     */
+    com.google.protobuf.ByteString
+        getOsInfoBytes();
+
+    /**
+     * <code>string os_version = 5;</code>
+     */
+    java.lang.String getOsVersion();
+    /**
+     * <code>string os_version = 5;</code>
+     */
+    com.google.protobuf.ByteString
+        getOsVersionBytes();
+
+    /**
+     * <code>int32 cpu_count = 6;</code>
+     */
+    int getCpuCount();
+
+    /**
+     * <code>int64 max_heap_size = 7;</code>
+     */
+    long getMaxHeapSize();
+  }
+  /**
+   * Protobuf type {@code org.jbenchx.SystemInfo}
+   */
+  public  static final class SystemInfo extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:org.jbenchx.SystemInfo)
+      SystemInfoOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use SystemInfo.newBuilder() to construct.
+    private SystemInfo(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private SystemInfo() {
+      timerGranularityNs_ = 0L;
+      methodInvokeTimeNs_ = 0L;
+      systemBenchmark_ = 0D;
+      osInfo_ = "";
+      osVersion_ = "";
+      cpuCount_ = 0;
+      maxHeapSize_ = 0L;
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private SystemInfo(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!parseUnknownFieldProto3(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+            case 8: {
+
+              timerGranularityNs_ = input.readInt64();
+              break;
+            }
+            case 16: {
+
+              methodInvokeTimeNs_ = input.readInt64();
+              break;
+            }
+            case 25: {
+
+              systemBenchmark_ = input.readDouble();
+              break;
+            }
+            case 34: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              osInfo_ = s;
+              break;
+            }
+            case 42: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              osVersion_ = s;
+              break;
+            }
+            case 48: {
+
+              cpuCount_ = input.readInt32();
+              break;
+            }
+            case 56: {
+
+              maxHeapSize_ = input.readInt64();
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return org.jbenchx.Benchmark.internal_static_org_jbenchx_SystemInfo_descriptor;
+    }
+
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return org.jbenchx.Benchmark.internal_static_org_jbenchx_SystemInfo_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              org.jbenchx.Benchmark.SystemInfo.class, org.jbenchx.Benchmark.SystemInfo.Builder.class);
+    }
+
+    public static final int TIMER_GRANULARITY_NS_FIELD_NUMBER = 1;
+    private long timerGranularityNs_;
+    /**
+     * <code>int64 timer_granularity_ns = 1;</code>
+     */
+    public long getTimerGranularityNs() {
+      return timerGranularityNs_;
+    }
+
+    public static final int METHOD_INVOKE_TIME_NS_FIELD_NUMBER = 2;
+    private long methodInvokeTimeNs_;
+    /**
+     * <code>int64 method_invoke_time_ns = 2;</code>
+     */
+    public long getMethodInvokeTimeNs() {
+      return methodInvokeTimeNs_;
+    }
+
+    public static final int SYSTEM_BENCHMARK_FIELD_NUMBER = 3;
+    private double systemBenchmark_;
+    /**
+     * <code>double system_benchmark = 3;</code>
+     */
+    public double getSystemBenchmark() {
+      return systemBenchmark_;
+    }
+
+    public static final int OS_INFO_FIELD_NUMBER = 4;
+    private volatile java.lang.Object osInfo_;
+    /**
+     * <code>string os_info = 4;</code>
+     */
+    public java.lang.String getOsInfo() {
+      java.lang.Object ref = osInfo_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        osInfo_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>string os_info = 4;</code>
+     */
+    public com.google.protobuf.ByteString
+        getOsInfoBytes() {
+      java.lang.Object ref = osInfo_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        osInfo_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int OS_VERSION_FIELD_NUMBER = 5;
+    private volatile java.lang.Object osVersion_;
+    /**
+     * <code>string os_version = 5;</code>
+     */
+    public java.lang.String getOsVersion() {
+      java.lang.Object ref = osVersion_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        osVersion_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>string os_version = 5;</code>
+     */
+    public com.google.protobuf.ByteString
+        getOsVersionBytes() {
+      java.lang.Object ref = osVersion_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        osVersion_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int CPU_COUNT_FIELD_NUMBER = 6;
+    private int cpuCount_;
+    /**
+     * <code>int32 cpu_count = 6;</code>
+     */
+    public int getCpuCount() {
+      return cpuCount_;
+    }
+
+    public static final int MAX_HEAP_SIZE_FIELD_NUMBER = 7;
+    private long maxHeapSize_;
+    /**
+     * <code>int64 max_heap_size = 7;</code>
+     */
+    public long getMaxHeapSize() {
+      return maxHeapSize_;
+    }
+
+    private byte memoizedIsInitialized = -1;
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (timerGranularityNs_ != 0L) {
+        output.writeInt64(1, timerGranularityNs_);
+      }
+      if (methodInvokeTimeNs_ != 0L) {
+        output.writeInt64(2, methodInvokeTimeNs_);
+      }
+      if (systemBenchmark_ != 0D) {
+        output.writeDouble(3, systemBenchmark_);
+      }
+      if (!getOsInfoBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 4, osInfo_);
+      }
+      if (!getOsVersionBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 5, osVersion_);
+      }
+      if (cpuCount_ != 0) {
+        output.writeInt32(6, cpuCount_);
+      }
+      if (maxHeapSize_ != 0L) {
+        output.writeInt64(7, maxHeapSize_);
+      }
+      unknownFields.writeTo(output);
+    }
+
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (timerGranularityNs_ != 0L) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt64Size(1, timerGranularityNs_);
+      }
+      if (methodInvokeTimeNs_ != 0L) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt64Size(2, methodInvokeTimeNs_);
+      }
+      if (systemBenchmark_ != 0D) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeDoubleSize(3, systemBenchmark_);
+      }
+      if (!getOsInfoBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(4, osInfo_);
+      }
+      if (!getOsVersionBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(5, osVersion_);
+      }
+      if (cpuCount_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(6, cpuCount_);
+      }
+      if (maxHeapSize_ != 0L) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt64Size(7, maxHeapSize_);
+      }
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof org.jbenchx.Benchmark.SystemInfo)) {
+        return super.equals(obj);
+      }
+      org.jbenchx.Benchmark.SystemInfo other = (org.jbenchx.Benchmark.SystemInfo) obj;
+
+      boolean result = true;
+      result = result && (getTimerGranularityNs()
+          == other.getTimerGranularityNs());
+      result = result && (getMethodInvokeTimeNs()
+          == other.getMethodInvokeTimeNs());
+      result = result && (
+          java.lang.Double.doubleToLongBits(getSystemBenchmark())
+          == java.lang.Double.doubleToLongBits(
+              other.getSystemBenchmark()));
+      result = result && getOsInfo()
+          .equals(other.getOsInfo());
+      result = result && getOsVersion()
+          .equals(other.getOsVersion());
+      result = result && (getCpuCount()
+          == other.getCpuCount());
+      result = result && (getMaxHeapSize()
+          == other.getMaxHeapSize());
+      result = result && unknownFields.equals(other.unknownFields);
+      return result;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + TIMER_GRANULARITY_NS_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+          getTimerGranularityNs());
+      hash = (37 * hash) + METHOD_INVOKE_TIME_NS_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+          getMethodInvokeTimeNs());
+      hash = (37 * hash) + SYSTEM_BENCHMARK_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+          java.lang.Double.doubleToLongBits(getSystemBenchmark()));
+      hash = (37 * hash) + OS_INFO_FIELD_NUMBER;
+      hash = (53 * hash) + getOsInfo().hashCode();
+      hash = (37 * hash) + OS_VERSION_FIELD_NUMBER;
+      hash = (53 * hash) + getOsVersion().hashCode();
+      hash = (37 * hash) + CPU_COUNT_FIELD_NUMBER;
+      hash = (53 * hash) + getCpuCount();
+      hash = (37 * hash) + MAX_HEAP_SIZE_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+          getMaxHeapSize());
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static org.jbenchx.Benchmark.SystemInfo parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static org.jbenchx.Benchmark.SystemInfo parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static org.jbenchx.Benchmark.SystemInfo parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static org.jbenchx.Benchmark.SystemInfo parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static org.jbenchx.Benchmark.SystemInfo parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static org.jbenchx.Benchmark.SystemInfo parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static org.jbenchx.Benchmark.SystemInfo parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static org.jbenchx.Benchmark.SystemInfo parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static org.jbenchx.Benchmark.SystemInfo parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static org.jbenchx.Benchmark.SystemInfo parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static org.jbenchx.Benchmark.SystemInfo parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static org.jbenchx.Benchmark.SystemInfo parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(org.jbenchx.Benchmark.SystemInfo prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code org.jbenchx.SystemInfo}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:org.jbenchx.SystemInfo)
+        org.jbenchx.Benchmark.SystemInfoOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return org.jbenchx.Benchmark.internal_static_org_jbenchx_SystemInfo_descriptor;
+      }
+
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return org.jbenchx.Benchmark.internal_static_org_jbenchx_SystemInfo_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                org.jbenchx.Benchmark.SystemInfo.class, org.jbenchx.Benchmark.SystemInfo.Builder.class);
+      }
+
+      // Construct using org.jbenchx.Benchmark.SystemInfo.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      public Builder clear() {
+        super.clear();
+        timerGranularityNs_ = 0L;
+
+        methodInvokeTimeNs_ = 0L;
+
+        systemBenchmark_ = 0D;
+
+        osInfo_ = "";
+
+        osVersion_ = "";
+
+        cpuCount_ = 0;
+
+        maxHeapSize_ = 0L;
+
+        return this;
+      }
+
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return org.jbenchx.Benchmark.internal_static_org_jbenchx_SystemInfo_descriptor;
+      }
+
+      public org.jbenchx.Benchmark.SystemInfo getDefaultInstanceForType() {
+        return org.jbenchx.Benchmark.SystemInfo.getDefaultInstance();
+      }
+
+      public org.jbenchx.Benchmark.SystemInfo build() {
+        org.jbenchx.Benchmark.SystemInfo result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      public org.jbenchx.Benchmark.SystemInfo buildPartial() {
+        org.jbenchx.Benchmark.SystemInfo result = new org.jbenchx.Benchmark.SystemInfo(this);
+        result.timerGranularityNs_ = timerGranularityNs_;
+        result.methodInvokeTimeNs_ = methodInvokeTimeNs_;
+        result.systemBenchmark_ = systemBenchmark_;
+        result.osInfo_ = osInfo_;
+        result.osVersion_ = osVersion_;
+        result.cpuCount_ = cpuCount_;
+        result.maxHeapSize_ = maxHeapSize_;
+        onBuilt();
+        return result;
+      }
+
+      public Builder clone() {
+        return (Builder) super.clone();
+      }
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return (Builder) super.setField(field, value);
+      }
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return (Builder) super.clearField(field);
+      }
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return (Builder) super.clearOneof(oneof);
+      }
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return (Builder) super.setRepeatedField(field, index, value);
+      }
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return (Builder) super.addRepeatedField(field, value);
+      }
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof org.jbenchx.Benchmark.SystemInfo) {
+          return mergeFrom((org.jbenchx.Benchmark.SystemInfo)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(org.jbenchx.Benchmark.SystemInfo other) {
+        if (other == org.jbenchx.Benchmark.SystemInfo.getDefaultInstance()) return this;
+        if (other.getTimerGranularityNs() != 0L) {
+          setTimerGranularityNs(other.getTimerGranularityNs());
+        }
+        if (other.getMethodInvokeTimeNs() != 0L) {
+          setMethodInvokeTimeNs(other.getMethodInvokeTimeNs());
+        }
+        if (other.getSystemBenchmark() != 0D) {
+          setSystemBenchmark(other.getSystemBenchmark());
+        }
+        if (!other.getOsInfo().isEmpty()) {
+          osInfo_ = other.osInfo_;
+          onChanged();
+        }
+        if (!other.getOsVersion().isEmpty()) {
+          osVersion_ = other.osVersion_;
+          onChanged();
+        }
+        if (other.getCpuCount() != 0) {
+          setCpuCount(other.getCpuCount());
+        }
+        if (other.getMaxHeapSize() != 0L) {
+          setMaxHeapSize(other.getMaxHeapSize());
+        }
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        org.jbenchx.Benchmark.SystemInfo parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (org.jbenchx.Benchmark.SystemInfo) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+
+      private long timerGranularityNs_ ;
+      /**
+       * <code>int64 timer_granularity_ns = 1;</code>
+       */
+      public long getTimerGranularityNs() {
+        return timerGranularityNs_;
+      }
+      /**
+       * <code>int64 timer_granularity_ns = 1;</code>
+       */
+      public Builder setTimerGranularityNs(long value) {
+        
+        timerGranularityNs_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>int64 timer_granularity_ns = 1;</code>
+       */
+      public Builder clearTimerGranularityNs() {
+        
+        timerGranularityNs_ = 0L;
+        onChanged();
+        return this;
+      }
+
+      private long methodInvokeTimeNs_ ;
+      /**
+       * <code>int64 method_invoke_time_ns = 2;</code>
+       */
+      public long getMethodInvokeTimeNs() {
+        return methodInvokeTimeNs_;
+      }
+      /**
+       * <code>int64 method_invoke_time_ns = 2;</code>
+       */
+      public Builder setMethodInvokeTimeNs(long value) {
+        
+        methodInvokeTimeNs_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>int64 method_invoke_time_ns = 2;</code>
+       */
+      public Builder clearMethodInvokeTimeNs() {
+        
+        methodInvokeTimeNs_ = 0L;
+        onChanged();
+        return this;
+      }
+
+      private double systemBenchmark_ ;
+      /**
+       * <code>double system_benchmark = 3;</code>
+       */
+      public double getSystemBenchmark() {
+        return systemBenchmark_;
+      }
+      /**
+       * <code>double system_benchmark = 3;</code>
+       */
+      public Builder setSystemBenchmark(double value) {
+        
+        systemBenchmark_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>double system_benchmark = 3;</code>
+       */
+      public Builder clearSystemBenchmark() {
+        
+        systemBenchmark_ = 0D;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object osInfo_ = "";
+      /**
+       * <code>string os_info = 4;</code>
+       */
+      public java.lang.String getOsInfo() {
+        java.lang.Object ref = osInfo_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          osInfo_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>string os_info = 4;</code>
+       */
+      public com.google.protobuf.ByteString
+          getOsInfoBytes() {
+        java.lang.Object ref = osInfo_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          osInfo_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>string os_info = 4;</code>
+       */
+      public Builder setOsInfo(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        osInfo_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string os_info = 4;</code>
+       */
+      public Builder clearOsInfo() {
+        
+        osInfo_ = getDefaultInstance().getOsInfo();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string os_info = 4;</code>
+       */
+      public Builder setOsInfoBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        osInfo_ = value;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object osVersion_ = "";
+      /**
+       * <code>string os_version = 5;</code>
+       */
+      public java.lang.String getOsVersion() {
+        java.lang.Object ref = osVersion_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          osVersion_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>string os_version = 5;</code>
+       */
+      public com.google.protobuf.ByteString
+          getOsVersionBytes() {
+        java.lang.Object ref = osVersion_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          osVersion_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>string os_version = 5;</code>
+       */
+      public Builder setOsVersion(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        osVersion_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string os_version = 5;</code>
+       */
+      public Builder clearOsVersion() {
+        
+        osVersion_ = getDefaultInstance().getOsVersion();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string os_version = 5;</code>
+       */
+      public Builder setOsVersionBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        osVersion_ = value;
+        onChanged();
+        return this;
+      }
+
+      private int cpuCount_ ;
+      /**
+       * <code>int32 cpu_count = 6;</code>
+       */
+      public int getCpuCount() {
+        return cpuCount_;
+      }
+      /**
+       * <code>int32 cpu_count = 6;</code>
+       */
+      public Builder setCpuCount(int value) {
+        
+        cpuCount_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>int32 cpu_count = 6;</code>
+       */
+      public Builder clearCpuCount() {
+        
+        cpuCount_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private long maxHeapSize_ ;
+      /**
+       * <code>int64 max_heap_size = 7;</code>
+       */
+      public long getMaxHeapSize() {
+        return maxHeapSize_;
+      }
+      /**
+       * <code>int64 max_heap_size = 7;</code>
+       */
+      public Builder setMaxHeapSize(long value) {
+        
+        maxHeapSize_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>int64 max_heap_size = 7;</code>
+       */
+      public Builder clearMaxHeapSize() {
+        
+        maxHeapSize_ = 0L;
+        onChanged();
+        return this;
+      }
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFieldsProto3(unknownFields);
+      }
+
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:org.jbenchx.SystemInfo)
+    }
+
+    // @@protoc_insertion_point(class_scope:org.jbenchx.SystemInfo)
+    private static final org.jbenchx.Benchmark.SystemInfo DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new org.jbenchx.Benchmark.SystemInfo();
+    }
+
+    public static org.jbenchx.Benchmark.SystemInfo getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<SystemInfo>
+        PARSER = new com.google.protobuf.AbstractParser<SystemInfo>() {
+      public SystemInfo parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new SystemInfo(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<SystemInfo> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<SystemInfo> getParserForType() {
+      return PARSER;
+    }
+
+    public org.jbenchx.Benchmark.SystemInfo getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
   public interface ResultOrBuilder extends
       // @@protoc_insertion_point(interface_extends:org.jbenchx.Result)
       com.google.protobuf.MessageOrBuilder {
@@ -5627,43 +7144,91 @@ public final class Benchmark {
         getVersionBytes();
 
     /**
-     * <code>repeated .org.jbenchx.Failure failures = 2;</code>
+     * <code>.org.jbenchx.SystemInfo system_info = 2;</code>
      */
-    java.util.List<org.jbenchx.Benchmark.Failure> 
-        getFailuresList();
+    boolean hasSystemInfo();
     /**
-     * <code>repeated .org.jbenchx.Failure failures = 2;</code>
+     * <code>.org.jbenchx.SystemInfo system_info = 2;</code>
      */
-    org.jbenchx.Benchmark.Failure getFailures(int index);
+    org.jbenchx.Benchmark.SystemInfo getSystemInfo();
     /**
-     * <code>repeated .org.jbenchx.Failure failures = 2;</code>
+     * <code>.org.jbenchx.SystemInfo system_info = 2;</code>
      */
-    int getFailuresCount();
+    org.jbenchx.Benchmark.SystemInfoOrBuilder getSystemInfoOrBuilder();
+
     /**
-     * <code>repeated .org.jbenchx.Failure failures = 2;</code>
+     * <code>repeated .org.jbenchx.TaskResult task_result = 3;</code>
      */
-    java.util.List<? extends org.jbenchx.Benchmark.FailureOrBuilder> 
-        getFailuresOrBuilderList();
+    java.util.List<org.jbenchx.Benchmark.TaskResult> 
+        getTaskResultList();
     /**
-     * <code>repeated .org.jbenchx.Failure failures = 2;</code>
+     * <code>repeated .org.jbenchx.TaskResult task_result = 3;</code>
      */
-    org.jbenchx.Benchmark.FailureOrBuilder getFailuresOrBuilder(
+    org.jbenchx.Benchmark.TaskResult getTaskResult(int index);
+    /**
+     * <code>repeated .org.jbenchx.TaskResult task_result = 3;</code>
+     */
+    int getTaskResultCount();
+    /**
+     * <code>repeated .org.jbenchx.TaskResult task_result = 3;</code>
+     */
+    java.util.List<? extends org.jbenchx.Benchmark.TaskResultOrBuilder> 
+        getTaskResultOrBuilderList();
+    /**
+     * <code>repeated .org.jbenchx.TaskResult task_result = 3;</code>
+     */
+    org.jbenchx.Benchmark.TaskResultOrBuilder getTaskResultOrBuilder(
         int index);
 
     /**
-     * <code>double estimated_benchmark = 3;</code>
+     * <code>repeated .org.jbenchx.Error general_error = 4;</code>
      */
-    double getEstimatedBenchmark();
+    java.util.List<org.jbenchx.Benchmark.Error> 
+        getGeneralErrorList();
+    /**
+     * <code>repeated .org.jbenchx.Error general_error = 4;</code>
+     */
+    org.jbenchx.Benchmark.Error getGeneralError(int index);
+    /**
+     * <code>repeated .org.jbenchx.Error general_error = 4;</code>
+     */
+    int getGeneralErrorCount();
+    /**
+     * <code>repeated .org.jbenchx.Error general_error = 4;</code>
+     */
+    java.util.List<? extends org.jbenchx.Benchmark.ErrorOrBuilder> 
+        getGeneralErrorOrBuilderList();
+    /**
+     * <code>repeated .org.jbenchx.Error general_error = 4;</code>
+     */
+    org.jbenchx.Benchmark.ErrorOrBuilder getGeneralErrorOrBuilder(
+        int index);
 
     /**
-     * <code>int64 iteration_count = 4;</code>
+     * <code>.google.protobuf.Timestamp start_time = 5;</code>
      */
-    long getIterationCount();
+    boolean hasStartTime();
+    /**
+     * <code>.google.protobuf.Timestamp start_time = 5;</code>
+     */
+    com.google.protobuf.Timestamp getStartTime();
+    /**
+     * <code>.google.protobuf.Timestamp start_time = 5;</code>
+     */
+    com.google.protobuf.TimestampOrBuilder getStartTimeOrBuilder();
 
     /**
-     * <code>double divisor = 5;</code>
+     * <code>.google.protobuf.Timestamp end_time = 6;</code>
      */
-    double getDivisor();
+    boolean hasEndTime();
+    /**
+     * <code>.google.protobuf.Timestamp end_time = 6;</code>
+     */
+    com.google.protobuf.Timestamp getEndTime();
+    /**
+     * <code>.google.protobuf.Timestamp end_time = 6;</code>
+     */
+    com.google.protobuf.TimestampOrBuilder getEndTimeOrBuilder();
   }
   /**
    * Protobuf type {@code org.jbenchx.Result}
@@ -5679,10 +7244,8 @@ public final class Benchmark {
     }
     private Result() {
       version_ = "";
-      failures_ = java.util.Collections.emptyList();
-      estimatedBenchmark_ = 0D;
-      iterationCount_ = 0L;
-      divisor_ = 0D;
+      taskResult_ = java.util.Collections.emptyList();
+      generalError_ = java.util.Collections.emptyList();
     }
 
     @java.lang.Override
@@ -5723,27 +7286,60 @@ public final class Benchmark {
               break;
             }
             case 18: {
-              if (!((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
-                failures_ = new java.util.ArrayList<org.jbenchx.Benchmark.Failure>();
-                mutable_bitField0_ |= 0x00000002;
+              org.jbenchx.Benchmark.SystemInfo.Builder subBuilder = null;
+              if (systemInfo_ != null) {
+                subBuilder = systemInfo_.toBuilder();
               }
-              failures_.add(
-                  input.readMessage(org.jbenchx.Benchmark.Failure.parser(), extensionRegistry));
+              systemInfo_ = input.readMessage(org.jbenchx.Benchmark.SystemInfo.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(systemInfo_);
+                systemInfo_ = subBuilder.buildPartial();
+              }
+
               break;
             }
-            case 25: {
-
-              estimatedBenchmark_ = input.readDouble();
+            case 26: {
+              if (!((mutable_bitField0_ & 0x00000004) == 0x00000004)) {
+                taskResult_ = new java.util.ArrayList<org.jbenchx.Benchmark.TaskResult>();
+                mutable_bitField0_ |= 0x00000004;
+              }
+              taskResult_.add(
+                  input.readMessage(org.jbenchx.Benchmark.TaskResult.parser(), extensionRegistry));
               break;
             }
-            case 32: {
-
-              iterationCount_ = input.readInt64();
+            case 34: {
+              if (!((mutable_bitField0_ & 0x00000008) == 0x00000008)) {
+                generalError_ = new java.util.ArrayList<org.jbenchx.Benchmark.Error>();
+                mutable_bitField0_ |= 0x00000008;
+              }
+              generalError_.add(
+                  input.readMessage(org.jbenchx.Benchmark.Error.parser(), extensionRegistry));
               break;
             }
-            case 41: {
+            case 42: {
+              com.google.protobuf.Timestamp.Builder subBuilder = null;
+              if (startTime_ != null) {
+                subBuilder = startTime_.toBuilder();
+              }
+              startTime_ = input.readMessage(com.google.protobuf.Timestamp.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(startTime_);
+                startTime_ = subBuilder.buildPartial();
+              }
 
-              divisor_ = input.readDouble();
+              break;
+            }
+            case 50: {
+              com.google.protobuf.Timestamp.Builder subBuilder = null;
+              if (endTime_ != null) {
+                subBuilder = endTime_.toBuilder();
+              }
+              endTime_ = input.readMessage(com.google.protobuf.Timestamp.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(endTime_);
+                endTime_ = subBuilder.buildPartial();
+              }
+
               break;
             }
           }
@@ -5754,8 +7350,11 @@ public final class Benchmark {
         throw new com.google.protobuf.InvalidProtocolBufferException(
             e).setUnfinishedMessage(this);
       } finally {
-        if (((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
-          failures_ = java.util.Collections.unmodifiableList(failures_);
+        if (((mutable_bitField0_ & 0x00000004) == 0x00000004)) {
+          taskResult_ = java.util.Collections.unmodifiableList(taskResult_);
+        }
+        if (((mutable_bitField0_ & 0x00000008) == 0x00000008)) {
+          generalError_ = java.util.Collections.unmodifiableList(generalError_);
         }
         this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
@@ -5808,66 +7407,137 @@ public final class Benchmark {
       }
     }
 
-    public static final int FAILURES_FIELD_NUMBER = 2;
-    private java.util.List<org.jbenchx.Benchmark.Failure> failures_;
+    public static final int SYSTEM_INFO_FIELD_NUMBER = 2;
+    private org.jbenchx.Benchmark.SystemInfo systemInfo_;
     /**
-     * <code>repeated .org.jbenchx.Failure failures = 2;</code>
+     * <code>.org.jbenchx.SystemInfo system_info = 2;</code>
      */
-    public java.util.List<org.jbenchx.Benchmark.Failure> getFailuresList() {
-      return failures_;
+    public boolean hasSystemInfo() {
+      return systemInfo_ != null;
     }
     /**
-     * <code>repeated .org.jbenchx.Failure failures = 2;</code>
+     * <code>.org.jbenchx.SystemInfo system_info = 2;</code>
      */
-    public java.util.List<? extends org.jbenchx.Benchmark.FailureOrBuilder> 
-        getFailuresOrBuilderList() {
-      return failures_;
+    public org.jbenchx.Benchmark.SystemInfo getSystemInfo() {
+      return systemInfo_ == null ? org.jbenchx.Benchmark.SystemInfo.getDefaultInstance() : systemInfo_;
     }
     /**
-     * <code>repeated .org.jbenchx.Failure failures = 2;</code>
+     * <code>.org.jbenchx.SystemInfo system_info = 2;</code>
      */
-    public int getFailuresCount() {
-      return failures_.size();
+    public org.jbenchx.Benchmark.SystemInfoOrBuilder getSystemInfoOrBuilder() {
+      return getSystemInfo();
+    }
+
+    public static final int TASK_RESULT_FIELD_NUMBER = 3;
+    private java.util.List<org.jbenchx.Benchmark.TaskResult> taskResult_;
+    /**
+     * <code>repeated .org.jbenchx.TaskResult task_result = 3;</code>
+     */
+    public java.util.List<org.jbenchx.Benchmark.TaskResult> getTaskResultList() {
+      return taskResult_;
     }
     /**
-     * <code>repeated .org.jbenchx.Failure failures = 2;</code>
+     * <code>repeated .org.jbenchx.TaskResult task_result = 3;</code>
      */
-    public org.jbenchx.Benchmark.Failure getFailures(int index) {
-      return failures_.get(index);
+    public java.util.List<? extends org.jbenchx.Benchmark.TaskResultOrBuilder> 
+        getTaskResultOrBuilderList() {
+      return taskResult_;
     }
     /**
-     * <code>repeated .org.jbenchx.Failure failures = 2;</code>
+     * <code>repeated .org.jbenchx.TaskResult task_result = 3;</code>
      */
-    public org.jbenchx.Benchmark.FailureOrBuilder getFailuresOrBuilder(
+    public int getTaskResultCount() {
+      return taskResult_.size();
+    }
+    /**
+     * <code>repeated .org.jbenchx.TaskResult task_result = 3;</code>
+     */
+    public org.jbenchx.Benchmark.TaskResult getTaskResult(int index) {
+      return taskResult_.get(index);
+    }
+    /**
+     * <code>repeated .org.jbenchx.TaskResult task_result = 3;</code>
+     */
+    public org.jbenchx.Benchmark.TaskResultOrBuilder getTaskResultOrBuilder(
         int index) {
-      return failures_.get(index);
+      return taskResult_.get(index);
     }
 
-    public static final int ESTIMATED_BENCHMARK_FIELD_NUMBER = 3;
-    private double estimatedBenchmark_;
+    public static final int GENERAL_ERROR_FIELD_NUMBER = 4;
+    private java.util.List<org.jbenchx.Benchmark.Error> generalError_;
     /**
-     * <code>double estimated_benchmark = 3;</code>
+     * <code>repeated .org.jbenchx.Error general_error = 4;</code>
      */
-    public double getEstimatedBenchmark() {
-      return estimatedBenchmark_;
+    public java.util.List<org.jbenchx.Benchmark.Error> getGeneralErrorList() {
+      return generalError_;
+    }
+    /**
+     * <code>repeated .org.jbenchx.Error general_error = 4;</code>
+     */
+    public java.util.List<? extends org.jbenchx.Benchmark.ErrorOrBuilder> 
+        getGeneralErrorOrBuilderList() {
+      return generalError_;
+    }
+    /**
+     * <code>repeated .org.jbenchx.Error general_error = 4;</code>
+     */
+    public int getGeneralErrorCount() {
+      return generalError_.size();
+    }
+    /**
+     * <code>repeated .org.jbenchx.Error general_error = 4;</code>
+     */
+    public org.jbenchx.Benchmark.Error getGeneralError(int index) {
+      return generalError_.get(index);
+    }
+    /**
+     * <code>repeated .org.jbenchx.Error general_error = 4;</code>
+     */
+    public org.jbenchx.Benchmark.ErrorOrBuilder getGeneralErrorOrBuilder(
+        int index) {
+      return generalError_.get(index);
     }
 
-    public static final int ITERATION_COUNT_FIELD_NUMBER = 4;
-    private long iterationCount_;
+    public static final int START_TIME_FIELD_NUMBER = 5;
+    private com.google.protobuf.Timestamp startTime_;
     /**
-     * <code>int64 iteration_count = 4;</code>
+     * <code>.google.protobuf.Timestamp start_time = 5;</code>
      */
-    public long getIterationCount() {
-      return iterationCount_;
+    public boolean hasStartTime() {
+      return startTime_ != null;
+    }
+    /**
+     * <code>.google.protobuf.Timestamp start_time = 5;</code>
+     */
+    public com.google.protobuf.Timestamp getStartTime() {
+      return startTime_ == null ? com.google.protobuf.Timestamp.getDefaultInstance() : startTime_;
+    }
+    /**
+     * <code>.google.protobuf.Timestamp start_time = 5;</code>
+     */
+    public com.google.protobuf.TimestampOrBuilder getStartTimeOrBuilder() {
+      return getStartTime();
     }
 
-    public static final int DIVISOR_FIELD_NUMBER = 5;
-    private double divisor_;
+    public static final int END_TIME_FIELD_NUMBER = 6;
+    private com.google.protobuf.Timestamp endTime_;
     /**
-     * <code>double divisor = 5;</code>
+     * <code>.google.protobuf.Timestamp end_time = 6;</code>
      */
-    public double getDivisor() {
-      return divisor_;
+    public boolean hasEndTime() {
+      return endTime_ != null;
+    }
+    /**
+     * <code>.google.protobuf.Timestamp end_time = 6;</code>
+     */
+    public com.google.protobuf.Timestamp getEndTime() {
+      return endTime_ == null ? com.google.protobuf.Timestamp.getDefaultInstance() : endTime_;
+    }
+    /**
+     * <code>.google.protobuf.Timestamp end_time = 6;</code>
+     */
+    public com.google.protobuf.TimestampOrBuilder getEndTimeOrBuilder() {
+      return getEndTime();
     }
 
     private byte memoizedIsInitialized = -1;
@@ -5885,17 +7555,20 @@ public final class Benchmark {
       if (!getVersionBytes().isEmpty()) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 1, version_);
       }
-      for (int i = 0; i < failures_.size(); i++) {
-        output.writeMessage(2, failures_.get(i));
+      if (systemInfo_ != null) {
+        output.writeMessage(2, getSystemInfo());
       }
-      if (estimatedBenchmark_ != 0D) {
-        output.writeDouble(3, estimatedBenchmark_);
+      for (int i = 0; i < taskResult_.size(); i++) {
+        output.writeMessage(3, taskResult_.get(i));
       }
-      if (iterationCount_ != 0L) {
-        output.writeInt64(4, iterationCount_);
+      for (int i = 0; i < generalError_.size(); i++) {
+        output.writeMessage(4, generalError_.get(i));
       }
-      if (divisor_ != 0D) {
-        output.writeDouble(5, divisor_);
+      if (startTime_ != null) {
+        output.writeMessage(5, getStartTime());
+      }
+      if (endTime_ != null) {
+        output.writeMessage(6, getEndTime());
       }
       unknownFields.writeTo(output);
     }
@@ -5908,21 +7581,25 @@ public final class Benchmark {
       if (!getVersionBytes().isEmpty()) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, version_);
       }
-      for (int i = 0; i < failures_.size(); i++) {
+      if (systemInfo_ != null) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(2, failures_.get(i));
+          .computeMessageSize(2, getSystemInfo());
       }
-      if (estimatedBenchmark_ != 0D) {
+      for (int i = 0; i < taskResult_.size(); i++) {
         size += com.google.protobuf.CodedOutputStream
-          .computeDoubleSize(3, estimatedBenchmark_);
+          .computeMessageSize(3, taskResult_.get(i));
       }
-      if (iterationCount_ != 0L) {
+      for (int i = 0; i < generalError_.size(); i++) {
         size += com.google.protobuf.CodedOutputStream
-          .computeInt64Size(4, iterationCount_);
+          .computeMessageSize(4, generalError_.get(i));
       }
-      if (divisor_ != 0D) {
+      if (startTime_ != null) {
         size += com.google.protobuf.CodedOutputStream
-          .computeDoubleSize(5, divisor_);
+          .computeMessageSize(5, getStartTime());
+      }
+      if (endTime_ != null) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(6, getEndTime());
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -5942,18 +7619,25 @@ public final class Benchmark {
       boolean result = true;
       result = result && getVersion()
           .equals(other.getVersion());
-      result = result && getFailuresList()
-          .equals(other.getFailuresList());
-      result = result && (
-          java.lang.Double.doubleToLongBits(getEstimatedBenchmark())
-          == java.lang.Double.doubleToLongBits(
-              other.getEstimatedBenchmark()));
-      result = result && (getIterationCount()
-          == other.getIterationCount());
-      result = result && (
-          java.lang.Double.doubleToLongBits(getDivisor())
-          == java.lang.Double.doubleToLongBits(
-              other.getDivisor()));
+      result = result && (hasSystemInfo() == other.hasSystemInfo());
+      if (hasSystemInfo()) {
+        result = result && getSystemInfo()
+            .equals(other.getSystemInfo());
+      }
+      result = result && getTaskResultList()
+          .equals(other.getTaskResultList());
+      result = result && getGeneralErrorList()
+          .equals(other.getGeneralErrorList());
+      result = result && (hasStartTime() == other.hasStartTime());
+      if (hasStartTime()) {
+        result = result && getStartTime()
+            .equals(other.getStartTime());
+      }
+      result = result && (hasEndTime() == other.hasEndTime());
+      if (hasEndTime()) {
+        result = result && getEndTime()
+            .equals(other.getEndTime());
+      }
       result = result && unknownFields.equals(other.unknownFields);
       return result;
     }
@@ -5967,19 +7651,26 @@ public final class Benchmark {
       hash = (19 * hash) + getDescriptor().hashCode();
       hash = (37 * hash) + VERSION_FIELD_NUMBER;
       hash = (53 * hash) + getVersion().hashCode();
-      if (getFailuresCount() > 0) {
-        hash = (37 * hash) + FAILURES_FIELD_NUMBER;
-        hash = (53 * hash) + getFailuresList().hashCode();
+      if (hasSystemInfo()) {
+        hash = (37 * hash) + SYSTEM_INFO_FIELD_NUMBER;
+        hash = (53 * hash) + getSystemInfo().hashCode();
       }
-      hash = (37 * hash) + ESTIMATED_BENCHMARK_FIELD_NUMBER;
-      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
-          java.lang.Double.doubleToLongBits(getEstimatedBenchmark()));
-      hash = (37 * hash) + ITERATION_COUNT_FIELD_NUMBER;
-      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
-          getIterationCount());
-      hash = (37 * hash) + DIVISOR_FIELD_NUMBER;
-      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
-          java.lang.Double.doubleToLongBits(getDivisor()));
+      if (getTaskResultCount() > 0) {
+        hash = (37 * hash) + TASK_RESULT_FIELD_NUMBER;
+        hash = (53 * hash) + getTaskResultList().hashCode();
+      }
+      if (getGeneralErrorCount() > 0) {
+        hash = (37 * hash) + GENERAL_ERROR_FIELD_NUMBER;
+        hash = (53 * hash) + getGeneralErrorList().hashCode();
+      }
+      if (hasStartTime()) {
+        hash = (37 * hash) + START_TIME_FIELD_NUMBER;
+        hash = (53 * hash) + getStartTime().hashCode();
+      }
+      if (hasEndTime()) {
+        hash = (37 * hash) + END_TIME_FIELD_NUMBER;
+        hash = (53 * hash) + getEndTime().hashCode();
+      }
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -6105,25 +7796,44 @@ public final class Benchmark {
       private void maybeForceBuilderInitialization() {
         if (com.google.protobuf.GeneratedMessageV3
                 .alwaysUseFieldBuilders) {
-          getFailuresFieldBuilder();
+          getTaskResultFieldBuilder();
+          getGeneralErrorFieldBuilder();
         }
       }
       public Builder clear() {
         super.clear();
         version_ = "";
 
-        if (failuresBuilder_ == null) {
-          failures_ = java.util.Collections.emptyList();
-          bitField0_ = (bitField0_ & ~0x00000002);
+        if (systemInfoBuilder_ == null) {
+          systemInfo_ = null;
         } else {
-          failuresBuilder_.clear();
+          systemInfo_ = null;
+          systemInfoBuilder_ = null;
         }
-        estimatedBenchmark_ = 0D;
-
-        iterationCount_ = 0L;
-
-        divisor_ = 0D;
-
+        if (taskResultBuilder_ == null) {
+          taskResult_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000004);
+        } else {
+          taskResultBuilder_.clear();
+        }
+        if (generalErrorBuilder_ == null) {
+          generalError_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000008);
+        } else {
+          generalErrorBuilder_.clear();
+        }
+        if (startTimeBuilder_ == null) {
+          startTime_ = null;
+        } else {
+          startTime_ = null;
+          startTimeBuilder_ = null;
+        }
+        if (endTimeBuilder_ == null) {
+          endTime_ = null;
+        } else {
+          endTime_ = null;
+          endTimeBuilder_ = null;
+        }
         return this;
       }
 
@@ -6149,18 +7859,39 @@ public final class Benchmark {
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
         result.version_ = version_;
-        if (failuresBuilder_ == null) {
-          if (((bitField0_ & 0x00000002) == 0x00000002)) {
-            failures_ = java.util.Collections.unmodifiableList(failures_);
-            bitField0_ = (bitField0_ & ~0x00000002);
-          }
-          result.failures_ = failures_;
+        if (systemInfoBuilder_ == null) {
+          result.systemInfo_ = systemInfo_;
         } else {
-          result.failures_ = failuresBuilder_.build();
+          result.systemInfo_ = systemInfoBuilder_.build();
         }
-        result.estimatedBenchmark_ = estimatedBenchmark_;
-        result.iterationCount_ = iterationCount_;
-        result.divisor_ = divisor_;
+        if (taskResultBuilder_ == null) {
+          if (((bitField0_ & 0x00000004) == 0x00000004)) {
+            taskResult_ = java.util.Collections.unmodifiableList(taskResult_);
+            bitField0_ = (bitField0_ & ~0x00000004);
+          }
+          result.taskResult_ = taskResult_;
+        } else {
+          result.taskResult_ = taskResultBuilder_.build();
+        }
+        if (generalErrorBuilder_ == null) {
+          if (((bitField0_ & 0x00000008) == 0x00000008)) {
+            generalError_ = java.util.Collections.unmodifiableList(generalError_);
+            bitField0_ = (bitField0_ & ~0x00000008);
+          }
+          result.generalError_ = generalError_;
+        } else {
+          result.generalError_ = generalErrorBuilder_.build();
+        }
+        if (startTimeBuilder_ == null) {
+          result.startTime_ = startTime_;
+        } else {
+          result.startTime_ = startTimeBuilder_.build();
+        }
+        if (endTimeBuilder_ == null) {
+          result.endTime_ = endTime_;
+        } else {
+          result.endTime_ = endTimeBuilder_.build();
+        }
         result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
@@ -6207,40 +7938,66 @@ public final class Benchmark {
           version_ = other.version_;
           onChanged();
         }
-        if (failuresBuilder_ == null) {
-          if (!other.failures_.isEmpty()) {
-            if (failures_.isEmpty()) {
-              failures_ = other.failures_;
-              bitField0_ = (bitField0_ & ~0x00000002);
+        if (other.hasSystemInfo()) {
+          mergeSystemInfo(other.getSystemInfo());
+        }
+        if (taskResultBuilder_ == null) {
+          if (!other.taskResult_.isEmpty()) {
+            if (taskResult_.isEmpty()) {
+              taskResult_ = other.taskResult_;
+              bitField0_ = (bitField0_ & ~0x00000004);
             } else {
-              ensureFailuresIsMutable();
-              failures_.addAll(other.failures_);
+              ensureTaskResultIsMutable();
+              taskResult_.addAll(other.taskResult_);
             }
             onChanged();
           }
         } else {
-          if (!other.failures_.isEmpty()) {
-            if (failuresBuilder_.isEmpty()) {
-              failuresBuilder_.dispose();
-              failuresBuilder_ = null;
-              failures_ = other.failures_;
-              bitField0_ = (bitField0_ & ~0x00000002);
-              failuresBuilder_ = 
+          if (!other.taskResult_.isEmpty()) {
+            if (taskResultBuilder_.isEmpty()) {
+              taskResultBuilder_.dispose();
+              taskResultBuilder_ = null;
+              taskResult_ = other.taskResult_;
+              bitField0_ = (bitField0_ & ~0x00000004);
+              taskResultBuilder_ = 
                 com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
-                   getFailuresFieldBuilder() : null;
+                   getTaskResultFieldBuilder() : null;
             } else {
-              failuresBuilder_.addAllMessages(other.failures_);
+              taskResultBuilder_.addAllMessages(other.taskResult_);
             }
           }
         }
-        if (other.getEstimatedBenchmark() != 0D) {
-          setEstimatedBenchmark(other.getEstimatedBenchmark());
+        if (generalErrorBuilder_ == null) {
+          if (!other.generalError_.isEmpty()) {
+            if (generalError_.isEmpty()) {
+              generalError_ = other.generalError_;
+              bitField0_ = (bitField0_ & ~0x00000008);
+            } else {
+              ensureGeneralErrorIsMutable();
+              generalError_.addAll(other.generalError_);
+            }
+            onChanged();
+          }
+        } else {
+          if (!other.generalError_.isEmpty()) {
+            if (generalErrorBuilder_.isEmpty()) {
+              generalErrorBuilder_.dispose();
+              generalErrorBuilder_ = null;
+              generalError_ = other.generalError_;
+              bitField0_ = (bitField0_ & ~0x00000008);
+              generalErrorBuilder_ = 
+                com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
+                   getGeneralErrorFieldBuilder() : null;
+            } else {
+              generalErrorBuilder_.addAllMessages(other.generalError_);
+            }
+          }
         }
-        if (other.getIterationCount() != 0L) {
-          setIterationCount(other.getIterationCount());
+        if (other.hasStartTime()) {
+          mergeStartTime(other.getStartTime());
         }
-        if (other.getDivisor() != 0D) {
-          setDivisor(other.getDivisor());
+        if (other.hasEndTime()) {
+          mergeEndTime(other.getEndTime());
         }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
@@ -6339,322 +8096,835 @@ public final class Benchmark {
         return this;
       }
 
-      private java.util.List<org.jbenchx.Benchmark.Failure> failures_ =
+      private org.jbenchx.Benchmark.SystemInfo systemInfo_ = null;
+      private com.google.protobuf.SingleFieldBuilderV3<
+          org.jbenchx.Benchmark.SystemInfo, org.jbenchx.Benchmark.SystemInfo.Builder, org.jbenchx.Benchmark.SystemInfoOrBuilder> systemInfoBuilder_;
+      /**
+       * <code>.org.jbenchx.SystemInfo system_info = 2;</code>
+       */
+      public boolean hasSystemInfo() {
+        return systemInfoBuilder_ != null || systemInfo_ != null;
+      }
+      /**
+       * <code>.org.jbenchx.SystemInfo system_info = 2;</code>
+       */
+      public org.jbenchx.Benchmark.SystemInfo getSystemInfo() {
+        if (systemInfoBuilder_ == null) {
+          return systemInfo_ == null ? org.jbenchx.Benchmark.SystemInfo.getDefaultInstance() : systemInfo_;
+        } else {
+          return systemInfoBuilder_.getMessage();
+        }
+      }
+      /**
+       * <code>.org.jbenchx.SystemInfo system_info = 2;</code>
+       */
+      public Builder setSystemInfo(org.jbenchx.Benchmark.SystemInfo value) {
+        if (systemInfoBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          systemInfo_ = value;
+          onChanged();
+        } else {
+          systemInfoBuilder_.setMessage(value);
+        }
+
+        return this;
+      }
+      /**
+       * <code>.org.jbenchx.SystemInfo system_info = 2;</code>
+       */
+      public Builder setSystemInfo(
+          org.jbenchx.Benchmark.SystemInfo.Builder builderForValue) {
+        if (systemInfoBuilder_ == null) {
+          systemInfo_ = builderForValue.build();
+          onChanged();
+        } else {
+          systemInfoBuilder_.setMessage(builderForValue.build());
+        }
+
+        return this;
+      }
+      /**
+       * <code>.org.jbenchx.SystemInfo system_info = 2;</code>
+       */
+      public Builder mergeSystemInfo(org.jbenchx.Benchmark.SystemInfo value) {
+        if (systemInfoBuilder_ == null) {
+          if (systemInfo_ != null) {
+            systemInfo_ =
+              org.jbenchx.Benchmark.SystemInfo.newBuilder(systemInfo_).mergeFrom(value).buildPartial();
+          } else {
+            systemInfo_ = value;
+          }
+          onChanged();
+        } else {
+          systemInfoBuilder_.mergeFrom(value);
+        }
+
+        return this;
+      }
+      /**
+       * <code>.org.jbenchx.SystemInfo system_info = 2;</code>
+       */
+      public Builder clearSystemInfo() {
+        if (systemInfoBuilder_ == null) {
+          systemInfo_ = null;
+          onChanged();
+        } else {
+          systemInfo_ = null;
+          systemInfoBuilder_ = null;
+        }
+
+        return this;
+      }
+      /**
+       * <code>.org.jbenchx.SystemInfo system_info = 2;</code>
+       */
+      public org.jbenchx.Benchmark.SystemInfo.Builder getSystemInfoBuilder() {
+        
+        onChanged();
+        return getSystemInfoFieldBuilder().getBuilder();
+      }
+      /**
+       * <code>.org.jbenchx.SystemInfo system_info = 2;</code>
+       */
+      public org.jbenchx.Benchmark.SystemInfoOrBuilder getSystemInfoOrBuilder() {
+        if (systemInfoBuilder_ != null) {
+          return systemInfoBuilder_.getMessageOrBuilder();
+        } else {
+          return systemInfo_ == null ?
+              org.jbenchx.Benchmark.SystemInfo.getDefaultInstance() : systemInfo_;
+        }
+      }
+      /**
+       * <code>.org.jbenchx.SystemInfo system_info = 2;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilderV3<
+          org.jbenchx.Benchmark.SystemInfo, org.jbenchx.Benchmark.SystemInfo.Builder, org.jbenchx.Benchmark.SystemInfoOrBuilder> 
+          getSystemInfoFieldBuilder() {
+        if (systemInfoBuilder_ == null) {
+          systemInfoBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              org.jbenchx.Benchmark.SystemInfo, org.jbenchx.Benchmark.SystemInfo.Builder, org.jbenchx.Benchmark.SystemInfoOrBuilder>(
+                  getSystemInfo(),
+                  getParentForChildren(),
+                  isClean());
+          systemInfo_ = null;
+        }
+        return systemInfoBuilder_;
+      }
+
+      private java.util.List<org.jbenchx.Benchmark.TaskResult> taskResult_ =
         java.util.Collections.emptyList();
-      private void ensureFailuresIsMutable() {
-        if (!((bitField0_ & 0x00000002) == 0x00000002)) {
-          failures_ = new java.util.ArrayList<org.jbenchx.Benchmark.Failure>(failures_);
-          bitField0_ |= 0x00000002;
+      private void ensureTaskResultIsMutable() {
+        if (!((bitField0_ & 0x00000004) == 0x00000004)) {
+          taskResult_ = new java.util.ArrayList<org.jbenchx.Benchmark.TaskResult>(taskResult_);
+          bitField0_ |= 0x00000004;
          }
       }
 
       private com.google.protobuf.RepeatedFieldBuilderV3<
-          org.jbenchx.Benchmark.Failure, org.jbenchx.Benchmark.Failure.Builder, org.jbenchx.Benchmark.FailureOrBuilder> failuresBuilder_;
+          org.jbenchx.Benchmark.TaskResult, org.jbenchx.Benchmark.TaskResult.Builder, org.jbenchx.Benchmark.TaskResultOrBuilder> taskResultBuilder_;
 
       /**
-       * <code>repeated .org.jbenchx.Failure failures = 2;</code>
+       * <code>repeated .org.jbenchx.TaskResult task_result = 3;</code>
        */
-      public java.util.List<org.jbenchx.Benchmark.Failure> getFailuresList() {
-        if (failuresBuilder_ == null) {
-          return java.util.Collections.unmodifiableList(failures_);
+      public java.util.List<org.jbenchx.Benchmark.TaskResult> getTaskResultList() {
+        if (taskResultBuilder_ == null) {
+          return java.util.Collections.unmodifiableList(taskResult_);
         } else {
-          return failuresBuilder_.getMessageList();
+          return taskResultBuilder_.getMessageList();
         }
       }
       /**
-       * <code>repeated .org.jbenchx.Failure failures = 2;</code>
+       * <code>repeated .org.jbenchx.TaskResult task_result = 3;</code>
        */
-      public int getFailuresCount() {
-        if (failuresBuilder_ == null) {
-          return failures_.size();
+      public int getTaskResultCount() {
+        if (taskResultBuilder_ == null) {
+          return taskResult_.size();
         } else {
-          return failuresBuilder_.getCount();
+          return taskResultBuilder_.getCount();
         }
       }
       /**
-       * <code>repeated .org.jbenchx.Failure failures = 2;</code>
+       * <code>repeated .org.jbenchx.TaskResult task_result = 3;</code>
        */
-      public org.jbenchx.Benchmark.Failure getFailures(int index) {
-        if (failuresBuilder_ == null) {
-          return failures_.get(index);
+      public org.jbenchx.Benchmark.TaskResult getTaskResult(int index) {
+        if (taskResultBuilder_ == null) {
+          return taskResult_.get(index);
         } else {
-          return failuresBuilder_.getMessage(index);
+          return taskResultBuilder_.getMessage(index);
         }
       }
       /**
-       * <code>repeated .org.jbenchx.Failure failures = 2;</code>
+       * <code>repeated .org.jbenchx.TaskResult task_result = 3;</code>
        */
-      public Builder setFailures(
-          int index, org.jbenchx.Benchmark.Failure value) {
-        if (failuresBuilder_ == null) {
+      public Builder setTaskResult(
+          int index, org.jbenchx.Benchmark.TaskResult value) {
+        if (taskResultBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
           }
-          ensureFailuresIsMutable();
-          failures_.set(index, value);
+          ensureTaskResultIsMutable();
+          taskResult_.set(index, value);
           onChanged();
         } else {
-          failuresBuilder_.setMessage(index, value);
+          taskResultBuilder_.setMessage(index, value);
         }
         return this;
       }
       /**
-       * <code>repeated .org.jbenchx.Failure failures = 2;</code>
+       * <code>repeated .org.jbenchx.TaskResult task_result = 3;</code>
        */
-      public Builder setFailures(
-          int index, org.jbenchx.Benchmark.Failure.Builder builderForValue) {
-        if (failuresBuilder_ == null) {
-          ensureFailuresIsMutable();
-          failures_.set(index, builderForValue.build());
+      public Builder setTaskResult(
+          int index, org.jbenchx.Benchmark.TaskResult.Builder builderForValue) {
+        if (taskResultBuilder_ == null) {
+          ensureTaskResultIsMutable();
+          taskResult_.set(index, builderForValue.build());
           onChanged();
         } else {
-          failuresBuilder_.setMessage(index, builderForValue.build());
+          taskResultBuilder_.setMessage(index, builderForValue.build());
         }
         return this;
       }
       /**
-       * <code>repeated .org.jbenchx.Failure failures = 2;</code>
+       * <code>repeated .org.jbenchx.TaskResult task_result = 3;</code>
        */
-      public Builder addFailures(org.jbenchx.Benchmark.Failure value) {
-        if (failuresBuilder_ == null) {
+      public Builder addTaskResult(org.jbenchx.Benchmark.TaskResult value) {
+        if (taskResultBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
           }
-          ensureFailuresIsMutable();
-          failures_.add(value);
+          ensureTaskResultIsMutable();
+          taskResult_.add(value);
           onChanged();
         } else {
-          failuresBuilder_.addMessage(value);
+          taskResultBuilder_.addMessage(value);
         }
         return this;
       }
       /**
-       * <code>repeated .org.jbenchx.Failure failures = 2;</code>
+       * <code>repeated .org.jbenchx.TaskResult task_result = 3;</code>
        */
-      public Builder addFailures(
-          int index, org.jbenchx.Benchmark.Failure value) {
-        if (failuresBuilder_ == null) {
+      public Builder addTaskResult(
+          int index, org.jbenchx.Benchmark.TaskResult value) {
+        if (taskResultBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
           }
-          ensureFailuresIsMutable();
-          failures_.add(index, value);
+          ensureTaskResultIsMutable();
+          taskResult_.add(index, value);
           onChanged();
         } else {
-          failuresBuilder_.addMessage(index, value);
+          taskResultBuilder_.addMessage(index, value);
         }
         return this;
       }
       /**
-       * <code>repeated .org.jbenchx.Failure failures = 2;</code>
+       * <code>repeated .org.jbenchx.TaskResult task_result = 3;</code>
        */
-      public Builder addFailures(
-          org.jbenchx.Benchmark.Failure.Builder builderForValue) {
-        if (failuresBuilder_ == null) {
-          ensureFailuresIsMutable();
-          failures_.add(builderForValue.build());
+      public Builder addTaskResult(
+          org.jbenchx.Benchmark.TaskResult.Builder builderForValue) {
+        if (taskResultBuilder_ == null) {
+          ensureTaskResultIsMutable();
+          taskResult_.add(builderForValue.build());
           onChanged();
         } else {
-          failuresBuilder_.addMessage(builderForValue.build());
+          taskResultBuilder_.addMessage(builderForValue.build());
         }
         return this;
       }
       /**
-       * <code>repeated .org.jbenchx.Failure failures = 2;</code>
+       * <code>repeated .org.jbenchx.TaskResult task_result = 3;</code>
        */
-      public Builder addFailures(
-          int index, org.jbenchx.Benchmark.Failure.Builder builderForValue) {
-        if (failuresBuilder_ == null) {
-          ensureFailuresIsMutable();
-          failures_.add(index, builderForValue.build());
+      public Builder addTaskResult(
+          int index, org.jbenchx.Benchmark.TaskResult.Builder builderForValue) {
+        if (taskResultBuilder_ == null) {
+          ensureTaskResultIsMutable();
+          taskResult_.add(index, builderForValue.build());
           onChanged();
         } else {
-          failuresBuilder_.addMessage(index, builderForValue.build());
+          taskResultBuilder_.addMessage(index, builderForValue.build());
         }
         return this;
       }
       /**
-       * <code>repeated .org.jbenchx.Failure failures = 2;</code>
+       * <code>repeated .org.jbenchx.TaskResult task_result = 3;</code>
        */
-      public Builder addAllFailures(
-          java.lang.Iterable<? extends org.jbenchx.Benchmark.Failure> values) {
-        if (failuresBuilder_ == null) {
-          ensureFailuresIsMutable();
+      public Builder addAllTaskResult(
+          java.lang.Iterable<? extends org.jbenchx.Benchmark.TaskResult> values) {
+        if (taskResultBuilder_ == null) {
+          ensureTaskResultIsMutable();
           com.google.protobuf.AbstractMessageLite.Builder.addAll(
-              values, failures_);
+              values, taskResult_);
           onChanged();
         } else {
-          failuresBuilder_.addAllMessages(values);
+          taskResultBuilder_.addAllMessages(values);
         }
         return this;
       }
       /**
-       * <code>repeated .org.jbenchx.Failure failures = 2;</code>
+       * <code>repeated .org.jbenchx.TaskResult task_result = 3;</code>
        */
-      public Builder clearFailures() {
-        if (failuresBuilder_ == null) {
-          failures_ = java.util.Collections.emptyList();
-          bitField0_ = (bitField0_ & ~0x00000002);
+      public Builder clearTaskResult() {
+        if (taskResultBuilder_ == null) {
+          taskResult_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000004);
           onChanged();
         } else {
-          failuresBuilder_.clear();
+          taskResultBuilder_.clear();
         }
         return this;
       }
       /**
-       * <code>repeated .org.jbenchx.Failure failures = 2;</code>
+       * <code>repeated .org.jbenchx.TaskResult task_result = 3;</code>
        */
-      public Builder removeFailures(int index) {
-        if (failuresBuilder_ == null) {
-          ensureFailuresIsMutable();
-          failures_.remove(index);
+      public Builder removeTaskResult(int index) {
+        if (taskResultBuilder_ == null) {
+          ensureTaskResultIsMutable();
+          taskResult_.remove(index);
           onChanged();
         } else {
-          failuresBuilder_.remove(index);
+          taskResultBuilder_.remove(index);
         }
         return this;
       }
       /**
-       * <code>repeated .org.jbenchx.Failure failures = 2;</code>
+       * <code>repeated .org.jbenchx.TaskResult task_result = 3;</code>
        */
-      public org.jbenchx.Benchmark.Failure.Builder getFailuresBuilder(
+      public org.jbenchx.Benchmark.TaskResult.Builder getTaskResultBuilder(
           int index) {
-        return getFailuresFieldBuilder().getBuilder(index);
+        return getTaskResultFieldBuilder().getBuilder(index);
       }
       /**
-       * <code>repeated .org.jbenchx.Failure failures = 2;</code>
+       * <code>repeated .org.jbenchx.TaskResult task_result = 3;</code>
        */
-      public org.jbenchx.Benchmark.FailureOrBuilder getFailuresOrBuilder(
+      public org.jbenchx.Benchmark.TaskResultOrBuilder getTaskResultOrBuilder(
           int index) {
-        if (failuresBuilder_ == null) {
-          return failures_.get(index);  } else {
-          return failuresBuilder_.getMessageOrBuilder(index);
+        if (taskResultBuilder_ == null) {
+          return taskResult_.get(index);  } else {
+          return taskResultBuilder_.getMessageOrBuilder(index);
         }
       }
       /**
-       * <code>repeated .org.jbenchx.Failure failures = 2;</code>
+       * <code>repeated .org.jbenchx.TaskResult task_result = 3;</code>
        */
-      public java.util.List<? extends org.jbenchx.Benchmark.FailureOrBuilder> 
-           getFailuresOrBuilderList() {
-        if (failuresBuilder_ != null) {
-          return failuresBuilder_.getMessageOrBuilderList();
+      public java.util.List<? extends org.jbenchx.Benchmark.TaskResultOrBuilder> 
+           getTaskResultOrBuilderList() {
+        if (taskResultBuilder_ != null) {
+          return taskResultBuilder_.getMessageOrBuilderList();
         } else {
-          return java.util.Collections.unmodifiableList(failures_);
+          return java.util.Collections.unmodifiableList(taskResult_);
         }
       }
       /**
-       * <code>repeated .org.jbenchx.Failure failures = 2;</code>
+       * <code>repeated .org.jbenchx.TaskResult task_result = 3;</code>
        */
-      public org.jbenchx.Benchmark.Failure.Builder addFailuresBuilder() {
-        return getFailuresFieldBuilder().addBuilder(
-            org.jbenchx.Benchmark.Failure.getDefaultInstance());
+      public org.jbenchx.Benchmark.TaskResult.Builder addTaskResultBuilder() {
+        return getTaskResultFieldBuilder().addBuilder(
+            org.jbenchx.Benchmark.TaskResult.getDefaultInstance());
       }
       /**
-       * <code>repeated .org.jbenchx.Failure failures = 2;</code>
+       * <code>repeated .org.jbenchx.TaskResult task_result = 3;</code>
        */
-      public org.jbenchx.Benchmark.Failure.Builder addFailuresBuilder(
+      public org.jbenchx.Benchmark.TaskResult.Builder addTaskResultBuilder(
           int index) {
-        return getFailuresFieldBuilder().addBuilder(
-            index, org.jbenchx.Benchmark.Failure.getDefaultInstance());
+        return getTaskResultFieldBuilder().addBuilder(
+            index, org.jbenchx.Benchmark.TaskResult.getDefaultInstance());
       }
       /**
-       * <code>repeated .org.jbenchx.Failure failures = 2;</code>
+       * <code>repeated .org.jbenchx.TaskResult task_result = 3;</code>
        */
-      public java.util.List<org.jbenchx.Benchmark.Failure.Builder> 
-           getFailuresBuilderList() {
-        return getFailuresFieldBuilder().getBuilderList();
+      public java.util.List<org.jbenchx.Benchmark.TaskResult.Builder> 
+           getTaskResultBuilderList() {
+        return getTaskResultFieldBuilder().getBuilderList();
       }
       private com.google.protobuf.RepeatedFieldBuilderV3<
-          org.jbenchx.Benchmark.Failure, org.jbenchx.Benchmark.Failure.Builder, org.jbenchx.Benchmark.FailureOrBuilder> 
-          getFailuresFieldBuilder() {
-        if (failuresBuilder_ == null) {
-          failuresBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
-              org.jbenchx.Benchmark.Failure, org.jbenchx.Benchmark.Failure.Builder, org.jbenchx.Benchmark.FailureOrBuilder>(
-                  failures_,
-                  ((bitField0_ & 0x00000002) == 0x00000002),
+          org.jbenchx.Benchmark.TaskResult, org.jbenchx.Benchmark.TaskResult.Builder, org.jbenchx.Benchmark.TaskResultOrBuilder> 
+          getTaskResultFieldBuilder() {
+        if (taskResultBuilder_ == null) {
+          taskResultBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
+              org.jbenchx.Benchmark.TaskResult, org.jbenchx.Benchmark.TaskResult.Builder, org.jbenchx.Benchmark.TaskResultOrBuilder>(
+                  taskResult_,
+                  ((bitField0_ & 0x00000004) == 0x00000004),
                   getParentForChildren(),
                   isClean());
-          failures_ = null;
+          taskResult_ = null;
         }
-        return failuresBuilder_;
+        return taskResultBuilder_;
       }
 
-      private double estimatedBenchmark_ ;
-      /**
-       * <code>double estimated_benchmark = 3;</code>
-       */
-      public double getEstimatedBenchmark() {
-        return estimatedBenchmark_;
-      }
-      /**
-       * <code>double estimated_benchmark = 3;</code>
-       */
-      public Builder setEstimatedBenchmark(double value) {
-        
-        estimatedBenchmark_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>double estimated_benchmark = 3;</code>
-       */
-      public Builder clearEstimatedBenchmark() {
-        
-        estimatedBenchmark_ = 0D;
-        onChanged();
-        return this;
+      private java.util.List<org.jbenchx.Benchmark.Error> generalError_ =
+        java.util.Collections.emptyList();
+      private void ensureGeneralErrorIsMutable() {
+        if (!((bitField0_ & 0x00000008) == 0x00000008)) {
+          generalError_ = new java.util.ArrayList<org.jbenchx.Benchmark.Error>(generalError_);
+          bitField0_ |= 0x00000008;
+         }
       }
 
-      private long iterationCount_ ;
+      private com.google.protobuf.RepeatedFieldBuilderV3<
+          org.jbenchx.Benchmark.Error, org.jbenchx.Benchmark.Error.Builder, org.jbenchx.Benchmark.ErrorOrBuilder> generalErrorBuilder_;
+
       /**
-       * <code>int64 iteration_count = 4;</code>
+       * <code>repeated .org.jbenchx.Error general_error = 4;</code>
        */
-      public long getIterationCount() {
-        return iterationCount_;
+      public java.util.List<org.jbenchx.Benchmark.Error> getGeneralErrorList() {
+        if (generalErrorBuilder_ == null) {
+          return java.util.Collections.unmodifiableList(generalError_);
+        } else {
+          return generalErrorBuilder_.getMessageList();
+        }
       }
       /**
-       * <code>int64 iteration_count = 4;</code>
+       * <code>repeated .org.jbenchx.Error general_error = 4;</code>
        */
-      public Builder setIterationCount(long value) {
-        
-        iterationCount_ = value;
-        onChanged();
+      public int getGeneralErrorCount() {
+        if (generalErrorBuilder_ == null) {
+          return generalError_.size();
+        } else {
+          return generalErrorBuilder_.getCount();
+        }
+      }
+      /**
+       * <code>repeated .org.jbenchx.Error general_error = 4;</code>
+       */
+      public org.jbenchx.Benchmark.Error getGeneralError(int index) {
+        if (generalErrorBuilder_ == null) {
+          return generalError_.get(index);
+        } else {
+          return generalErrorBuilder_.getMessage(index);
+        }
+      }
+      /**
+       * <code>repeated .org.jbenchx.Error general_error = 4;</code>
+       */
+      public Builder setGeneralError(
+          int index, org.jbenchx.Benchmark.Error value) {
+        if (generalErrorBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureGeneralErrorIsMutable();
+          generalError_.set(index, value);
+          onChanged();
+        } else {
+          generalErrorBuilder_.setMessage(index, value);
+        }
         return this;
       }
       /**
-       * <code>int64 iteration_count = 4;</code>
+       * <code>repeated .org.jbenchx.Error general_error = 4;</code>
        */
-      public Builder clearIterationCount() {
-        
-        iterationCount_ = 0L;
-        onChanged();
+      public Builder setGeneralError(
+          int index, org.jbenchx.Benchmark.Error.Builder builderForValue) {
+        if (generalErrorBuilder_ == null) {
+          ensureGeneralErrorIsMutable();
+          generalError_.set(index, builderForValue.build());
+          onChanged();
+        } else {
+          generalErrorBuilder_.setMessage(index, builderForValue.build());
+        }
         return this;
+      }
+      /**
+       * <code>repeated .org.jbenchx.Error general_error = 4;</code>
+       */
+      public Builder addGeneralError(org.jbenchx.Benchmark.Error value) {
+        if (generalErrorBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureGeneralErrorIsMutable();
+          generalError_.add(value);
+          onChanged();
+        } else {
+          generalErrorBuilder_.addMessage(value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .org.jbenchx.Error general_error = 4;</code>
+       */
+      public Builder addGeneralError(
+          int index, org.jbenchx.Benchmark.Error value) {
+        if (generalErrorBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureGeneralErrorIsMutable();
+          generalError_.add(index, value);
+          onChanged();
+        } else {
+          generalErrorBuilder_.addMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .org.jbenchx.Error general_error = 4;</code>
+       */
+      public Builder addGeneralError(
+          org.jbenchx.Benchmark.Error.Builder builderForValue) {
+        if (generalErrorBuilder_ == null) {
+          ensureGeneralErrorIsMutable();
+          generalError_.add(builderForValue.build());
+          onChanged();
+        } else {
+          generalErrorBuilder_.addMessage(builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .org.jbenchx.Error general_error = 4;</code>
+       */
+      public Builder addGeneralError(
+          int index, org.jbenchx.Benchmark.Error.Builder builderForValue) {
+        if (generalErrorBuilder_ == null) {
+          ensureGeneralErrorIsMutable();
+          generalError_.add(index, builderForValue.build());
+          onChanged();
+        } else {
+          generalErrorBuilder_.addMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .org.jbenchx.Error general_error = 4;</code>
+       */
+      public Builder addAllGeneralError(
+          java.lang.Iterable<? extends org.jbenchx.Benchmark.Error> values) {
+        if (generalErrorBuilder_ == null) {
+          ensureGeneralErrorIsMutable();
+          com.google.protobuf.AbstractMessageLite.Builder.addAll(
+              values, generalError_);
+          onChanged();
+        } else {
+          generalErrorBuilder_.addAllMessages(values);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .org.jbenchx.Error general_error = 4;</code>
+       */
+      public Builder clearGeneralError() {
+        if (generalErrorBuilder_ == null) {
+          generalError_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000008);
+          onChanged();
+        } else {
+          generalErrorBuilder_.clear();
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .org.jbenchx.Error general_error = 4;</code>
+       */
+      public Builder removeGeneralError(int index) {
+        if (generalErrorBuilder_ == null) {
+          ensureGeneralErrorIsMutable();
+          generalError_.remove(index);
+          onChanged();
+        } else {
+          generalErrorBuilder_.remove(index);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .org.jbenchx.Error general_error = 4;</code>
+       */
+      public org.jbenchx.Benchmark.Error.Builder getGeneralErrorBuilder(
+          int index) {
+        return getGeneralErrorFieldBuilder().getBuilder(index);
+      }
+      /**
+       * <code>repeated .org.jbenchx.Error general_error = 4;</code>
+       */
+      public org.jbenchx.Benchmark.ErrorOrBuilder getGeneralErrorOrBuilder(
+          int index) {
+        if (generalErrorBuilder_ == null) {
+          return generalError_.get(index);  } else {
+          return generalErrorBuilder_.getMessageOrBuilder(index);
+        }
+      }
+      /**
+       * <code>repeated .org.jbenchx.Error general_error = 4;</code>
+       */
+      public java.util.List<? extends org.jbenchx.Benchmark.ErrorOrBuilder> 
+           getGeneralErrorOrBuilderList() {
+        if (generalErrorBuilder_ != null) {
+          return generalErrorBuilder_.getMessageOrBuilderList();
+        } else {
+          return java.util.Collections.unmodifiableList(generalError_);
+        }
+      }
+      /**
+       * <code>repeated .org.jbenchx.Error general_error = 4;</code>
+       */
+      public org.jbenchx.Benchmark.Error.Builder addGeneralErrorBuilder() {
+        return getGeneralErrorFieldBuilder().addBuilder(
+            org.jbenchx.Benchmark.Error.getDefaultInstance());
+      }
+      /**
+       * <code>repeated .org.jbenchx.Error general_error = 4;</code>
+       */
+      public org.jbenchx.Benchmark.Error.Builder addGeneralErrorBuilder(
+          int index) {
+        return getGeneralErrorFieldBuilder().addBuilder(
+            index, org.jbenchx.Benchmark.Error.getDefaultInstance());
+      }
+      /**
+       * <code>repeated .org.jbenchx.Error general_error = 4;</code>
+       */
+      public java.util.List<org.jbenchx.Benchmark.Error.Builder> 
+           getGeneralErrorBuilderList() {
+        return getGeneralErrorFieldBuilder().getBuilderList();
+      }
+      private com.google.protobuf.RepeatedFieldBuilderV3<
+          org.jbenchx.Benchmark.Error, org.jbenchx.Benchmark.Error.Builder, org.jbenchx.Benchmark.ErrorOrBuilder> 
+          getGeneralErrorFieldBuilder() {
+        if (generalErrorBuilder_ == null) {
+          generalErrorBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
+              org.jbenchx.Benchmark.Error, org.jbenchx.Benchmark.Error.Builder, org.jbenchx.Benchmark.ErrorOrBuilder>(
+                  generalError_,
+                  ((bitField0_ & 0x00000008) == 0x00000008),
+                  getParentForChildren(),
+                  isClean());
+          generalError_ = null;
+        }
+        return generalErrorBuilder_;
       }
 
-      private double divisor_ ;
+      private com.google.protobuf.Timestamp startTime_ = null;
+      private com.google.protobuf.SingleFieldBuilderV3<
+          com.google.protobuf.Timestamp, com.google.protobuf.Timestamp.Builder, com.google.protobuf.TimestampOrBuilder> startTimeBuilder_;
       /**
-       * <code>double divisor = 5;</code>
+       * <code>.google.protobuf.Timestamp start_time = 5;</code>
        */
-      public double getDivisor() {
-        return divisor_;
+      public boolean hasStartTime() {
+        return startTimeBuilder_ != null || startTime_ != null;
       }
       /**
-       * <code>double divisor = 5;</code>
+       * <code>.google.protobuf.Timestamp start_time = 5;</code>
        */
-      public Builder setDivisor(double value) {
-        
-        divisor_ = value;
-        onChanged();
+      public com.google.protobuf.Timestamp getStartTime() {
+        if (startTimeBuilder_ == null) {
+          return startTime_ == null ? com.google.protobuf.Timestamp.getDefaultInstance() : startTime_;
+        } else {
+          return startTimeBuilder_.getMessage();
+        }
+      }
+      /**
+       * <code>.google.protobuf.Timestamp start_time = 5;</code>
+       */
+      public Builder setStartTime(com.google.protobuf.Timestamp value) {
+        if (startTimeBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          startTime_ = value;
+          onChanged();
+        } else {
+          startTimeBuilder_.setMessage(value);
+        }
+
         return this;
       }
       /**
-       * <code>double divisor = 5;</code>
+       * <code>.google.protobuf.Timestamp start_time = 5;</code>
        */
-      public Builder clearDivisor() {
-        
-        divisor_ = 0D;
-        onChanged();
+      public Builder setStartTime(
+          com.google.protobuf.Timestamp.Builder builderForValue) {
+        if (startTimeBuilder_ == null) {
+          startTime_ = builderForValue.build();
+          onChanged();
+        } else {
+          startTimeBuilder_.setMessage(builderForValue.build());
+        }
+
         return this;
+      }
+      /**
+       * <code>.google.protobuf.Timestamp start_time = 5;</code>
+       */
+      public Builder mergeStartTime(com.google.protobuf.Timestamp value) {
+        if (startTimeBuilder_ == null) {
+          if (startTime_ != null) {
+            startTime_ =
+              com.google.protobuf.Timestamp.newBuilder(startTime_).mergeFrom(value).buildPartial();
+          } else {
+            startTime_ = value;
+          }
+          onChanged();
+        } else {
+          startTimeBuilder_.mergeFrom(value);
+        }
+
+        return this;
+      }
+      /**
+       * <code>.google.protobuf.Timestamp start_time = 5;</code>
+       */
+      public Builder clearStartTime() {
+        if (startTimeBuilder_ == null) {
+          startTime_ = null;
+          onChanged();
+        } else {
+          startTime_ = null;
+          startTimeBuilder_ = null;
+        }
+
+        return this;
+      }
+      /**
+       * <code>.google.protobuf.Timestamp start_time = 5;</code>
+       */
+      public com.google.protobuf.Timestamp.Builder getStartTimeBuilder() {
+        
+        onChanged();
+        return getStartTimeFieldBuilder().getBuilder();
+      }
+      /**
+       * <code>.google.protobuf.Timestamp start_time = 5;</code>
+       */
+      public com.google.protobuf.TimestampOrBuilder getStartTimeOrBuilder() {
+        if (startTimeBuilder_ != null) {
+          return startTimeBuilder_.getMessageOrBuilder();
+        } else {
+          return startTime_ == null ?
+              com.google.protobuf.Timestamp.getDefaultInstance() : startTime_;
+        }
+      }
+      /**
+       * <code>.google.protobuf.Timestamp start_time = 5;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilderV3<
+          com.google.protobuf.Timestamp, com.google.protobuf.Timestamp.Builder, com.google.protobuf.TimestampOrBuilder> 
+          getStartTimeFieldBuilder() {
+        if (startTimeBuilder_ == null) {
+          startTimeBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              com.google.protobuf.Timestamp, com.google.protobuf.Timestamp.Builder, com.google.protobuf.TimestampOrBuilder>(
+                  getStartTime(),
+                  getParentForChildren(),
+                  isClean());
+          startTime_ = null;
+        }
+        return startTimeBuilder_;
+      }
+
+      private com.google.protobuf.Timestamp endTime_ = null;
+      private com.google.protobuf.SingleFieldBuilderV3<
+          com.google.protobuf.Timestamp, com.google.protobuf.Timestamp.Builder, com.google.protobuf.TimestampOrBuilder> endTimeBuilder_;
+      /**
+       * <code>.google.protobuf.Timestamp end_time = 6;</code>
+       */
+      public boolean hasEndTime() {
+        return endTimeBuilder_ != null || endTime_ != null;
+      }
+      /**
+       * <code>.google.protobuf.Timestamp end_time = 6;</code>
+       */
+      public com.google.protobuf.Timestamp getEndTime() {
+        if (endTimeBuilder_ == null) {
+          return endTime_ == null ? com.google.protobuf.Timestamp.getDefaultInstance() : endTime_;
+        } else {
+          return endTimeBuilder_.getMessage();
+        }
+      }
+      /**
+       * <code>.google.protobuf.Timestamp end_time = 6;</code>
+       */
+      public Builder setEndTime(com.google.protobuf.Timestamp value) {
+        if (endTimeBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          endTime_ = value;
+          onChanged();
+        } else {
+          endTimeBuilder_.setMessage(value);
+        }
+
+        return this;
+      }
+      /**
+       * <code>.google.protobuf.Timestamp end_time = 6;</code>
+       */
+      public Builder setEndTime(
+          com.google.protobuf.Timestamp.Builder builderForValue) {
+        if (endTimeBuilder_ == null) {
+          endTime_ = builderForValue.build();
+          onChanged();
+        } else {
+          endTimeBuilder_.setMessage(builderForValue.build());
+        }
+
+        return this;
+      }
+      /**
+       * <code>.google.protobuf.Timestamp end_time = 6;</code>
+       */
+      public Builder mergeEndTime(com.google.protobuf.Timestamp value) {
+        if (endTimeBuilder_ == null) {
+          if (endTime_ != null) {
+            endTime_ =
+              com.google.protobuf.Timestamp.newBuilder(endTime_).mergeFrom(value).buildPartial();
+          } else {
+            endTime_ = value;
+          }
+          onChanged();
+        } else {
+          endTimeBuilder_.mergeFrom(value);
+        }
+
+        return this;
+      }
+      /**
+       * <code>.google.protobuf.Timestamp end_time = 6;</code>
+       */
+      public Builder clearEndTime() {
+        if (endTimeBuilder_ == null) {
+          endTime_ = null;
+          onChanged();
+        } else {
+          endTime_ = null;
+          endTimeBuilder_ = null;
+        }
+
+        return this;
+      }
+      /**
+       * <code>.google.protobuf.Timestamp end_time = 6;</code>
+       */
+      public com.google.protobuf.Timestamp.Builder getEndTimeBuilder() {
+        
+        onChanged();
+        return getEndTimeFieldBuilder().getBuilder();
+      }
+      /**
+       * <code>.google.protobuf.Timestamp end_time = 6;</code>
+       */
+      public com.google.protobuf.TimestampOrBuilder getEndTimeOrBuilder() {
+        if (endTimeBuilder_ != null) {
+          return endTimeBuilder_.getMessageOrBuilder();
+        } else {
+          return endTime_ == null ?
+              com.google.protobuf.Timestamp.getDefaultInstance() : endTime_;
+        }
+      }
+      /**
+       * <code>.google.protobuf.Timestamp end_time = 6;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilderV3<
+          com.google.protobuf.Timestamp, com.google.protobuf.Timestamp.Builder, com.google.protobuf.TimestampOrBuilder> 
+          getEndTimeFieldBuilder() {
+        if (endTimeBuilder_ == null) {
+          endTimeBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              com.google.protobuf.Timestamp, com.google.protobuf.Timestamp.Builder, com.google.protobuf.TimestampOrBuilder>(
+                  getEndTime(),
+                  getParentForChildren(),
+                  isClean());
+          endTime_ = null;
+        }
+        return endTimeBuilder_;
       }
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
@@ -6716,10 +8986,10 @@ public final class Benchmark {
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_org_jbenchx_Warning_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_org_jbenchx_Failure_descriptor;
+    internal_static_org_jbenchx_Error_descriptor;
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_org_jbenchx_Failure_fieldAccessorTable;
+      internal_static_org_jbenchx_Error_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_org_jbenchx_GcEvent_descriptor;
   private static final 
@@ -6746,6 +9016,11 @@ public final class Benchmark {
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_org_jbenchx_TaskResult_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_org_jbenchx_SystemInfo_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_org_jbenchx_SystemInfo_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_org_jbenchx_Result_descriptor;
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
@@ -6759,28 +9034,39 @@ public final class Benchmark {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\023proto/jbenchx.proto\022\013org.jbenchx\"\266\001\n\nP" +
-      "arameters\022\026\n\016target_time_ns\030\001 \001(\003\022\025\n\rmin" +
-      "_run_count\030\002 \001(\005\022\025\n\rmax_run_count\030\003 \001(\005\022" +
-      "\030\n\020min_sample_count\030\004 \001(\005\022\031\n\021max_restart" +
-      "_count\030\005 \001(\005\022\025\n\rmax_deviation\030\006 \001(\001\022\026\n\016m" +
-      "easure_memory\030\007 \001(\010\"\032\n\007Warning\022\017\n\007messag" +
-      "e\030\001 \001(\t\"/\n\007Failure\022\017\n\007message\030\001 \001(\t\022\023\n\013s" +
-      "tack_trace\030\002 \003(\t\")\n\007GcEvent\022\r\n\005count\030\001 \001" +
-      "(\003\022\017\n\007time_ns\030\002 \001(\003\"\207\001\n\007GcStats\0225\n\tgc_ev" +
-      "ents\030\001 \003(\0132\".org.jbenchx.GcStats.GcEvent" +
-      "sEntry\032E\n\rGcEventsEntry\022\013\n\003key\030\001 \001(\t\022#\n\005" +
-      "value\030\002 \001(\0132\024.org.jbenchx.GcEvent:\0028\001\"A\n" +
-      "\006Timing\022&\n\010gc_stats\030\001 \001(\0132\024.org.jbenchx." +
-      "GcStats\022\017\n\007time_ns\030\002 \001(\003\"\221\001\n\nTaskResult\022" +
-      "$\n\007timings\030\001 \003(\0132\023.org.jbenchx.Timing\022#\n" +
-      "\005erros\030\002 \003(\0132\024.org.jbenchx.Failure\022&\n\010wa" +
-      "rnings\030\003 \003(\0132\024.org.jbenchx.Warning\022\020\n\010mi" +
-      "n_time\030\004 \001(\003\"\210\001\n\006Result\022\017\n\007version\030\001 \001(\t" +
-      "\022&\n\010failures\030\002 \003(\0132\024.org.jbenchx.Failure" +
-      "\022\033\n\023estimated_benchmark\030\003 \001(\001\022\027\n\017iterati" +
-      "on_count\030\004 \001(\003\022\017\n\007divisor\030\005 \001(\001B\013B\tBench" +
-      "markb\006proto3"
+      "\n\023proto/jbenchx.proto\022\013org.jbenchx\032\037goog" +
+      "le/protobuf/timestamp.proto\"\266\001\n\nParamete" +
+      "rs\022\026\n\016target_time_ns\030\001 \001(\003\022\025\n\rmin_run_co" +
+      "unt\030\002 \001(\005\022\025\n\rmax_run_count\030\003 \001(\005\022\030\n\020min_" +
+      "sample_count\030\004 \001(\005\022\031\n\021max_restart_count\030" +
+      "\005 \001(\005\022\025\n\rmax_deviation\030\006 \001(\001\022\026\n\016measure_" +
+      "memory\030\007 \001(\010\"\032\n\007Warning\022\017\n\007message\030\001 \001(\t" +
+      "\">\n\005Error\022\017\n\007message\030\001 \001(\t\022\023\n\013stack_trac" +
+      "e\030\002 \003(\t\022\017\n\007skipped\030\003 \001(\010\")\n\007GcEvent\022\r\n\005c" +
+      "ount\030\001 \001(\003\022\017\n\007time_ns\030\002 \001(\003\"\207\001\n\007GcStats\022" +
+      "5\n\tgc_events\030\001 \003(\0132\".org.jbenchx.GcStats" +
+      ".GcEventsEntry\032E\n\rGcEventsEntry\022\013\n\003key\030\001" +
+      " \001(\t\022#\n\005value\030\002 \001(\0132\024.org.jbenchx.GcEven" +
+      "t:\0028\001\"E\n\006Timing\022&\n\010gc_stats\030\001 \001(\0132\024.org." +
+      "jbenchx.GcStats\022\023\n\013run_time_ns\030\002 \001(\003\"\206\002\n" +
+      "\nTaskResult\022\021\n\ttask_name\030\001 \001(\t\022#\n\006timing" +
+      "\030\002 \003(\0132\023.org.jbenchx.Timing\022!\n\005error\030\003 \003" +
+      "(\0132\022.org.jbenchx.Error\022%\n\007warning\030\004 \003(\0132" +
+      "\024.org.jbenchx.Warning\022\027\n\017min_run_time_ns" +
+      "\030\005 \001(\003\022\027\n\017iteration_count\030\006 \001(\003\022\017\n\007divis" +
+      "or\030\007 \001(\001\022\033\n\023estimated_benchmark\030\010 \001(\001\022\026\n" +
+      "\016benchmark_unit\030\t \001(\t\"\262\001\n\nSystemInfo\022\034\n\024" +
+      "timer_granularity_ns\030\001 \001(\003\022\035\n\025method_inv" +
+      "oke_time_ns\030\002 \001(\003\022\030\n\020system_benchmark\030\003 " +
+      "\001(\001\022\017\n\007os_info\030\004 \001(\t\022\022\n\nos_version\030\005 \001(\t" +
+      "\022\021\n\tcpu_count\030\006 \001(\005\022\025\n\rmax_heap_size\030\007 \001" +
+      "(\003\"\376\001\n\006Result\022\017\n\007version\030\001 \001(\t\022,\n\013system" +
+      "_info\030\002 \001(\0132\027.org.jbenchx.SystemInfo\022,\n\013" +
+      "task_result\030\003 \003(\0132\027.org.jbenchx.TaskResu" +
+      "lt\022)\n\rgeneral_error\030\004 \003(\0132\022.org.jbenchx." +
+      "Error\022.\n\nstart_time\030\005 \001(\0132\032.google.proto" +
+      "buf.Timestamp\022,\n\010end_time\030\006 \001(\0132\032.google" +
+      ".protobuf.TimestampB\013B\tBenchmarkb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -6793,6 +9079,7 @@ public final class Benchmark {
     com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
+          com.google.protobuf.TimestampProto.getDescriptor(),
         }, assigner);
     internal_static_org_jbenchx_Parameters_descriptor =
       getDescriptor().getMessageTypes().get(0);
@@ -6806,12 +9093,12 @@ public final class Benchmark {
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_org_jbenchx_Warning_descriptor,
         new java.lang.String[] { "Message", });
-    internal_static_org_jbenchx_Failure_descriptor =
+    internal_static_org_jbenchx_Error_descriptor =
       getDescriptor().getMessageTypes().get(2);
-    internal_static_org_jbenchx_Failure_fieldAccessorTable = new
+    internal_static_org_jbenchx_Error_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_org_jbenchx_Failure_descriptor,
-        new java.lang.String[] { "Message", "StackTrace", });
+        internal_static_org_jbenchx_Error_descriptor,
+        new java.lang.String[] { "Message", "StackTrace", "Skipped", });
     internal_static_org_jbenchx_GcEvent_descriptor =
       getDescriptor().getMessageTypes().get(3);
     internal_static_org_jbenchx_GcEvent_fieldAccessorTable = new
@@ -6835,19 +9122,26 @@ public final class Benchmark {
     internal_static_org_jbenchx_Timing_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_org_jbenchx_Timing_descriptor,
-        new java.lang.String[] { "GcStats", "TimeNs", });
+        new java.lang.String[] { "GcStats", "RunTimeNs", });
     internal_static_org_jbenchx_TaskResult_descriptor =
       getDescriptor().getMessageTypes().get(6);
     internal_static_org_jbenchx_TaskResult_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_org_jbenchx_TaskResult_descriptor,
-        new java.lang.String[] { "Timings", "Erros", "Warnings", "MinTime", });
-    internal_static_org_jbenchx_Result_descriptor =
+        new java.lang.String[] { "TaskName", "Timing", "Error", "Warning", "MinRunTimeNs", "IterationCount", "Divisor", "EstimatedBenchmark", "BenchmarkUnit", });
+    internal_static_org_jbenchx_SystemInfo_descriptor =
       getDescriptor().getMessageTypes().get(7);
+    internal_static_org_jbenchx_SystemInfo_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_org_jbenchx_SystemInfo_descriptor,
+        new java.lang.String[] { "TimerGranularityNs", "MethodInvokeTimeNs", "SystemBenchmark", "OsInfo", "OsVersion", "CpuCount", "MaxHeapSize", });
+    internal_static_org_jbenchx_Result_descriptor =
+      getDescriptor().getMessageTypes().get(8);
     internal_static_org_jbenchx_Result_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_org_jbenchx_Result_descriptor,
-        new java.lang.String[] { "Version", "Failures", "EstimatedBenchmark", "IterationCount", "Divisor", });
+        new java.lang.String[] { "Version", "SystemInfo", "TaskResult", "GeneralError", "StartTime", "EndTime", });
+    com.google.protobuf.TimestampProto.getDescriptor();
   }
 
   // @@protoc_insertion_point(outer_class_scope)
