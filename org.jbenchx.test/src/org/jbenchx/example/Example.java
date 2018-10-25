@@ -57,39 +57,39 @@ public class Example {
     return Math.sqrt(fNumber1);
   }
 
-  @Bench(divisor = 2)
-  public double sqrt2() {
+  @Bench
+  public double sqrt2(@DivideBy @ForEachInt(2) int calls) {
     return Math.sqrt(fNumber1) + Math.sqrt(fNumber2);
   }
 
-  @Bench(divisor = 3)
-  public double sqrt3() {
+  @Bench
+  public double sqrt3(@DivideBy @ForEachInt(3) int calls) {
     return Math.sqrt(fNumber1) + Math.sqrt(fNumber2) + Math.sqrt(fNumber3);
   }
 
-  @Bench(divisor = 2)
-  public double sqrt2b() {
+  @Bench
+  public double sqrt2b(@DivideBy @ForEachInt(2) int calls) {
     return Math.sqrt(Math.sqrt(fNumber1));
   }
 
-  @Bench(divisor = 3)
-  public void sqrt3b() {
+  @Bench
+  public void sqrt3b(@DivideBy @ForEachInt(3) int calls) {
     fNumber3 = Math.sqrt(Math.sqrt(Math.sqrt(fNumber1)));
   }
 
-  @Bench(divisor = 1000)
-  public double sqrt() {
+  @Bench
+  public double sqrt(@DivideBy @ForEachInt({1,10,100,1000}) int iterations) {
     double result = 0;
 //    double f = 1;
-    for (int i = 0; i < 1000; i++) {
+    for (int i = 0; i < iterations; i++) {
       result += Math.sqrt(fNumber1);
 //      f+= 0.00001;
     }
     return result;
   }
 
-  @Bench(divisor = 1000)
-  public double sqrtR() {
+  @Bench
+  public double sqrtR(@DivideBy @ForEachInt({1,10,100,1000}) int iterations) {
     double result = fNumber1;
     for (int i = 0; i < 1000; i++) {
       result = Math.sqrt(result) + 1;

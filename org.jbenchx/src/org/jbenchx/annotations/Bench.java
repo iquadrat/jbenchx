@@ -43,11 +43,6 @@ public @interface Bench {
   double maxDeviation() default -1;
   
   /**
-   * Benchmark value divisor. The measured time is divided by this value.
-   */
-  int divisor() default -1;
-
-  /**
    * Target time for a single run of the benchmark.
    */
   long targetTimeNs() default -1;

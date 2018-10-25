@@ -1,13 +1,19 @@
 package org.jbenchx;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.regex.Pattern;
 
 import javax.annotation.CheckForNull;
 
+import org.jbenchx.Benchmark.Parameters;
+import org.jbenchx.Benchmark.Parameters.Builder;
+import org.jbenchx.annotations.Bench;
+import org.jbenchx.annotations.MemoryBench;
 import org.jbenchx.monitor.IProgressMonitor;
 import org.jbenchx.result.BenchmarkFailure;
 import org.jbenchx.result.IBenchmarkResult;
@@ -21,6 +27,55 @@ import org.jbenchx.vm.SystemInfo;
 
 // TODO create builder
 public class BenchmarkContext implements IBenchmarkContext {
+  
+  public static Benchmark.Parameters getDefaultParameters() {
+     return Benchmark.Parameters.newBuilder()
+         .setTargetTimeNs(250 * TimeUtil.MS)
+         .setMinRunCount(10)
+         .setMaxRunCount(100)
+         .setMinSampleCount(8)
+         .setMaxDeviation(0.05)
+         .setMaxRestartCount(15)
+         .build();
+  }
+  
+  @CheckForNull
+  public static Benchmark.Parameters getParamsFrom(Method method) {
+    List<Bench> annotations = ClassUtil.findMethodAnnotations(method, Bench.class);
+    List<MemoryBench> memoryAnnotations = ClassUtil.findMethodAnnotations(method, MemoryBench.class);
+    if (annotations.isEmpty() && memoryAnnotations.isEmpty()) {
+      return null;
+    }
+    ListIterator<Bench> iterator = annotations.listIterator(annotations.size());
+    Benchmark.Parameters.Builder builder = Benchmark.Parameters.newBuilder();
+    while (iterator.hasPrevious()) {
+      builder.mergeFrom(getParamsFrom(iterator.previous()));
+    }
+    if (!memoryAnnotations.isEmpty()) {
+      builder.setMeasureMemory(true);
+    }
+    return builder.build();
+  }
+  
+  private static Benchmark.Parameters getParamsFrom(Bench annotation) {
+    Builder builder = Benchmark.Parameters.newBuilder();
+    if (annotation.targetTimeNs() != -1) {
+      builder.setTargetTimeNs(annotation.targetTimeNs());
+    }
+    if (annotation.minRunCount() != -1) {
+      builder.setMinRunCount(annotation.minRunCount());
+    }
+    if (annotation.maxRunCount() != -1) {
+      builder.setMaxRunCount(annotation.maxRunCount());
+    }
+    if (annotation.minSampleCount() != -1) {
+      builder.setMinSampleCount(annotation.minSampleCount());
+    }
+    if (annotation.maxDeviation() != -1) {
+      builder.setMaxDeviation(annotation.maxDeviation());
+    }
+    return builder.build();
+  }
 
 	public static final List<Pattern> RUN_ALL;
 	static {
@@ -32,7 +87,7 @@ public class BenchmarkContext implements IBenchmarkContext {
 
 	private final IProgressMonitor fProgressMonitor;
 
-	private final BenchmarkParameters fDefaultParams;
+	private final Benchmark.Parameters fDefaultParams;
 
 	@CheckForNull
 	private final SystemInfo fSystemInfo;
@@ -45,11 +100,11 @@ public class BenchmarkContext implements IBenchmarkContext {
 
 	public BenchmarkContext(IProgressMonitor progressMonitor, @CheckForNull SystemInfo systemInfo,
 			List<Pattern> patterns) {
-		this(progressMonitor, systemInfo, patterns, BenchmarkParameters.getDefaults());
+		this(progressMonitor, systemInfo, patterns, getDefaultParameters());
 	}
 
 	public BenchmarkContext(IProgressMonitor progressMonitor, @CheckForNull SystemInfo systemInfo,
-			List<Pattern> patterns, BenchmarkParameters defaultParams) {
+			List<Pattern> patterns, Benchmark.Parameters defaultParams) {
 		fProgressMonitor = progressMonitor;
 		fSystemInfo = systemInfo;
 		fDefaultParams = defaultParams;
@@ -57,7 +112,7 @@ public class BenchmarkContext implements IBenchmarkContext {
 	}
 
 	@Override
-	public BenchmarkParameters getDefaultParams() {
+	public Benchmark.Parameters getDefaultParams() {
 		return fDefaultParams;
 	}
 
@@ -93,8 +148,10 @@ public class BenchmarkContext implements IBenchmarkContext {
 	}
 
 	public static IBenchmarkContext create(IProgressMonitor progressMonitor, List<Pattern> tagPatterns) {
-		IBenchmarkContext systemBenchmarkContext = new BenchmarkContext(IProgressMonitor.DUMMY, null, RUN_ALL);
-		systemBenchmarkContext.getDefaultParams().setTargetTimeNs(50 * TimeUtil.MS);
+    Parameters systemParams = getDefaultParameters().toBuilder().setTargetTimeNs(50 * TimeUtil.MS).build();
+    IBenchmarkContext systemBenchmarkContext = 
+            new BenchmarkContext(IProgressMonitor.DUMMY, null, RUN_ALL, systemParams);
+    
 		BenchmarkRunner runner = new BenchmarkRunner();
 		runner.add(SystemBenchmark.class);
 
@@ -107,10 +164,10 @@ public class BenchmarkContext implements IBenchmarkContext {
 		IBenchmarkTask emptyTask = result.findTask(SystemBenchmark.class.getSimpleName() + ".empty");
 		ITaskResult emptyResult = result.getResult(emptyTask);
 
-		IBenchmarkTask calculateTask = result.findTask(SystemBenchmark.class.getSimpleName() + ".calculate");
+		IBenchmarkTask calculateTask = result.findTask(SystemBenchmark.class.getSimpleName() + ".calculate(1000)");
 		ITaskResult calculateResult = result.getResult(calculateTask);
 
-		IBenchmarkTask memoryTask = result.findTask(SystemBenchmark.class.getSimpleName() + ".memory");
+		IBenchmarkTask memoryTask = result.findTask(SystemBenchmark.class.getSimpleName() + ".memory(8388608)");
 		ITaskResult memoryResult = result.getResult(memoryTask);
 
 		double systemBenchMark = calculateResult.getEstimatedBenchmark() + memoryResult.getEstimatedBenchmark();
@@ -126,7 +183,6 @@ public class BenchmarkContext implements IBenchmarkContext {
 	@Override
 	public ClassLoader getClassLoader() {
 		return ClassUtil.createClassLoader();
-		// return Thread.currentThread().getContextClassLoader();
 	}
 
 	@Override

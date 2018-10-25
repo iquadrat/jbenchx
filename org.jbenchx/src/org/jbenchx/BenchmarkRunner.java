@@ -75,7 +75,7 @@ public class BenchmarkRunner {
         continue;
       }
       
-      BenchmarkParameters params = BenchmarkParameters.read(method);
+      Benchmark.Parameters params = BenchmarkContext.getParamsFrom(method);
       if (params == null) {
         continue;
       }
@@ -85,7 +85,7 @@ public class BenchmarkRunner {
 //        continue;
 //      }
       
-      params = BenchmarkParameters.merge(context.getDefaultParams(), params);
+      params = context.getDefaultParams().toBuilder().mergeFrom(params).build();
       boolean singleRun = hasSingleRunAnnotation(method);
       
       Iterable<ParameterizationValues> methodParameterizations = getMethodArgumentsIterator(method);

@@ -13,7 +13,6 @@ import org.jbenchx.IBenchmarkContext;
 import org.jbenchx.monitor.ConsoleProgressMonitor;
 import org.jbenchx.monitor.MultiProgressMonitor;
 import org.jbenchx.result.IBenchmarkResult;
-import org.jbenchx.result.XmlResultSerializer;
 import org.jbenchx.util.StringUtil;
 
 public class RemoteRunner {
@@ -59,7 +58,8 @@ public class RemoteRunner {
       IBenchmarkContext context = BenchmarkContext.create(progressMonitor, patterns.isEmpty() ? BenchmarkContext.RUN_ALL : patterns);
       IBenchmarkResult result = runner.run(context);
       FileOutputStream out = new FileOutputStream(fileName.toString() + "-"+result.getEndTime().getTime()+ ".bench");
-      new XmlResultSerializer().serialize(result, out);
+      // FIXME
+      //new XmlResultSerializer().serialize(result, out);
 
     } catch (IOException e) {
       // TODO Auto-generated catch block

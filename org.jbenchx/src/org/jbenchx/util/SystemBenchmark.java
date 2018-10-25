@@ -4,15 +4,17 @@ import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
 
 import org.jbenchx.annotations.Bench;
+import org.jbenchx.annotations.DivideBy;
+import org.jbenchx.annotations.ForEachInt;
 
 public class SystemBenchmark {
   
   private static final int MEM_BENCH_SIZE = 8 * 1024 * 1024;
   
-  private IntBuffer        fBuffer;
+  private final IntBuffer  buffer;
   
   public SystemBenchmark() {
-    fBuffer = ByteBuffer.allocateDirect(MEM_BENCH_SIZE).asIntBuffer();
+    buffer = ByteBuffer.allocateDirect(MEM_BENCH_SIZE).asIntBuffer();
   }
   
   @Bench
@@ -23,10 +25,10 @@ public class SystemBenchmark {
   /**
    * Do some floating point number crunching.
    */
-  @Bench(divisor = 1000)
-  public double calculate() {
+  @Bench
+  public double calculate(@DivideBy @ForEachInt({1000}) int iterations) {
     double result = 0;
-    for (int i = 0; i < 1000; i++) {
+    for (int i = 0; i < iterations; i++) {
       result += 0.5 / i;
     }
     return result;
@@ -37,21 +39,21 @@ public class SystemBenchmark {
    * the same runs on a machine this is a strong indicator that other applications
    * are running concurrently.
    */
-  @Bench(divisor = MEM_BENCH_SIZE)
-  public Object memory() {
-    fBuffer.clear();
-    int size = fBuffer.capacity();
+  @Bench
+  public Object memory(@DivideBy @ForEachInt({MEM_BENCH_SIZE}) int memSize) {
+    buffer.clear();
+    int size = buffer.capacity();
     for (int i = 0; i < size; ++i) {
-      fBuffer.put(i);
+      buffer.put(i);
     }
     
     // partition in two halfs
-    fBuffer.position(size / 2);
-    IntBuffer buf1 = fBuffer.slice();
+    buffer.position(size / 2);
+    IntBuffer buf1 = buffer.slice();
     
-    fBuffer.position(0);
-    fBuffer.limit(size / 2);
-    IntBuffer buf2 = fBuffer.slice();
+    buffer.position(0);
+    buffer.limit(size / 2);
+    IntBuffer buf2 = buffer.slice();
     
     for (int i = 0; i < 10; ++i) {
       buf1.clear();
@@ -63,7 +65,7 @@ public class SystemBenchmark {
       buf2.put(buf1);
     }
     
-    return fBuffer;
+    return buffer;
   }
   
 }

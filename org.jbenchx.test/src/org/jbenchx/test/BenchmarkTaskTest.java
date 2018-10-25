@@ -8,7 +8,6 @@ import java.lang.reflect.Method;
 import java.util.regex.Pattern;
 
 import org.jbenchx.BenchmarkContext;
-import org.jbenchx.BenchmarkParameters;
 import org.jbenchx.IBenchmarkContext;
 import org.jbenchx.annotations.Bench;
 import org.jbenchx.monitor.IProgressMonitor;
@@ -38,7 +37,7 @@ public class BenchmarkTaskTest extends BenchmarkTestCase {
   @Test
   public void warningWhenIterationToFast() throws Throwable {
     Method emptyMethod = TestBench.class.getMethod("empty");
-    IBenchmarkTask task = new BenchmarkTask(TestBench.class, emptyMethod, BenchmarkParameters.getDefaults(), false, NO_ARGS, NO_ARGS);
+    IBenchmarkTask task = new BenchmarkTask(TestBench.class, emptyMethod, BenchmarkContext.getDefaultParameters(), false, NO_ARGS, NO_ARGS);
     BenchmarkResult result = new BenchmarkResult(SystemInfo.create(1, 2, 3.0));
     IBenchmarkContext context = new BenchmarkContext(IProgressMonitor.DUMMY, SystemInfo.create(10, 100, 100), BenchmarkContext.RUN_ALL);
     task.run(result, context);

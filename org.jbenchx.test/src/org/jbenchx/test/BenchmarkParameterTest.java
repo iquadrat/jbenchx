@@ -12,7 +12,7 @@ public class BenchmarkParameterTest extends BenchmarkTestCase {
 
     public void zero() {}
 
-    @Bench(divisor = 7, minRunCount = 10)
+    @Bench(minRunCount = 10)
     public void one() {}
 
     @Bench(maxDeviation = 0.01, minRunCount = 9)
@@ -21,7 +21,7 @@ public class BenchmarkParameterTest extends BenchmarkTestCase {
     @Bench(minSampleCount = 10, targetTimeNs = 1000)
     public void three() {}
 
-    @Bench(minRunCount = 100, divisor = 20)
+    @Bench(minRunCount = 100)
     public void four() {}
 
     @Bench(maxRunCount = 10, minSampleCount = 2)
@@ -41,11 +41,11 @@ public class BenchmarkParameterTest extends BenchmarkTestCase {
     public void two() {}
 
     @Override
-    @Bench(divisor = 10, maxDeviation = 0.1)
+    @Bench(maxDeviation = 0.1)
     public void four() {}
 
     @Override
-    @Bench(maxRunCount = 2, divisor = 100, targetTimeNs = 100)
+    @Bench(maxRunCount = 2, targetTimeNs = 100)
     public void five() {}
 
     @Override
@@ -66,16 +66,15 @@ public class BenchmarkParameterTest extends BenchmarkTestCase {
 
   @Test
   public void read() throws Exception {
-    assertNull(BenchmarkParameters.read(C.class.getMethod("zero")));
+    assertNull(BenchmarkContext.getParamsFrom(C.class.getMethod("zero")));
 
-    // long targetTimeNs, int divisor, int minRunCount, int maxRunCount, int minSampleCount, double maxDeviation
-    assertEquals(new BenchmarkParameters(-1, 7, 10, -1, -1, -1), BenchmarkParameters.read(C.class.getMethod("one")));
-    assertEquals(new BenchmarkParameters(-1, -1, 9, -1, -1, 0.01), BenchmarkParameters.read(C.class.getMethod("two")));
-    assertEquals(new BenchmarkParameters(1000, -1, -1, -1, 10, -1), BenchmarkParameters.read(C.class.getMethod("three")));
-    assertEquals(new BenchmarkParameters(-1, 10, 100, -1, -1, 0.1), BenchmarkParameters.read(C.class.getMethod("four")));
-    assertEquals(new BenchmarkParameters(1000, 100, -1, 1, 2, -1), BenchmarkParameters.read(C.class.getMethod("five")));
-    assertEquals(new BenchmarkParameters(-1, -1, -1, -1, -1, -1), BenchmarkParameters.read(C.class.getMethod("six")));
-    assertEquals(new BenchmarkParameters(-1, -1, 20, -1, -1, -1), BenchmarkParameters.read(C.class.getMethod("seven")));
+    assertEquals(Benchmark.Parameters.newBuilder().setMinRunCount(10).build(), BenchmarkContext.getParamsFrom(C.class.getMethod("one")));
+    assertEquals(Benchmark.Parameters.newBuilder().setMinRunCount(9).setMaxDeviation(0.01).build(), BenchmarkContext.getParamsFrom(C.class.getMethod("two")));
+    assertEquals(Benchmark.Parameters.newBuilder().setTargetTimeNs(1000).setMinSampleCount(10).build(), BenchmarkContext.getParamsFrom(C.class.getMethod("three")));
+    assertEquals(Benchmark.Parameters.newBuilder().setMinRunCount(100).setMaxDeviation(0.1).build(), BenchmarkContext.getParamsFrom(C.class.getMethod("four")));
+    assertEquals(Benchmark.Parameters.newBuilder().setMaxRunCount(1).setTargetTimeNs(1000).setMinSampleCount(2).build(), BenchmarkContext.getParamsFrom(C.class.getMethod("five")));
+    assertEquals(Benchmark.Parameters.getDefaultInstance(), BenchmarkContext.getParamsFrom(C.class.getMethod("six")));
+    assertEquals(Benchmark.Parameters.newBuilder().setMinRunCount(20).build(), BenchmarkContext.getParamsFrom(C.class.getMethod("seven")));
   }
 
 }

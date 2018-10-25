@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.jbenchx.BenchmarkParameters;
+import org.jbenchx.Benchmark;
+
 
 public class TaskResult implements ITaskResult {
   
@@ -20,15 +21,15 @@ public class TaskResult implements ITaskResult {
   
   private final double                 fDivisor;
   
-  public TaskResult(BenchmarkParameters params, BenchmarkTimings timings, long iterationCount, double divisor) {
+  public TaskResult(Benchmark.Parameters params, BenchmarkTimings timings, long iterationCount, double divisor) {
     this(params, timings, iterationCount, divisor, new BenchmarkFailure[0]);
   }
   
-  public TaskResult(BenchmarkParameters params, BenchmarkFailure... errors) {
+  public TaskResult(Benchmark.Parameters params, BenchmarkFailure... errors) {
     this(params, new BenchmarkTimings(), 0, 1.0, errors);
   }
   
-  private TaskResult(BenchmarkParameters params, BenchmarkTimings timings, long iterationCount, double divisor, BenchmarkFailure... errors) {
+  private TaskResult(Benchmark.Parameters params, BenchmarkTimings timings, long iterationCount, double divisor, BenchmarkFailure... errors) {
     fTimings = timings;
     fIterationCount = iterationCount;
     fDivisor = divisor;
@@ -37,9 +38,9 @@ public class TaskResult implements ITaskResult {
     fEstimatedBenchmark = estimateBenchmark(params);
   }
   
-  private double estimateBenchmark(BenchmarkParameters params) {
+  private double estimateBenchmark(Benchmark.Parameters params) {
     double perIterationTimeRaw = 1.0 * fTimings.getEstimatedRunTime() / fIterationCount;
-    double benchmarkTime = perIterationTimeRaw / params.getDivisor() / fDivisor;
+    double benchmarkTime = perIterationTimeRaw / fDivisor;
     return Math.max(0, benchmarkTime);
   }
   

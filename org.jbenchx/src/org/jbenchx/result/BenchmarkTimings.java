@@ -3,45 +3,45 @@ package org.jbenchx.result;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.jbenchx.BenchmarkParameters;
+import org.jbenchx.Benchmark;
 
 public class BenchmarkTimings {
   
 //  private final BenchmarkParameters fParams;
-  private final List<Timing> fTimings;
+  private final List<Timing> timings;
   
-  private long               fMinTime    = Long.MAX_VALUE;
+  private long               minTime    = Long.MAX_VALUE;
   
-  private transient boolean  fLastIsBest = true;
+  private transient boolean  lastIsBest = true;
   
   public BenchmarkTimings(/*BenchmarkParameters params*/) {
 //    fParams = params;
-    fTimings = new ArrayList<Timing>();
+    this.timings = new ArrayList<Timing>();
   }
   
   public void add(Timing timing) {
-    fTimings.add(timing);
-    if (timing.getRunTime() < fMinTime) {
-      fMinTime = timing.getRunTime();
-      fLastIsBest = true;
+    this.timings.add(timing);
+    if (timing.getRunTime() < minTime) {
+      minTime = timing.getRunTime();
+      this.lastIsBest = true;
     } else {
-      fLastIsBest = false;
+      this.lastIsBest = false;
     }
   }
   
   public List<Timing> getTimings() {
-    return fTimings;
+    return timings;
   }
   
-  public boolean needsMoreRuns(BenchmarkParameters fParams) {
-    if (getRuns() >= fParams.getMaxRunCount()) {
+  public boolean needsMoreRuns(Benchmark.Parameters params) {
+    if (getRuns() >= params.getMaxRunCount()) {
       return false;
     }
-    if (getRuns() < fParams.getMinRunCount()) {
+    if (getRuns() < params.getMinRunCount()) {
       return true;
     }
     
-    if (fLastIsBest) {
+    if (lastIsBest) {
       return true;
     }
     
@@ -55,40 +55,40 @@ public class BenchmarkTimings {
 //      }
 //    }
     
-    long maxAllowedTime = Math.round(fMinTime * (1 + fParams.getMaxDeviation()));
+    long maxAllowedTime = Math.round(minTime * (1 + params.getMaxDeviation()));
     int validSampleCount = 0;
     for (int i = 0; i < getRuns(); ++i) {
-      if (fTimings.get(i).getRunTime() <= maxAllowedTime) {
+      if (timings.get(i).getRunTime() <= maxAllowedTime) {
         validSampleCount++;
       }
     }
     
-    return validSampleCount < fParams.getMinSampleCount();
+    return validSampleCount < params.getMinSampleCount();
   }
   
   /**
    * @return estimated runtime in nanoseconds
    */
   public long getEstimatedRunTime() {
-    return fMinTime;
+    return minTime;
   }
   
   public void clear() {
-    fMinTime = Long.MAX_VALUE;
-    fLastIsBest = true;
-    fTimings.clear();
+    minTime = Long.MAX_VALUE;
+    lastIsBest = true;
+    timings.clear();
   }
   
   private int getRuns() {
-    return fTimings.size();
+    return timings.size();
   }
 
   @Override
   public int hashCode() {
     final int prime = 31;
     int result = 1;
-    result = prime * result + (int)(fMinTime ^ (fMinTime >>> 32));
-    result = prime * result + ((fTimings == null) ? 0 : fTimings.hashCode());
+    result = prime * result + (int)(minTime ^ (minTime >>> 32));
+    result = prime * result + ((timings == null) ? 0 : timings.hashCode());
     return result;
   }
 
@@ -98,10 +98,10 @@ public class BenchmarkTimings {
     if (obj == null) return false;
     if (getClass() != obj.getClass()) return false;
     BenchmarkTimings other = (BenchmarkTimings)obj;
-    if (fMinTime != other.fMinTime) return false;
-    if (fTimings == null) {
-      if (other.fTimings != null) return false;
-    } else if (!fTimings.equals(other.fTimings)) return false;
+    if (minTime != other.minTime) return false;
+    if (timings == null) {
+      if (other.timings != null) return false;
+    } else if (!timings.equals(other.timings)) return false;
     return true;
   }
   

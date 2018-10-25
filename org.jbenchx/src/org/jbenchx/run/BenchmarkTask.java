@@ -9,7 +9,7 @@ import java.util.List;
 
 import javax.annotation.CheckForNull;
 
-import org.jbenchx.BenchmarkParameters;
+import org.jbenchx.Benchmark;
 import org.jbenchx.IBenchmarkContext;
 import org.jbenchx.SkipBenchmarkException;
 import org.jbenchx.Timer;
@@ -35,7 +35,7 @@ public class BenchmarkTask implements IBenchmarkTask {
   
   protected final String                 fMethodName;
   
-  protected final BenchmarkParameters    fParams;
+  protected final Benchmark.Parameters    fParams;
   
   protected final boolean                fSingleRun;
   
@@ -45,14 +45,14 @@ public class BenchmarkTask implements IBenchmarkTask {
   
   protected final ArrayList<Class<?>>    fMethodArgumentTypes;
   
-  public BenchmarkTask(Class<?> benchmarkClass, Method method, BenchmarkParameters params, boolean singleRun,
+  public BenchmarkTask(Class<?> benchmarkClass, Method method, Benchmark.Parameters params, boolean singleRun,
       ParameterizationValues constructorArguments,
       ParameterizationValues methodArguments) {
     this(benchmarkClass.getName(), method.getName(), new ArrayList<Class<?>>(Arrays.<Class<?>>asList(method.getParameterTypes())),
         params, singleRun, constructorArguments, methodArguments);
   }
   
-  public BenchmarkTask(String className, String methodName, List<Class<?>> methodArgumentTypes, BenchmarkParameters params, boolean singleRun,
+  public BenchmarkTask(String className, String methodName, List<Class<?>> methodArgumentTypes, Benchmark.Parameters params, boolean singleRun,
       ParameterizationValues constructorArguments, ParameterizationValues methodArguments) {
     if (methodArgumentTypes.size() != methodArguments.getValues().size()) {
       throw new IllegalArgumentException("Method argument type count does not match the method arguments count: " + methodArgumentTypes.size()
@@ -70,7 +70,6 @@ public class BenchmarkTask implements IBenchmarkTask {
   @Override
   public void run(BenchmarkResult result, IBenchmarkContext context) {
     ClassLoader classLoader = context.getClassLoader();
-    //SkipBenchmarkException skipException = classLoader.loadClass(SkipBenchmarkException.class.getName()); 
     
     try {
       
@@ -121,6 +120,7 @@ public class BenchmarkTask implements IBenchmarkTask {
     SystemUtil.cleanMemory();
     VmState preState = VmState.getCurrentState();
     long runtimePerIteration = Long.MAX_VALUE;
+    int restarts = 0;
     do {
       
       if (fSingleRun) {
@@ -134,10 +134,11 @@ public class BenchmarkTask implements IBenchmarkTask {
       runtimePerIteration = Math.min(runtimePerIteration, time / iterationCount);
       
       Timing timing = new Timing(time, preGcStats, postGcStats);
-      if (preState.equals(postState)) {
+      if (preState.equals(postState) /* || restarts > fParams.getMaxRestartCount() */) {
         timings.add(timing);
       } else {
         // restart
+        restarts++;
         timings.clear();
         iterationCount = findIterationCount(benchmark, method, timerGranularity);
         runtimePerIteration = Long.MAX_VALUE;

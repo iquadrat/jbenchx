@@ -1,2 +1,2 @@
 * jsr305.jar is from JSR-305 reference implementation, see LICENSE-jsr305.txt.
-* xstream-1.4.1.jar is xstream library (http://xstream.codehaus.org), see LICENSE-xstream.txt
+* protobuf-java-3.6.1.jar is protobuf library (https://developers.google.com/protocol-buffers/), see LICENSE-protobuf.txt

@@ -1,0 +1,56 @@
+syntax = "proto3";
+
+package org.jbenchx;
+
+option java_outer_classname = "Benchmark";
+
+message Parameters {
+	int64 target_time_ns = 1;
+	int32 min_run_count = 2;
+	int32 max_run_count = 3;
+	int32 min_sample_count = 4;
+	int32 max_restart_count = 5;
+	double max_deviation = 6;
+	bool measure_memory = 7;
+}
+
+message Warning {
+	string message = 1;
+}
+
+message Failure {
+	string message = 1;
+	repeated string stack_trace = 2;
+}
+
+message GcEvent {
+	// The invocation count of this garbage collector.
+	int64 count = 1;
+	// The total time used in this garbage collector event in nanoseconds.
+	int64 time_ns = 2;
+}
+
+message GcStats {
+	// Maps GC events by name.
+	map<string, GcEvent> gc_events = 1;
+}
+
+message Timing {
+	GcStats gc_stats = 1;
+	int64 time_ns = 2;
+}
+
+message TaskResult {
+	repeated Timing timings = 1;
+	repeated Failure erros = 2;
+	repeated Warning warnings = 3;
+	int64 min_time = 4 ;
+}
+
+message Result {
+	string version = 1;
+	repeated Failure failures = 2;
+	double estimated_benchmark = 3;
+	int64 iteration_count = 4;
+	double divisor = 5;
+}
