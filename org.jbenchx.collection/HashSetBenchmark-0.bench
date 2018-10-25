@@ -1,162 +1,1997 @@
 task_result {
   task_name: "HashSetBenchmark(10).benchHashCode"
-  error {
-    stack_trace: "java.util.Collections$UnmodifiableMap.put(Collections.java:1457)"
-    stack_trace: "org.jbenchx.util.SystemUtil.getGcStats(SystemUtil.java:23)"
-    stack_trace: "org.jbenchx.run.BenchmarkTask.internalRun(BenchmarkTask.java:130)"
-    stack_trace: "org.jbenchx.run.BenchmarkTask.run(BenchmarkTask.java:73)"
-    stack_trace: "org.jbenchx.BenchmarkRunner.run(BenchmarkRunner.java:40)"
-    stack_trace: "org.jbenchx.remote.RemoteRunner.main(RemoteRunner.java:62)"
+  timing {
+    run_time_ns: 251888350
   }
+  timing {
+    gc_stats {
+      gc_events {
+        key: "PS Scavenge"
+        value {
+          count: 1
+          time_ns: 1000000
+        }
+      }
+    }
+    run_time_ns: 252004539
+  }
+  timing {
+    gc_stats {
+      gc_events {
+        key: "PS Scavenge"
+        value {
+          count: 1
+        }
+      }
+    }
+    run_time_ns: 248080860
+  }
+  timing {
+    gc_stats {
+      gc_events {
+        key: "PS Scavenge"
+        value {
+          count: 1
+          time_ns: 1000000
+        }
+      }
+    }
+    run_time_ns: 248293000
+  }
+  timing {
+    gc_stats {
+      gc_events {
+        key: "PS Scavenge"
+        value {
+          count: 1
+        }
+      }
+    }
+    run_time_ns: 247421782
+  }
+  timing {
+    gc_stats {
+      gc_events {
+        key: "PS Scavenge"
+        value {
+          count: 1
+          time_ns: 1000000
+        }
+      }
+    }
+    run_time_ns: 248098620
+  }
+  timing {
+    gc_stats {
+      gc_events {
+        key: "PS Scavenge"
+        value {
+          count: 1
+        }
+      }
+    }
+    run_time_ns: 248814728
+  }
+  timing {
+    gc_stats {
+      gc_events {
+        key: "PS Scavenge"
+        value {
+          count: 1
+          time_ns: 1000000
+        }
+      }
+    }
+    run_time_ns: 250700943
+  }
+  timing {
+    gc_stats {
+      gc_events {
+        key: "PS Scavenge"
+        value {
+          count: 1
+          time_ns: 1000000
+        }
+      }
+    }
+    run_time_ns: 249513866
+  }
+  timing {
+    gc_stats {
+      gc_events {
+        key: "PS Scavenge"
+        value {
+          count: 1
+        }
+      }
+    }
+    run_time_ns: 250960772
+  }
+  warning {
+    message: "Runtime of single iteration too short: 35ns, increase work in single iteration to run at least 60ns"
+  }
+  iteration_count: 6884908
+  divisor: 1.0
+  estimated_benchmark: 35.936831980906646
 }
 task_result {
   task_name: "HashSetBenchmark(1000).benchHashCode"
-  error {
-    stack_trace: "java.util.Collections$UnmodifiableMap.put(Collections.java:1457)"
-    stack_trace: "org.jbenchx.util.SystemUtil.getGcStats(SystemUtil.java:23)"
-    stack_trace: "org.jbenchx.run.BenchmarkTask.internalRun(BenchmarkTask.java:130)"
-    stack_trace: "org.jbenchx.run.BenchmarkTask.run(BenchmarkTask.java:73)"
-    stack_trace: "org.jbenchx.BenchmarkRunner.run(BenchmarkRunner.java:40)"
-    stack_trace: "org.jbenchx.remote.RemoteRunner.main(RemoteRunner.java:62)"
+  timing {
+    run_time_ns: 201851545
   }
+  timing {
+    run_time_ns: 202473883
+  }
+  timing {
+    run_time_ns: 199260722
+  }
+  timing {
+    run_time_ns: 199250172
+  }
+  timing {
+    run_time_ns: 200958086
+  }
+  timing {
+    run_time_ns: 200366239
+  }
+  timing {
+    run_time_ns: 208480415
+  }
+  timing {
+    run_time_ns: 202727472
+  }
+  timing {
+    run_time_ns: 199267522
+  }
+  timing {
+    run_time_ns: 201652965
+  }
+  iteration_count: 61125
+  divisor: 1.0
+  estimated_benchmark: 3259.7165153374235
 }
 task_result {
   task_name: "HashSetBenchmark(100000).benchHashCode"
-  error {
-    stack_trace: "java.util.Collections$UnmodifiableMap.put(Collections.java:1457)"
-    stack_trace: "org.jbenchx.util.SystemUtil.getGcStats(SystemUtil.java:23)"
-    stack_trace: "org.jbenchx.run.BenchmarkTask.internalRun(BenchmarkTask.java:130)"
-    stack_trace: "org.jbenchx.run.BenchmarkTask.run(BenchmarkTask.java:73)"
-    stack_trace: "org.jbenchx.BenchmarkRunner.run(BenchmarkRunner.java:40)"
-    stack_trace: "org.jbenchx.remote.RemoteRunner.main(RemoteRunner.java:62)"
+  timing {
+    run_time_ns: 188726103
   }
+  timing {
+    run_time_ns: 189563120
+  }
+  timing {
+    run_time_ns: 188171034
+  }
+  timing {
+    run_time_ns: 186540659
+  }
+  timing {
+    run_time_ns: 188440793
+  }
+  timing {
+    run_time_ns: 186260610
+  }
+  timing {
+    run_time_ns: 186489728
+  }
+  timing {
+    run_time_ns: 188103024
+  }
+  timing {
+    run_time_ns: 190643957
+  }
+  timing {
+    run_time_ns: 249499266
+  }
+  iteration_count: 136
+  divisor: 1.0
+  estimated_benchmark: 1369563.3088235294
 }
 task_result {
   task_name: "HashSetBenchmark(10).containsAll"
-  error {
-    stack_trace: "java.util.Collections$UnmodifiableMap.put(Collections.java:1457)"
-    stack_trace: "org.jbenchx.util.SystemUtil.getGcStats(SystemUtil.java:23)"
-    stack_trace: "org.jbenchx.run.BenchmarkTask.internalRun(BenchmarkTask.java:130)"
-    stack_trace: "org.jbenchx.run.BenchmarkTask.run(BenchmarkTask.java:73)"
-    stack_trace: "org.jbenchx.BenchmarkRunner.run(BenchmarkRunner.java:40)"
-    stack_trace: "org.jbenchx.remote.RemoteRunner.main(RemoteRunner.java:62)"
+  timing {
+    gc_stats {
+      gc_events {
+        key: "PS Scavenge"
+        value {
+          count: 5
+          time_ns: 2000000
+        }
+      }
+    }
+    run_time_ns: 258666579
   }
+  timing {
+    gc_stats {
+      gc_events {
+        key: "PS Scavenge"
+        value {
+          count: 4
+          time_ns: 2000000
+        }
+      }
+    }
+    run_time_ns: 254615141
+  }
+  timing {
+    gc_stats {
+      gc_events {
+        key: "PS Scavenge"
+        value {
+          count: 5
+          time_ns: 2000000
+        }
+      }
+    }
+    run_time_ns: 252441127
+  }
+  timing {
+    gc_stats {
+      gc_events {
+        key: "PS Scavenge"
+        value {
+          count: 5
+          time_ns: 2000000
+        }
+      }
+    }
+    run_time_ns: 253453115
+  }
+  timing {
+    gc_stats {
+      gc_events {
+        key: "PS Scavenge"
+        value {
+          count: 5
+          time_ns: 2000000
+        }
+      }
+    }
+    run_time_ns: 253673354
+  }
+  timing {
+    gc_stats {
+      gc_events {
+        key: "PS Scavenge"
+        value {
+          count: 4
+          time_ns: 2000000
+        }
+      }
+    }
+    run_time_ns: 254119013
+  }
+  timing {
+    gc_stats {
+      gc_events {
+        key: "PS Scavenge"
+        value {
+          count: 4
+          time_ns: 2000000
+        }
+      }
+    }
+    run_time_ns: 255394919
+  }
+  timing {
+    gc_stats {
+      gc_events {
+        key: "PS Scavenge"
+        value {
+          count: 4
+          time_ns: 1000000
+        }
+      }
+    }
+    run_time_ns: 254860920
+  }
+  timing {
+    gc_stats {
+      gc_events {
+        key: "PS Scavenge"
+        value {
+          count: 5
+          time_ns: 2000000
+        }
+      }
+    }
+    run_time_ns: 256431936
+  }
+  timing {
+    gc_stats {
+      gc_events {
+        key: "PS Scavenge"
+        value {
+          count: 4
+          time_ns: 2000000
+        }
+      }
+    }
+    run_time_ns: 253648854
+  }
+  iteration_count: 3855343
+  divisor: 1.0
+  estimated_benchmark: 65.47825368585882
 }
 task_result {
   task_name: "HashSetBenchmark(1000).containsAll"
-  error {
-    stack_trace: "java.util.Collections$UnmodifiableMap.put(Collections.java:1457)"
-    stack_trace: "org.jbenchx.util.SystemUtil.getGcStats(SystemUtil.java:23)"
-    stack_trace: "org.jbenchx.run.BenchmarkTask.internalRun(BenchmarkTask.java:130)"
-    stack_trace: "org.jbenchx.run.BenchmarkTask.run(BenchmarkTask.java:73)"
-    stack_trace: "org.jbenchx.BenchmarkRunner.run(BenchmarkRunner.java:40)"
-    stack_trace: "org.jbenchx.remote.RemoteRunner.main(RemoteRunner.java:62)"
+  timing {
+    run_time_ns: 257547973
   }
+  timing {
+    run_time_ns: 253706974
+  }
+  timing {
+    run_time_ns: 250400574
+  }
+  timing {
+    run_time_ns: 251143821
+  }
+  timing {
+    run_time_ns: 251596110
+  }
+  timing {
+    run_time_ns: 253025416
+  }
+  timing {
+    run_time_ns: 254517392
+  }
+  timing {
+    run_time_ns: 258517840
+  }
+  timing {
+    run_time_ns: 254646984
+  }
+  timing {
+    run_time_ns: 280655626
+  }
+  iteration_count: 39927
+  divisor: 1.0
+  estimated_benchmark: 6271.4597640694265
 }
 task_result {
   task_name: "HashSetBenchmark(100000).containsAll"
-  error {
-    stack_trace: "java.util.Collections$UnmodifiableMap.put(Collections.java:1457)"
-    stack_trace: "org.jbenchx.util.SystemUtil.getGcStats(SystemUtil.java:23)"
-    stack_trace: "org.jbenchx.run.BenchmarkTask.internalRun(BenchmarkTask.java:130)"
-    stack_trace: "org.jbenchx.run.BenchmarkTask.run(BenchmarkTask.java:73)"
-    stack_trace: "org.jbenchx.BenchmarkRunner.run(BenchmarkRunner.java:40)"
-    stack_trace: "org.jbenchx.remote.RemoteRunner.main(RemoteRunner.java:62)"
+  timing {
+    run_time_ns: 295827434
   }
+  timing {
+    run_time_ns: 290508749
+  }
+  timing {
+    run_time_ns: 299798452
+  }
+  timing {
+    run_time_ns: 336079959
+  }
+  timing {
+    run_time_ns: 340172878
+  }
+  timing {
+    run_time_ns: 337139866
+  }
+  timing {
+    run_time_ns: 341569094
+  }
+  timing {
+    run_time_ns: 352006205
+  }
+  timing {
+    run_time_ns: 320819913
+  }
+  timing {
+    run_time_ns: 311020790
+  }
+  iteration_count: 194
+  divisor: 1.0
+  estimated_benchmark: 1497467.7783505155
 }
 task_result {
   task_name: "HashSetBenchmark(10).containsNo"
-  error {
-    stack_trace: "java.util.Collections$UnmodifiableMap.put(Collections.java:1457)"
-    stack_trace: "org.jbenchx.util.SystemUtil.getGcStats(SystemUtil.java:23)"
-    stack_trace: "org.jbenchx.run.BenchmarkTask.internalRun(BenchmarkTask.java:130)"
-    stack_trace: "org.jbenchx.run.BenchmarkTask.run(BenchmarkTask.java:73)"
-    stack_trace: "org.jbenchx.BenchmarkRunner.run(BenchmarkRunner.java:40)"
-    stack_trace: "org.jbenchx.remote.RemoteRunner.main(RemoteRunner.java:62)"
+  timing {
+    gc_stats {
+      gc_events {
+        key: "PS Scavenge"
+        value {
+          count: 1
+          time_ns: 1000000
+        }
+      }
+    }
+    run_time_ns: 241009969
   }
+  timing {
+    gc_stats {
+      gc_events {
+        key: "PS Scavenge"
+        value {
+          count: 1
+        }
+      }
+    }
+    run_time_ns: 240447230
+  }
+  timing {
+    gc_stats {
+      gc_events {
+        key: "PS Scavenge"
+        value {
+          count: 2
+          time_ns: 2000000
+        }
+      }
+    }
+    run_time_ns: 243643401
+  }
+  timing {
+    gc_stats {
+      gc_events {
+        key: "PS Scavenge"
+        value {
+          count: 1
+        }
+      }
+    }
+    run_time_ns: 242642604
+  }
+  timing {
+    gc_stats {
+      gc_events {
+        key: "PS Scavenge"
+        value {
+          count: 1
+          time_ns: 1000000
+        }
+      }
+    }
+    run_time_ns: 242931523
+  }
+  timing {
+    gc_stats {
+      gc_events {
+        key: "PS Scavenge"
+        value {
+          count: 2
+          time_ns: 1000000
+        }
+      }
+    }
+    run_time_ns: 242840953
+  }
+  timing {
+    gc_stats {
+      gc_events {
+        key: "PS Scavenge"
+        value {
+          count: 1
+        }
+      }
+    }
+    run_time_ns: 245476016
+  }
+  timing {
+    gc_stats {
+      gc_events {
+        key: "PS Scavenge"
+        value {
+          count: 2
+          time_ns: 1000000
+        }
+      }
+    }
+    run_time_ns: 245410456
+  }
+  timing {
+    gc_stats {
+      gc_events {
+        key: "PS Scavenge"
+        value {
+          count: 1
+          time_ns: 1000000
+        }
+      }
+    }
+    run_time_ns: 244399309
+  }
+  timing {
+    gc_stats {
+      gc_events {
+        key: "PS Scavenge"
+        value {
+          count: 2
+          time_ns: 1000000
+        }
+      }
+    }
+    run_time_ns: 245615156
+  }
+  warning {
+    message: "Runtime of single iteration too short: 48ns, increase work in single iteration to run at least 60ns"
+  }
+  iteration_count: 4959874
+  divisor: 1.0
+  estimated_benchmark: 48.478495623074295
 }
 task_result {
   task_name: "HashSetBenchmark(1000).containsNo"
-  error {
-    stack_trace: "java.util.Collections$UnmodifiableMap.put(Collections.java:1457)"
-    stack_trace: "org.jbenchx.util.SystemUtil.getGcStats(SystemUtil.java:23)"
-    stack_trace: "org.jbenchx.run.BenchmarkTask.internalRun(BenchmarkTask.java:130)"
-    stack_trace: "org.jbenchx.run.BenchmarkTask.run(BenchmarkTask.java:73)"
-    stack_trace: "org.jbenchx.BenchmarkRunner.run(BenchmarkRunner.java:40)"
-    stack_trace: "org.jbenchx.remote.RemoteRunner.main(RemoteRunner.java:62)"
+  timing {
+    run_time_ns: 238191497
   }
+  timing {
+    run_time_ns: 236279601
+  }
+  timing {
+    run_time_ns: 236280942
+  }
+  timing {
+    run_time_ns: 237875287
+  }
+  timing {
+    run_time_ns: 237599598
+  }
+  timing {
+    run_time_ns: 237378068
+  }
+  timing {
+    run_time_ns: 238207556
+  }
+  timing {
+    run_time_ns: 235015296
+  }
+  timing {
+    run_time_ns: 234081138
+  }
+  timing {
+    run_time_ns: 233262380
+  }
+  iteration_count: 74090
+  divisor: 1.0
+  estimated_benchmark: 3148.365231475233
 }
 task_result {
   task_name: "HashSetBenchmark(100000).containsNo"
-  error {
-    stack_trace: "java.util.Collections$UnmodifiableMap.put(Collections.java:1457)"
-    stack_trace: "org.jbenchx.util.SystemUtil.getGcStats(SystemUtil.java:23)"
-    stack_trace: "org.jbenchx.run.BenchmarkTask.internalRun(BenchmarkTask.java:130)"
-    stack_trace: "org.jbenchx.run.BenchmarkTask.run(BenchmarkTask.java:73)"
-    stack_trace: "org.jbenchx.BenchmarkRunner.run(BenchmarkRunner.java:40)"
-    stack_trace: "org.jbenchx.remote.RemoteRunner.main(RemoteRunner.java:62)"
+  timing {
+    run_time_ns: 206656776
   }
+  timing {
+    run_time_ns: 209844877
+  }
+  timing {
+    run_time_ns: 216053909
+  }
+  timing {
+    run_time_ns: 225989461
+  }
+  timing {
+    run_time_ns: 218710872
+  }
+  timing {
+    run_time_ns: 218067743
+  }
+  timing {
+    run_time_ns: 210615794
+  }
+  timing {
+    run_time_ns: 221463864
+  }
+  timing {
+    run_time_ns: 219870889
+  }
+  timing {
+    run_time_ns: 214933133
+  }
+  iteration_count: 183
+  divisor: 1.0
+  estimated_benchmark: 1129272.0
 }
 task_result {
   task_name: "HashSetBenchmark(10).containsYes"
-  error {
-    stack_trace: "java.util.Collections$UnmodifiableMap.put(Collections.java:1457)"
-    stack_trace: "org.jbenchx.util.SystemUtil.getGcStats(SystemUtil.java:23)"
-    stack_trace: "org.jbenchx.run.BenchmarkTask.internalRun(BenchmarkTask.java:130)"
-    stack_trace: "org.jbenchx.run.BenchmarkTask.run(BenchmarkTask.java:73)"
-    stack_trace: "org.jbenchx.BenchmarkRunner.run(BenchmarkRunner.java:40)"
-    stack_trace: "org.jbenchx.remote.RemoteRunner.main(RemoteRunner.java:62)"
+  timing {
+    gc_stats {
+      gc_events {
+        key: "PS Scavenge"
+        value {
+          count: 2
+          time_ns: 1000000
+        }
+      }
+    }
+    run_time_ns: 246281413
   }
+  timing {
+    gc_stats {
+      gc_events {
+        key: "PS Scavenge"
+        value {
+          count: 2
+          time_ns: 1000000
+        }
+      }
+    }
+    run_time_ns: 244990677
+  }
+  timing {
+    gc_stats {
+      gc_events {
+        key: "PS Scavenge"
+        value {
+          count: 3
+          time_ns: 1000000
+        }
+      }
+    }
+    run_time_ns: 245645255
+  }
+  timing {
+    gc_stats {
+      gc_events {
+        key: "PS Scavenge"
+        value {
+          count: 2
+          time_ns: 1000000
+        }
+      }
+    }
+    run_time_ns: 246201414
+  }
+  timing {
+    gc_stats {
+      gc_events {
+        key: "PS Scavenge"
+        value {
+          count: 3
+          time_ns: 1000000
+        }
+      }
+    }
+    run_time_ns: 251321130
+  }
+  timing {
+    gc_stats {
+      gc_events {
+        key: "PS Scavenge"
+        value {
+          count: 2
+          time_ns: 1000000
+        }
+      }
+    }
+    run_time_ns: 250818501
+  }
+  timing {
+    gc_stats {
+      gc_events {
+        key: "PS Scavenge"
+        value {
+          count: 2
+          time_ns: 1000000
+        }
+      }
+    }
+    run_time_ns: 250038313
+  }
+  timing {
+    gc_stats {
+      gc_events {
+        key: "PS Scavenge"
+        value {
+          count: 3
+          time_ns: 2000000
+        }
+      }
+    }
+    run_time_ns: 249974423
+  }
+  timing {
+    gc_stats {
+      gc_events {
+        key: "PS Scavenge"
+        value {
+          count: 2
+        }
+      }
+    }
+    run_time_ns: 249321115
+  }
+  timing {
+    gc_stats {
+      gc_events {
+        key: "PS Scavenge"
+        value {
+          count: 3
+          time_ns: 2000000
+        }
+      }
+    }
+    run_time_ns: 250450462
+  }
+  warning {
+    message: "Runtime of single iteration too short: 38ns, increase work in single iteration to run at least 60ns"
+  }
+  iteration_count: 6335847
+  divisor: 1.0
+  estimated_benchmark: 38.66739158947494
 }
 task_result {
   task_name: "HashSetBenchmark(1000).containsYes"
-  error {
-    stack_trace: "java.util.Collections$UnmodifiableMap.put(Collections.java:1457)"
-    stack_trace: "org.jbenchx.util.SystemUtil.getGcStats(SystemUtil.java:23)"
-    stack_trace: "org.jbenchx.run.BenchmarkTask.internalRun(BenchmarkTask.java:130)"
-    stack_trace: "org.jbenchx.run.BenchmarkTask.run(BenchmarkTask.java:73)"
-    stack_trace: "org.jbenchx.BenchmarkRunner.run(BenchmarkRunner.java:40)"
-    stack_trace: "org.jbenchx.remote.RemoteRunner.main(RemoteRunner.java:62)"
+  timing {
+    run_time_ns: 249712454
   }
+  timing {
+    run_time_ns: 250198742
+  }
+  timing {
+    run_time_ns: 249599444
+  }
+  timing {
+    run_time_ns: 247382770
+  }
+  timing {
+    run_time_ns: 244609818
+  }
+  timing {
+    run_time_ns: 248219508
+  }
+  timing {
+    run_time_ns: 248772576
+  }
+  timing {
+    run_time_ns: 246704633
+  }
+  timing {
+    run_time_ns: 246541513
+  }
+  timing {
+    run_time_ns: 245678445
+  }
+  iteration_count: 59776
+  divisor: 1.0
+  estimated_benchmark: 4092.1075013383297
 }
 task_result {
   task_name: "HashSetBenchmark(100000).containsYes"
-  error {
-    stack_trace: "java.util.Collections$UnmodifiableMap.put(Collections.java:1457)"
-    stack_trace: "org.jbenchx.util.SystemUtil.getGcStats(SystemUtil.java:23)"
-    stack_trace: "org.jbenchx.run.BenchmarkTask.internalRun(BenchmarkTask.java:130)"
-    stack_trace: "org.jbenchx.run.BenchmarkTask.run(BenchmarkTask.java:73)"
-    stack_trace: "org.jbenchx.BenchmarkRunner.run(BenchmarkRunner.java:40)"
-    stack_trace: "org.jbenchx.remote.RemoteRunner.main(RemoteRunner.java:62)"
+  timing {
+    run_time_ns: 282825860
   }
+  timing {
+    run_time_ns: 280139798
+  }
+  timing {
+    run_time_ns: 270812714
+  }
+  timing {
+    run_time_ns: 288188575
+  }
+  timing {
+    run_time_ns: 295757964
+  }
+  timing {
+    run_time_ns: 309112446
+  }
+  timing {
+    run_time_ns: 317040953
+  }
+  timing {
+    run_time_ns: 332675420
+  }
+  timing {
+    run_time_ns: 328866340
+  }
+  timing {
+    run_time_ns: 330938844
+  }
+  iteration_count: 235
+  divisor: 1.0
+  estimated_benchmark: 1152394.5276595745
 }
 task_result {
   task_name: "HashSetBenchmark(10).create"
-  error {
-    stack_trace: "java.util.Collections$UnmodifiableMap.put(Collections.java:1457)"
-    stack_trace: "org.jbenchx.util.SystemUtil.getGcStats(SystemUtil.java:23)"
-    stack_trace: "org.jbenchx.run.BenchmarkTask.internalRun(BenchmarkTask.java:130)"
-    stack_trace: "org.jbenchx.run.BenchmarkTask.run(BenchmarkTask.java:73)"
-    stack_trace: "org.jbenchx.BenchmarkRunner.run(BenchmarkRunner.java:40)"
-    stack_trace: "org.jbenchx.remote.RemoteRunner.main(RemoteRunner.java:62)"
+  timing {
+    gc_stats {
+      gc_events {
+        key: "PS Scavenge"
+        value {
+          count: 7
+          time_ns: 3000000
+        }
+      }
+    }
+    run_time_ns: 259028558
   }
+  timing {
+    gc_stats {
+      gc_events {
+        key: "PS Scavenge"
+        value {
+          count: 5
+          time_ns: 3000000
+        }
+      }
+    }
+    run_time_ns: 263147125
+  }
+  timing {
+    gc_stats {
+      gc_events {
+        key: "PS Scavenge"
+        value {
+          count: 4
+          time_ns: 1000000
+        }
+      }
+    }
+    run_time_ns: 255637967
+  }
+  timing {
+    gc_stats {
+      gc_events {
+        key: "PS Scavenge"
+        value {
+          count: 6
+          time_ns: 3000000
+        }
+      }
+    }
+    run_time_ns: 256227795
+  }
+  timing {
+    gc_stats {
+      gc_events {
+        key: "PS Scavenge"
+        value {
+          count: 7
+          time_ns: 3000000
+        }
+      }
+    }
+    run_time_ns: 255142419
+  }
+  timing {
+    gc_stats {
+      gc_events {
+        key: "PS Scavenge"
+        value {
+          count: 6
+          time_ns: 2000000
+        }
+      }
+    }
+    run_time_ns: 255857317
+  }
+  timing {
+    gc_stats {
+      gc_events {
+        key: "PS Scavenge"
+        value {
+          count: 6
+          time_ns: 3000000
+        }
+      }
+    }
+    run_time_ns: 255956777
+  }
+  timing {
+    gc_stats {
+      gc_events {
+        key: "PS Scavenge"
+        value {
+          count: 6
+          time_ns: 2000000
+        }
+      }
+    }
+    run_time_ns: 256624585
+  }
+  timing {
+    gc_stats {
+      gc_events {
+        key: "PS Scavenge"
+        value {
+          count: 6
+          time_ns: 2000000
+        }
+      }
+    }
+    run_time_ns: 256399915
+  }
+  timing {
+    gc_stats {
+      gc_events {
+        key: "PS Scavenge"
+        value {
+          count: 7
+          time_ns: 3000000
+        }
+      }
+    }
+    run_time_ns: 255476647
+  }
+  warning {
+    message: "Runtime of single iteration too short: 9ns, increase work in single iteration to run at least 60ns"
+  }
+  iteration_count: 28329774
+  divisor: 1.0
+  estimated_benchmark: 9.006157938287824
 }
 task_result {
   task_name: "HashSetBenchmark(1000).create"
-  error {
-    stack_trace: "java.util.Collections$UnmodifiableMap.put(Collections.java:1457)"
-    stack_trace: "org.jbenchx.util.SystemUtil.getGcStats(SystemUtil.java:23)"
-    stack_trace: "org.jbenchx.run.BenchmarkTask.internalRun(BenchmarkTask.java:130)"
-    stack_trace: "org.jbenchx.run.BenchmarkTask.run(BenchmarkTask.java:73)"
-    stack_trace: "org.jbenchx.BenchmarkRunner.run(BenchmarkRunner.java:40)"
-    stack_trace: "org.jbenchx.remote.RemoteRunner.main(RemoteRunner.java:62)"
+  timing {
+    gc_stats {
+      gc_events {
+        key: "PS Scavenge"
+        value {
+          count: 7
+          time_ns: 2000000
+        }
+      }
+    }
+    run_time_ns: 260713373
   }
+  timing {
+    gc_stats {
+      gc_events {
+        key: "PS Scavenge"
+        value {
+          count: 7
+          time_ns: 3000000
+        }
+      }
+    }
+    run_time_ns: 259714226
+  }
+  timing {
+    gc_stats {
+      gc_events {
+        key: "PS Scavenge"
+        value {
+          count: 6
+          time_ns: 3000000
+        }
+      }
+    }
+    run_time_ns: 260964752
+  }
+  timing {
+    gc_stats {
+      gc_events {
+        key: "PS Scavenge"
+        value {
+          count: 6
+          time_ns: 2000000
+        }
+      }
+    }
+    run_time_ns: 262816897
+  }
+  timing {
+    gc_stats {
+      gc_events {
+        key: "PS Scavenge"
+        value {
+          count: 4
+          time_ns: 2000000
+        }
+      }
+    }
+    run_time_ns: 262311348
+  }
+  timing {
+    gc_stats {
+      gc_events {
+        key: "PS Scavenge"
+        value {
+          count: 5
+          time_ns: 2000000
+        }
+      }
+    }
+    run_time_ns: 260963982
+  }
+  timing {
+    gc_stats {
+      gc_events {
+        key: "PS Scavenge"
+        value {
+          count: 7
+          time_ns: 3000000
+        }
+      }
+    }
+    run_time_ns: 264385862
+  }
+  timing {
+    gc_stats {
+      gc_events {
+        key: "PS Scavenge"
+        value {
+          count: 6
+          time_ns: 2000000
+        }
+      }
+    }
+    run_time_ns: 261583840
+  }
+  timing {
+    gc_stats {
+      gc_events {
+        key: "PS Scavenge"
+        value {
+          count: 7
+          time_ns: 3000000
+        }
+      }
+    }
+    run_time_ns: 261741059
+  }
+  timing {
+    gc_stats {
+      gc_events {
+        key: "PS Scavenge"
+        value {
+          count: 6
+          time_ns: 3000000
+        }
+      }
+    }
+    run_time_ns: 261507311
+  }
+  warning {
+    message: "Runtime of single iteration too short: 8ns, increase work in single iteration to run at least 60ns"
+  }
+  iteration_count: 28917493
+  divisor: 1.0
+  estimated_benchmark: 8.981215141990353
 }
 task_result {
   task_name: "HashSetBenchmark(100000).create"
-  error {
-    stack_trace: "java.util.Collections$UnmodifiableMap.put(Collections.java:1457)"
-    stack_trace: "org.jbenchx.util.SystemUtil.getGcStats(SystemUtil.java:23)"
-    stack_trace: "org.jbenchx.run.BenchmarkTask.internalRun(BenchmarkTask.java:130)"
-    stack_trace: "org.jbenchx.run.BenchmarkTask.run(BenchmarkTask.java:73)"
-    stack
+  timing {
+    gc_stats {
+      gc_events {
+        key: "PS Scavenge"
+        value {
+          count: 6
+          time_ns: 3000000
+        }
+      }
+    }
+    run_time_ns: 274030405
+  }
+  timing {
+    gc_stats {
+      gc_events {
+        key: "PS Scavenge"
+        value {
+          count: 6
+          time_ns: 2000000
+        }
+      }
+    }
+    run_time_ns: 267737273
+  }
+  timing {
+    gc_stats {
+      gc_events {
+        key: "PS Scavenge"
+        value {
+          count: 6
+          time_ns: 3000000
+        }
+      }
+    }
+    run_time_ns: 264106513
+  }
+  timing {
+    gc_stats {
+      gc_events {
+        key: "PS Scavenge"
+        value {
+          count: 6
+          time_ns: 2000000
+        }
+      }
+    }
+    run_time_ns: 268188202
+  }
+  timing {
+    gc_stats {
+      gc_events {
+        key: "PS Scavenge"
+        value {
+          count: 6
+          time_ns: 3000000
+        }
+      }
+    }
+    run_time_ns: 265444599
+  }
+  timing {
+    gc_stats {
+      gc_events {
+        key: "PS Scavenge"
+        value {
+          count: 7
+          time_ns: 4000000
+        }
+      }
+    }
+    run_time_ns: 264798001
+  }
+  timing {
+    gc_stats {
+      gc_events {
+        key: "PS Scavenge"
+        value {
+          count: 3
+          time_ns: 1000000
+        }
+      }
+    }
+    run_time_ns: 262536507
+  }
+  timing {
+    gc_stats {
+      gc_events {
+        key: "PS Scavenge"
+        value {
+          count: 3
+          time_ns: 2000000
+        }
+      }
+    }
+    run_time_ns: 262231338
+  }
+  timing {
+    gc_stats {
+      gc_events {
+        key: "PS Scavenge"
+        value {
+          count: 4
+          time_ns: 1000000
+        }
+      }
+    }
+    run_time_ns: 262596977
+  }
+  timing {
+    gc_stats {
+      gc_events {
+        key: "PS Scavenge"
+        value {
+          count: 5
+          time_ns: 3000000
+        }
+      }
+    }
+    run_time_ns: 263067646
+  }
+  warning {
+    message: "Runtime of single iteration too short: 8ns, increase work in single iteration to run at least 60ns"
+  }
+  iteration_count: 29206843
+  divisor: 1.0
+  estimated_benchmark: 8.978421187117005
+}
+task_result {
+  task_name: "HashSetBenchmark(10).isEmpty"
+  timing {
+    gc_stats {
+      gc_events {
+        key: "PS Scavenge"
+        value {
+          count: 3
+          time_ns: 1000000
+        }
+      }
+    }
+    run_time_ns: 255842476
+  }
+  timing {
+    gc_stats {
+      gc_events {
+        key: "PS Scavenge"
+        value {
+          count: 3
+          time_ns: 1000000
+        }
+      }
+    }
+    run_time_ns: 256790414
+  }
+  timing {
+    gc_stats {
+      gc_events {
+        key: "PS Scavenge"
+        value {
+          count: 3
+          time_ns: 2000000
+        }
+      }
+    }
+    run_time_ns: 256677475
+  }
+  timing {
+    gc_stats {
+      gc_events {
+        key: "PS Scavenge"
+        value {
+          count: 3
+          time_ns: 1000000
+        }
+      }
+    }
+    run_time_ns: 256400785
+  }
+  timing {
+    gc_stats {
+      gc_events {
+        key: "PS Scavenge"
+        value {
+          count: 3
+          time_ns: 1000000
+        }
+      }
+    }
+    run_time_ns: 257452782
+  }
+  timing {
+    gc_stats {
+      gc_events {
+        key: "PS Scavenge"
+        value {
+          count: 4
+          time_ns: 2000000
+        }
+      }
+    }
+    run_time_ns: 258085640
+  }
+  timing {
+    gc_stats {
+      gc_events {
+        key: "PS Scavenge"
+        value {
+          count: 5
+          time_ns: 2000000
+        }
+      }
+    }
+    run_time_ns: 257929150
+  }
+  timing {
+    gc_stats {
+      gc_events {
+        key: "PS Scavenge"
+        value {
+          count: 4
+          time_ns: 1000000
+        }
+      }
+    }
+    run_time_ns: 256413105
+  }
+  timing {
+    gc_stats {
+      gc_events {
+        key: "PS Scavenge"
+        value {
+          count: 6
+          time_ns: 3000000
+        }
+      }
+    }
+    run_time_ns: 257396372
+  }
+  timing {
+    gc_stats {
+      gc_events {
+        key: "PS Scavenge"
+        value {
+          count: 6
+          time_ns: 3000000
+        }
+      }
+    }
+    run_time_ns: 258878468
+  }
+  warning {
+    message: "Runtime of single iteration too short: 6ns, increase work in single iteration to run at least 60ns"
+  }
+  iteration_count: 37363062
+  divisor: 1.0
+  estimated_benchmark: 6.84747079883335
+}
+task_result {
+  task_name: "HashSetBenchmark(1000).isEmpty"
+  timing {
+    gc_stats {
+      gc_events {
+        key: "PS Scavenge"
+        value {
+          count: 4
+          time_ns: 10000000
+        }
+      }
+    }
+    run_time_ns: 263719974
+  }
+  timing {
+    gc_stats {
+      gc_events {
+        key: "PS Scavenge"
+        value {
+          count: 2
+          time_ns: 1000000
+        }
+      }
+    }
+    run_time_ns: 257064753
+  }
+  timing {
+    gc_stats {
+      gc_events {
+        key: "PS Scavenge"
+        value {
+          count: 2
+        }
+      }
+    }
+    run_time_ns: 255725596
+  }
+  timing {
+    gc_stats {
+      gc_events {
+        key: "PS Scavenge"
+        value {
+          count: 1
+          time_ns: 1000000
+        }
+      }
+    }
+    run_time_ns: 255410738
+  }
+  timing {
+    gc_stats {
+      gc_events {
+        key: "PS Scavenge"
+        value {
+          count: 2
+          time_ns: 1000000
+        }
+      }
+    }
+    run_time_ns: 255972156
+  }
+  timing {
+    gc_stats {
+      gc_events {
+        key: "PS Scavenge"
+        value {
+          count: 1
+        }
+      }
+    }
+    run_time_ns: 255303268
+  }
+  timing {
+    gc_stats {
+      gc_events {
+        key: "PS Scavenge"
+        value {
+          count: 2
+          time_ns: 1000000
+        }
+      }
+    }
+    run_time_ns: 256185766
+  }
+  timing {
+    gc_stats {
+      gc_events {
+        key: "PS Scavenge"
+        value {
+          count: 1
+        }
+      }
+    }
+    run_time_ns: 255583927
+  }
+  timing {
+    gc_stats {
+      gc_events {
+        key: "PS Scavenge"
+        value {
+          count: 2
+          time_ns: 1000000
+        }
+      }
+    }
+    run_time_ns: 253728482
+  }
+  timing {
+    gc_stats {
+      gc_events {
+        key: "PS Scavenge"
+        value {
+          count: 2
+          time_ns: 1000000
+        }
+      }
+    }
+    run_time_ns: 252428256
+  }
+  warning {
+    message: "Runtime of single iteration too short: 6ns, increase work in single iteration to run at least 60ns"
+  }
+  iteration_count: 37341731
+  divisor: 1.0
+  estimated_benchmark: 6.759950576474347
+}
+task_result {
+  task_name: "HashSetBenchmark(100000).isEmpty"
+  timing {
+    gc_stats {
+      gc_events {
+        key: "PS Scavenge"
+        value {
+          count: 1
+          time_ns: 1000000
+        }
+      }
+    }
+    run_time_ns: 255120789
+  }
+  timing {
+    gc_stats {
+      gc_events {
+        key: "PS Scavenge"
+        value {
+          count: 2
+          time_ns: 1000000
+        }
+      }
+    }
+    run_time_ns: 256181346
+  }
+  timing {
+    gc_stats {
+      gc_events {
+        key: "PS Scavenge"
+        value {
+          count: 2
+          time_ns: 1000000
+        }
+      }
+    }
+    run_time_ns: 259979295
+  }
+  timing {
+    gc_stats {
+      gc_events {
+        key: "PS Scavenge"
+        value {
+          count: 2
+          time_ns: 1000000
+        }
+      }
+    }
+    run_time_ns: 256712134
+  }
+  timing {
+    gc_stats {
+      gc_events {
+        key: "PS Scavenge"
+        value {
+          count: 3
+          time_ns: 1000000
+        }
+      }
+    }
+    run_time_ns: 258022820
+  }
+  timing {
+    gc_stats {
+      gc_events {
+        key: "PS Scavenge"
+        value {
+          count: 2
+          time_ns: 1000000
+        }
+      }
+    }
+    run_time_ns: 260636783
+  }
+  timing {
+    gc_stats {
+      gc_events {
+        key: "PS Scavenge"
+        value {
+          count: 3
+          time_ns: 1000000
+        }
+      }
+    }
+    run_time_ns: 257201332
+  }
+  timing {
+    gc_stats {
+      gc_events {
+        key: "PS Scavenge"
+        value {
+          count: 3
+          time_ns: 2000000
+        }
+      }
+    }
+    run_time_ns: 256974583
+  }
+  timing {
+    gc_stats {
+      gc_events {
+        key: "PS Scavenge"
+        value {
+          count: 3
+          time_ns: 1000000
+        }
+      }
+    }
+    run_time_ns: 257823851
+  }
+  timing {
+    gc_stats {
+      gc_events {
+        key: "PS Scavenge"
+        value {
+          count: 4
+          time_ns: 2000000
+        }
+      }
+    }
+    run_time_ns: 258200180
+  }
+  warning {
+    message: "Runtime of single iteration too short: 6ns, increase work in single iteration to run at least 60ns"
+  }
+  iteration_count: 37471075
+  divisor: 1.0
+  estimated_benchmark: 6.808472641897784
+}
+task_result {
+  task_name: "HashSetBenchmark(10).iterate"
+  timing {
+    run_time_ns: 251549199
+  }
+  timing {
+    gc_stats {
+      gc_events {
+        key: "PS Scavenge"
+        value {
+          count: 1
+        }
+      }
+    }
+    run_time_ns: 251246000
+  }
+  timing {
+    gc_stats {
+      gc_events {
+        key: "PS Scavenge"
+        value {
+          count: 1
+          time_ns: 1000000
+        }
+      }
+    }
+    run_time_ns: 250787531
+  }
+  timing {
+    run_time_ns: 249640734
+  }
+  timing {
+    gc_stats {
+      gc_events {
+        key: "PS Scavenge"
+        value {
+          count: 1
+        }
+      }
+    }
+    run_time_ns: 252998105
+  }
+  timing {
+    gc_stats {
+      gc_events {
+        key: "PS Scavenge"
+        value {
+          count: 1
+        }
+      }
+    }
+    run_time_ns: 249604925
+  }
+  timing {
+    gc_stats {
+      gc_events {
+        key: "PS Scavenge"
+        value {
+          count: 1
+          time_ns: 1000000
+        }
+      }
+    }
+    run_time_ns: 248263688
+  }
+  timing {
+    run_time_ns: 247373030
+  }
+  timing {
+    gc_stats {
+      gc_events {
+        key: "PS Scavenge"
+        value {
+          count: 1
+        }
+      }
+    }
+    run_time_ns: 247208821
+  }
+  timing {
+    gc_stats {
+      gc_events {
+        key: "PS Scavenge"
+        value {
+          count: 1
+          time_ns: 1000000
+        }
+      }
+    }
+    run_time_ns: 249013016
+  }
+  warning {
+    message: "Runtime of single iteration too short: 38ns, increase work in single iteration to run at least 60ns"
+  }
+  iteration_count: 6444767
+  divisor: 1.0
+  estimated_benchmark: 38.35806957800026
+}
+task_result {
+  task_name: "HashSetBenchmark(1000).iterate"
+  timing {
+    run_time_ns: 234553437
+  }
+  timing {
+    run_time_ns: 232143824
+  }
+  timing {
+    run_time_ns: 232046414
+  }
+  timing {
+    run_time_ns: 232169914
+  }
+  timing {
+    run_time_ns: 231002787
+  }
+  timing {
+    run_time_ns: 232297554
+  }
+  timing {
+    run_time_ns: 232850722
+  }
+  timing {
+    run_time_ns: 232776862
+  }
+  timing {
+    run_time_ns: 236260972
+  }
+  timing {
+    run_time_ns: 234834576
+  }
+  iteration_count: 73545
+  divisor: 1.0
+  estimated_benchmark: 3140.972017132368
+}
+task_result {
+  task_name: "HashSetBenchmark(100000).iterate"
+  timing {
+    run_time_ns: 185759775
+  }
+  timing {
+    run_time_ns: 184415379
+  }
+  timing {
+    run_time_ns: 187830779
+  }
+  timing {
+    run_time_ns: 187511100
+  }
+  timing {
+    run_time_ns: 185894714
+  }
+  timing {
+    run_time_ns: 187100761
+  }
+  timing {
+    run_time_ns: 185483275
+  }
+  timing {
+    run_time_ns: 192994964
+  }
+  timing {
+    run_time_ns: 187074011
+  }
+  timing {
+    run_time_ns: 187209680
+  }
+  iteration_count: 119
+  divisor: 1.0
+  estimated_benchmark: 1549709.0672268907
+}
+task_result {
+  task_name: "HashSetBenchmark(10).size"
+  timing {
+    gc_stats {
+      gc_events {
+        key: "PS Scavenge"
+        value {
+          count: 4
+          time_ns: 2000000
+        }
+      }
+    }
+    run_time_ns: 249474995
+  }
+  timing {
+    gc_stats {
+      gc_events {
+        key: "PS Scavenge"
+        value {
+          count: 4
+          time_ns: 2000000
+        }
+      }
+    }
+    run_time_ns: 248470197
+  }
+  timing {
+    gc_stats {
+      gc_events {
+        key: "PS Scavenge"
+        value {
+          count: 5
+          time_ns: 2000000
+        }
+      }
+    }
+    run_time_ns: 249279115
+  }
+  timing {
+    gc_stats {
+      gc_events {
+        key: "PS Scavenge"
+        value {
+          count: 6
+          time_ns: 3000000
+        }
+      }
+    }
+    run_time_ns: 249132216
+  }
+  timing {
+    gc_stats {
+      gc_events {
+        key: "PS Scavenge"
+        value {
+          count: 6
+          time_ns: 2000000
+        }
+      }
+    }
+    run_time_ns: 249988603
+  }
+  timing {
+    gc_stats {
+      gc_events {
+        key: "PS Scavenge"
+        value {
+          count: 3
+          time_ns: 3000000
+        }
+      }
+    }
+    run_time_ns: 250606812
+  }
+  timing {
+    gc_stats {
+      gc_events {
+        key: "PS Scavenge"
+        value {
+          count: 3
+          time_ns: 1000000
+        }
+      }
+    }
+    run_time_ns: 248843337
+  }
+  timing {
+    gc_stats {
+      gc_events {
+        key: "PS Scavenge"
+        value {
+          count: 2
+          time_ns: 8000000
+        }
+      }
+    }
+    run_time_ns: 254697440
+  }
+  timing {
+    gc_stats {
+      gc_events {
+        key: "PS Scavenge"
+        value {
+          count: 2
+        }
+      }
+    }
+    run_time_ns: 250810191
+  }
+  timing {
+    gc_stats {
+      gc_events {
+        key: "PS Scavenge"
+        value {
+          count: 1
+          time_ns: 1000000
+        }
+      }
+    }
+    run_time_ns: 266692055
+  }
+  warning {
+    message: "Runtime of single iteration too short: 7ns, increase work in single iteration to run at least 60ns"
+  }
+  iteration_count: 35098112
+  divisor: 1.0
+  estimated_benchmark: 7.079303781354393
+}
+task_result {
+  task_name: "HashSetBenchmark(1000).size"
+  timing {
+    gc_stats {
+      gc_events {
+        key: "PS Scavenge"
+        value {
+          count: 2
+          time_ns: 1000000
+        }
+      }
+    }
+    run_time_ns: 245147736
+  }
+  timing {
+    gc_stats {
+      gc_events {
+        key: "PS Scavenge"
+        value {
+          count: 1
+        }
+      }
+    }
+    run_time_ns: 245928385
+  }
+  timing {
+    gc_stats {
+      gc_events {
+        key: "PS Scavenge"
+        value {
+          count: 2
+          time_ns: 1000000
+        }
+      }
+    }
+    run_time_ns: 246750443
+  }
+  timing {
+    gc_stats {
+      gc_events {
+        key: "PS Scavenge"
+        value {
+          count: 2
+          time_ns: 1000000
+        }
+      }
+    }
+    run_time_ns: 246692393
+  }
+  timing {
+    gc_stats {
+      gc_events {
+        key: "PS Scavenge"
+        value {
+          count: 2
+          time_ns: 1000000
+        }
+      }
+    }
+    run_time_ns: 245721155
+  }
+  timing {
+    gc_stats {
+      gc_events {
+        key: "PS Scavenge"
+        value {
+          count: 3
+          time_ns: 1000000
+        }
+      }
+    }
+    run_time_ns: 247033231
+  }
+  timing {
+    gc_stats {
+      gc_events {
+        key: "PS Scavenge"
+        value {
+          count: 2
+          time_ns: 1000000
+        }
+      }
+    }
+    run_time_ns: 247080841
+  }
+  timing {
+    gc_stats {
+      gc_events {
+        key: "PS Scavenge"
+        value {
+          count: 3
+          time_ns: 1000000
+        }
+      }
+    }
+    run_time_ns: 246349663
+  }
+  timing {
+    gc_stats {
+      gc_events {
+        key: "PS Scavenge"
+        value {
+          count: 3
+          time_ns: 1000000
+        }
+      }
+    }
+    run_time_ns: 246636333
+  }
+  timing {
+    gc_stats {
+      gc_events {
+        key: "PS Scavenge"
+        value {
+          count: 3
+          time_ns: 2000000
+        }
+      }
+    }
+    run_time_ns: 246799462
+  }
+  warning {
+    message: "Runtime of single iteration too short: 7ns, increase work in single iteration to run at least 60ns"
+  }
+  iteration_count: 34727974
+  divisor: 1.0
+  estimated_benchmark: 7.059085450824169
+}
+task_result {
+  task_name: "HashSetBenchmark(100000).size"
+  timing {
+    gc_stats {
+      gc_events {
+        key: "PS Scavenge"
+        value {
+          count: 1
+        }
+      }
+    }
+    run_time_ns: 260454713
+  }
+  timing {
+    gc_stats {
+      g

@@ -8,25 +8,32 @@ public class VmState {
   
   public static final VmState EMPTY = new VmState(0, 0, 0);
   
-  private final long          fClassesLoaded;
-  private final long          fClassesUnloaded;
-  private final long          fCompilationTime;
+  private final long          classesLoaded;
+  
+  private final long          classesUnloaded;
+  
+  private final long          compilationTimeMs;
   
   public static VmState getCurrentState() {
     ClassLoadingMXBean loadBean = ManagementFactory.getClassLoadingMXBean();
-    long fClassesLoaded = loadBean.getTotalLoadedClassCount();
-    long fClassesUnloaded = loadBean.getUnloadedClassCount();
-    long fCompilationTime = getCompilationTime();
-    return new VmState(fClassesLoaded, fClassesUnloaded, fCompilationTime);
+    long classesLoaded = loadBean.getTotalLoadedClassCount();
+    long classesUnloaded = loadBean.getUnloadedClassCount();
+    long compilationTimeMs = getCompilationTimeMs();
+    return new VmState(classesLoaded, classesUnloaded, compilationTimeMs);
   }
   
   protected VmState(long classesLoaded, long classesUnloaded, long compilationTime) {
-    fClassesLoaded = classesLoaded;
-    fClassesUnloaded = classesUnloaded;
-    fCompilationTime = compilationTime;
+    this.classesLoaded = classesLoaded;
+    this.classesUnloaded = classesUnloaded;
+    this.compilationTimeMs = compilationTime;
   }
   
-  private static long getCompilationTime() {
+  public static VmState difference(VmState preState, VmState postState) {
+    return new VmState(postState.classesUnloaded - preState.classesUnloaded, postState.classesLoaded - preState.classesLoaded,
+        postState.compilationTimeMs - preState.compilationTimeMs);
+  }
+  
+  private static long getCompilationTimeMs() {
     CompilationMXBean compBean = ManagementFactory.getCompilationMXBean();
     if (compBean.isCompilationTimeMonitoringSupported()) {
       return compBean.getTotalCompilationTime();
@@ -38,9 +45,9 @@ public class VmState {
   public int hashCode() {
     final int prime = 31;
     int result = 1;
-    result = prime * result + (int)(fClassesLoaded ^ (fClassesLoaded >>> 32));
-    result = prime * result + (int)(fClassesUnloaded ^ (fClassesUnloaded >>> 32));
-    result = prime * result + (int)(fCompilationTime ^ (fCompilationTime >>> 32));
+    result = prime * result + (int)(classesLoaded ^ (classesLoaded >>> 32));
+    result = prime * result + (int)(classesUnloaded ^ (classesUnloaded >>> 32));
+    result = prime * result + (int)(compilationTimeMs ^ (compilationTimeMs >>> 32));
     return result;
   }
   
@@ -50,20 +57,15 @@ public class VmState {
     if (obj == null) return false;
     if (getClass() != obj.getClass()) return false;
     VmState other = (VmState)obj;
-    if (fClassesLoaded != other.fClassesLoaded) return false;
-    if (fClassesUnloaded != other.fClassesUnloaded) return false;
-    if (fCompilationTime != other.fCompilationTime) return false;
+    if (classesLoaded != other.classesLoaded) return false;
+    if (classesUnloaded != other.classesUnloaded) return false;
+    if (compilationTimeMs != other.compilationTimeMs) return false;
     return true;
   }
   
   @Override
   public String toString() {
-    return "Classes: " + fClassesLoaded + " loaded, " + fClassesUnloaded + " unloaded; used " + fCompilationTime + " to compile.";
-  }
-  
-  public static VmState difference(VmState preState, VmState postState) {
-    return new VmState(postState.fClassesUnloaded - preState.fClassesUnloaded, postState.fClassesLoaded - preState.fClassesLoaded,
-        postState.fCompilationTime - preState.fCompilationTime);
+    return "Classes: " + classesLoaded + " loaded, " + classesUnloaded + " unloaded; used " + compilationTimeMs + " to compile.";
   }
   
 }

@@ -10,13 +10,13 @@ import java.util.List;
 import javax.annotation.CheckForNull;
 
 import org.jbenchx.Benchmark;
+import org.jbenchx.Benchmark.SystemInfo;
 import org.jbenchx.IBenchmarkContext;
 import org.jbenchx.SkipBenchmarkException;
 import org.jbenchx.Timer;
 import org.jbenchx.result.ResultUtil;
 import org.jbenchx.util.SystemUtil;
 import org.jbenchx.util.TimeUtil;
-import org.jbenchx.vm.SystemInfo;
 import org.jbenchx.vm.VmState;
 
 // TODO extract proper base class
@@ -106,9 +106,9 @@ public class BenchmarkTask implements IBenchmarkTask {
     long timerGranularity = 10 * TimeUtil.MS;
     long methodInvokeTime = 0;
     SystemInfo systemInfo = context.getSystemInfo();
-    if (systemInfo != null) {
-      timerGranularity = systemInfo.getTimerGranularity();
-      methodInvokeTime = systemInfo.getMethodInvokeTime();
+    if (systemInfo.getTimerGranularityNs() > 0 && systemInfo.getMethodInvokeTimeNs() > 0) {
+      timerGranularity = systemInfo.getTimerGranularityNs();
+      methodInvokeTime = systemInfo.getMethodInvokeTimeNs();
     }
     
     Object benchmark = createInstance(classLoader);

@@ -9,8 +9,8 @@ import java.util.regex.Pattern;
 
 import javax.annotation.CheckForNull;
 
+import org.jbenchx.Benchmark.SystemInfo;
 import org.jbenchx.monitor.IProgressMonitor;
-import org.jbenchx.vm.SystemInfo;
 
 public interface IBenchmarkContext {
   

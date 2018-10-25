@@ -16,7 +16,7 @@ import org.jbenchx.monitor.IProgressMonitor;
 import org.jbenchx.run.BenchmarkTask;
 import org.jbenchx.run.IBenchmarkTask;
 import org.jbenchx.run.ParameterizationValues;
-import org.jbenchx.vm.SystemInfo;
+import org.jbenchx.util.SystemUtil;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -38,7 +38,7 @@ public class BenchmarkTaskTest extends BenchmarkTestCase {
   public void warningWhenIterationToFast() throws Throwable {
     Method emptyMethod = TestBench.class.getMethod("empty");
     IBenchmarkTask task = new BenchmarkTask(TestBench.class, emptyMethod, Benchmarks.getDefaultParameters(), false, NO_ARGS, NO_ARGS);
-    IBenchmarkContext context = new BenchmarkContext(IProgressMonitor.DUMMY, SystemInfo.create(10, 100, 100), BenchmarkContext.RUN_ALL);
+    IBenchmarkContext context = new BenchmarkContext(IProgressMonitor.DUMMY, SystemUtil.getSystemInfo(10, 100, 100), BenchmarkContext.RUN_ALL);
     TaskResult taskResult = task.run(context);
     if (!taskResult.getErrorList().isEmpty()) {
       Assert.fail(taskResult.getErrorList().toString());

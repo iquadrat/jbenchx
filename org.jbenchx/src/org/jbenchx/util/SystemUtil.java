@@ -2,6 +2,7 @@ package org.jbenchx.util;
 
 import java.lang.management.GarbageCollectorMXBean;
 import java.lang.management.ManagementFactory;
+import java.lang.management.MemoryUsage;
 
 import org.jbenchx.Benchmark;
 import org.jbenchx.Benchmark.GcEvent;
@@ -32,6 +33,19 @@ public class SystemUtil {
   public static long getUsedMemory() {
     Runtime runtime = Runtime.getRuntime();
     return runtime.totalMemory() - runtime.freeMemory();
+  }
+  
+  public static Benchmark.SystemInfo getSystemInfo(long timerGranularityNs, long methodInvokeTimeNs, double systemBenchMark) {
+    Benchmark.SystemInfo.Builder builder = Benchmark.SystemInfo.newBuilder();
+    builder.setTimerGranularityNs(timerGranularityNs);
+    builder.setMethodInvokeTimeNs(methodInvokeTimeNs);
+    builder.setSystemBenchmark(systemBenchMark);
+    builder.setOsInfo(System.getProperty("os.name"));
+    builder.setOsVersion(System.getProperty("os.version"));
+    builder.setCpuCount(ManagementFactory.getOperatingSystemMXBean().getAvailableProcessors());
+    MemoryUsage heapMemoryUsage = ManagementFactory.getMemoryMXBean().getHeapMemoryUsage();
+    builder.setMaxHeapSize(heapMemoryUsage.getMax());
+    return builder.build();
   }
   
 //  public static long estimateMethodInvokeTime() throws Exception {

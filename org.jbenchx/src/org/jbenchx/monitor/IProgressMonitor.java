@@ -1,9 +1,9 @@
 package org.jbenchx.monitor;
 
 import org.jbenchx.Benchmark;
+import org.jbenchx.Benchmark.SystemInfo;
 import org.jbenchx.Benchmark.TaskResult;
 import org.jbenchx.run.IBenchmarkTask;
-import org.jbenchx.vm.SystemInfo;
 import org.jbenchx.vm.VmState;
 
 public interface IProgressMonitor {

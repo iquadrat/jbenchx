@@ -3,10 +3,10 @@ package org.jbenchx.monitor;
 import java.io.PrintWriter;
 
 import org.jbenchx.Benchmark;
+import org.jbenchx.Benchmark.SystemInfo;
 import org.jbenchx.Benchmark.TaskResult;
 import org.jbenchx.run.IBenchmarkTask;
 import org.jbenchx.util.TimeUtil;
-import org.jbenchx.vm.SystemInfo;
 import org.jbenchx.vm.VmState;
 
 public class ConsoleProgressMonitor implements IProgressMonitor {

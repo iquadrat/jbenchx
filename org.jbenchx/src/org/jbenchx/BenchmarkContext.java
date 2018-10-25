@@ -6,16 +6,16 @@ import java.util.Collection;
 import java.util.List;
 import java.util.regex.Pattern;
 
-import javax.annotation.CheckForNull;
-
 import org.jbenchx.Benchmark.Parameters;
+import org.jbenchx.Benchmark.SystemInfo;
 import org.jbenchx.monitor.IProgressMonitor;
 import org.jbenchx.result.ResultUtil;
 import org.jbenchx.util.ClassUtil;
+import org.jbenchx.util.ObjectUtil;
 import org.jbenchx.util.StringUtil;
 import org.jbenchx.util.SystemBenchmark;
+import org.jbenchx.util.SystemUtil;
 import org.jbenchx.util.TimeUtil;
-import org.jbenchx.vm.SystemInfo;
 
 // TODO create builder
 public class BenchmarkContext implements IBenchmarkContext {
@@ -26,47 +26,46 @@ public class BenchmarkContext implements IBenchmarkContext {
 		RUN_ALL.add(StringUtil.wildCardToRegexpPattern("*"));
 	}
 
-	public static final String VERSION = "0.3.1";
+	public static final String VERSION = "0.4.0";
 
-	private final IProgressMonitor fProgressMonitor;
+	private final IProgressMonitor progressMonitor;
 
-	private final Benchmark.Parameters fDefaultParams;
+	private final Benchmark.Parameters defaultParams;
 
-	@CheckForNull
-	private final SystemInfo fSystemInfo;
+	private final SystemInfo systemInfo;
 
 	private final List<Pattern> fTagPatterns;
 
-	public BenchmarkContext(IProgressMonitor progressMonitor, @CheckForNull SystemInfo systemInfo) {
+	public BenchmarkContext(IProgressMonitor progressMonitor, SystemInfo systemInfo) {
 		this(progressMonitor, systemInfo, RUN_ALL);
 	}
 
-	public BenchmarkContext(IProgressMonitor progressMonitor, @CheckForNull SystemInfo systemInfo,
+	public BenchmarkContext(IProgressMonitor progressMonitor, SystemInfo systemInfo,
 			List<Pattern> patterns) {
 		this(progressMonitor, systemInfo, patterns, Benchmarks.getDefaultParameters());
 	}
 
-	public BenchmarkContext(IProgressMonitor progressMonitor, @CheckForNull SystemInfo systemInfo,
+	public BenchmarkContext(IProgressMonitor progressMonitor, SystemInfo systemInfo,
 			List<Pattern> patterns, Benchmark.Parameters defaultParams) {
-		fProgressMonitor = progressMonitor;
-		fSystemInfo = systemInfo;
-		fDefaultParams = defaultParams;
-		fTagPatterns = new ArrayList<>(patterns);
+		this.progressMonitor = ObjectUtil.checkNotNull(progressMonitor);
+		this.systemInfo = ObjectUtil.checkNotNull(systemInfo);
+		this.defaultParams = ObjectUtil.checkNotNull(defaultParams);
+		this.fTagPatterns = new ArrayList<>(patterns);
 	}
 
 	@Override
 	public Benchmark.Parameters getDefaultParams() {
-		return fDefaultParams;
+		return defaultParams;
 	}
 
 	@Override
 	public IProgressMonitor getProgressMonitor() {
-		return fProgressMonitor;
+		return progressMonitor;
 	}
 
 	@Override
 	public SystemInfo getSystemInfo() {
-		return fSystemInfo;
+		return systemInfo;
 	}
 
 	@Override
@@ -93,7 +92,7 @@ public class BenchmarkContext implements IBenchmarkContext {
 	public static IBenchmarkContext create(IProgressMonitor progressMonitor, List<Pattern> tagPatterns) {
     Parameters systemParams = Benchmarks.getDefaultParameters().toBuilder().setTargetTimeNs(50 * TimeUtil.MS).build();
     IBenchmarkContext systemBenchmarkContext = 
-            new BenchmarkContext(IProgressMonitor.DUMMY, null, RUN_ALL, systemParams);
+            new BenchmarkContext(IProgressMonitor.DUMMY, SystemInfo.getDefaultInstance(), RUN_ALL, systemParams);
     
 		BenchmarkRunner runner = new BenchmarkRunner();
 		runner.add(SystemBenchmark.class);
@@ -114,9 +113,8 @@ public class BenchmarkContext implements IBenchmarkContext {
     long timerGranularity = TimeUtil.estimateTimerGranularity(new Timer());
 		long methodInvoke = Math.round(emptyResult.getEstimatedBenchmark());
 
-		SystemInfo systemInfo = SystemInfo.create(timerGranularity, methodInvoke, systemBenchMark);
+		Benchmark.SystemInfo systemInfo = SystemUtil.getSystemInfo(timerGranularity, methodInvoke, systemBenchMark);
 		progressMonitor.systemInfo(systemInfo);
-
 		return new BenchmarkContext(progressMonitor, systemInfo, tagPatterns);
 	}
 

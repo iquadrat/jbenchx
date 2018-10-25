@@ -9,9 +9,9 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.jbenchx.Benchmark;
+import org.jbenchx.Benchmark.SystemInfo;
 import org.jbenchx.Benchmark.TaskResult;
 import org.jbenchx.run.IBenchmarkTask;
-import org.jbenchx.vm.SystemInfo;
 import org.jbenchx.vm.VmState;
 
 public class MultiProgressMonitor implements IProgressMonitor {
