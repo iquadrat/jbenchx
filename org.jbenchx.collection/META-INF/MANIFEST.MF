@@ -4,6 +4,6 @@ Bundle-Name: Collections
 Bundle-SymbolicName: org.jbenchx.collections
 Bundle-Version: 1.0.0.qualifier
 Export-Package: org.jbenchx.collections.jcf
-Require-Bundle: org.jbenchx;bundle-version="0.2.0"
+Require-Bundle: org.jbenchx;bundle-version="0.4.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-Vendor: Micha Riser

@@ -13,102 +13,83 @@ import org.jbenchx.annotations.Tags;
  */
 @Tags({"collection", "query"})
 public abstract class CollectionQueryBenchmark {
-
-  private static final int     COUNT = 100;
-  private final int            fSize = 1000;
-  private final Collection<String>   fCollection;
+  
+  private final Collection<String>   collection;
+  
   private final String[]             fContained;
+  
   private final String[]             fNotContained;
-  private final Collection<String>[] fCollectionArray;
-
-  @SuppressWarnings("unchecked")
-  CollectionQueryBenchmark() {
-    fCollection = createEmptyCollection();
-    fContained = new String[fSize];
-    fNotContained = new String[fSize];
-
+  
+  CollectionQueryBenchmark(int size) {
+    collection = createEmptyCollection();
+    fContained = new String[size];
+    fNotContained = new String[size];
+    
     // fill the collection
-    for (int i = 0; i < fSize; ++i) {
+    for (int i = 0; i < size; ++i) {
       int v = 2 * i + 1;
       String string = String.valueOf(v);
-      fCollection.add(string);
+      collection.add(string);
       fContained[i] = string;
       fNotContained[i] = String.valueOf(v + 1);
     }
-
-    // create some collections for testing simple properties
-    fCollectionArray = new Collection[COUNT];
-    for (int i = 0; i < COUNT; ++i) {
-      fCollectionArray[i] = createEmptyCollection();
-      for (int j = 0; j < fSize; ++j) {
-        fCollectionArray[i].add(String.valueOf(j));
-      }
-    }
   }
-
+  
   protected abstract Collection<String> createEmptyCollection();
-
-  @Bench(divisor = COUNT)
+  
+  @Bench
   public int size() {
-    int result = 0;
-    for (int i = 0; i < COUNT; ++i) {
-      result += fCollectionArray[i].size();
-    }
-    return result;
+    return collection.size();
   }
-
-  @Bench(divisor = COUNT)
-  public int isEmpty() {
-    int result = 0;
-    for (int i = 0; i < COUNT; ++i) {
-      result += fCollectionArray[i].isEmpty() ? 0 : 1;
-    }
-    return result;
+  
+  @Bench
+  public boolean isEmpty() {
+    return collection.isEmpty();
   }
-
-  @Bench(divisor = 1000)
+  
+  @Bench
   public boolean containsYes() {
     for (String s: fContained) {
-      if (!fCollection.contains(s)) {
+      if (!collection.contains(s)) {
         return true;
       }
     }
     return false;
   }
-
-  @Bench(divisor = 1000)
+  
+  @Bench
   public boolean containsNo() {
     for (String s: fNotContained) {
-      if (fCollection.contains(s)) {
+      if (collection.contains(s)) {
         return true;
       }
     }
     return false;
   }
-
-  @Bench(divisor = 1000)
+  
+  @Bench
   public int iterate() {
     int result = 0;
-    Iterator<String> iterator = fCollection.iterator();
+    Iterator<String> iterator = collection.iterator();
     while (iterator.hasNext()) {
       result += iterator.next().length();
     }
     return result;
   }
-
-  @Bench(divisor = 1000)
+  
+  @Bench
   public Object toArray() {
-    return fCollection.toArray();
+    return collection.toArray();
   }
-
-  @Bench(divisor = 1000)
+  
+  @Bench
   public boolean containsAll() {
-    return fCollection.containsAll(Arrays.asList(fContained));
+    return collection.containsAll(Arrays.asList(fContained));
   }
-
+  
   @Bench
   public int benchHashCode() {
-    return fCollection.hashCode();
+    return collection.hashCode();
   }
-
+  
 }
