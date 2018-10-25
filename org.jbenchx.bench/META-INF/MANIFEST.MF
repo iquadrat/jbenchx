@@ -6,3 +6,4 @@ Bundle-Version: 0.3.1.qualifier
 Bundle-Vendor: Micha Riser
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Require-Bundle: org.jbenchx;bundle-version="0.4.0"
+Automatic-Module-Name: org.jbenchx.bench

@@ -19,3 +19,4 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-ClassPath: lib/easymock-3.0.jar,
  .
 Bundle-Vendor: Micha Riser
+Automatic-Module-Name: org.jbenchx.test

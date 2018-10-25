@@ -2,7 +2,7 @@
 <feature
       id="org.jbenchx.eclipse"
       label="JBenchX for Eclipse"
-      version="0.3.1.qualifier"
+      version="0.4.0.qualifier"
       provider-name="Micha Riser">
 
    <description url="http://iquadrat.github.com/jbenchx/">
