@@ -28,7 +28,7 @@ public class BenchmarkContext implements IBenchmarkContext {
 		RUN_ALL.add(StringUtil.wildCardToRegexpPattern("*"));
 	}
 
-	public static final String VERSION = "0.3.0";
+	public static final String VERSION = "0.3.1";
 
 	private final IProgressMonitor fProgressMonitor;
 
